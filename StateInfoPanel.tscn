@@ -1,0 +1,93 @@
+[gd_scene format=3 uid="uid://cyq00qwa810bc"]
+
+[ext_resource type="Script" path="res://StateInfoPanel.gd" id="1_stateinfo"]
+
+[node name="StateInfoPanel" type="PanelContainer"]
+custom_minimum_size = Vector2(320, 0)
+offset_left = 24.0
+offset_top = 80.0
+offset_right = 344.0
+offset_bottom = 300.0
+script = ExtResource("1_stateinfo")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBox" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Header" type="HBoxContainer" parent="Margin/VBox"]
+layout_mode = 2
+
+[node name="TitleBox" type="VBoxContainer" parent="Margin/VBox/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="Subtitle" type="Label" parent="Margin/VBox/Header/TitleBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.65, 1)
+theme_override_font_sizes/font_size = 12
+text = "РЕГИОН"
+
+[node name="RegionName" type="Label" parent="Margin/VBox/Header/TitleBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.8, 0.5, 1)
+theme_override_font_sizes/font_size = 18
+text = "Бранденбург"
+autowrap_mode = 3
+
+[node name="CloseBtn" type="Button" parent="Margin/VBox/Header"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 0
+text = "×"
+
+[node name="HSeparator" type="HSeparator" parent="Margin/VBox"]
+layout_mode = 2
+
+[node name="OwnerBox" type="VBoxContainer" parent="Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Subtitle" type="Label" parent="Margin/VBox/OwnerBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.65, 1)
+theme_override_font_sizes/font_size = 12
+text = "ВЛАДЕЛЕЦ"
+
+[node name="OwnerRow" type="HBoxContainer" parent="Margin/VBox/OwnerBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ColorRect" type="ColorRect" parent="Margin/VBox/OwnerBox/OwnerRow"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_vertical = 4
+color = Color(0.4, 0.4, 0.4, 1)
+
+[node name="OwnerName" type="Label" parent="Margin/VBox/OwnerBox/OwnerRow"]
+layout_mode = 2
+text = "Германия"
+
+[node name="HSeparator2" type="HSeparator" parent="Margin/VBox"]
+layout_mode = 2
+
+[node name="PopBox" type="VBoxContainer" parent="Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Subtitle" type="Label" parent="Margin/VBox/PopBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.65, 1)
+theme_override_font_sizes/font_size = 12
+text = "НАСЕЛЕНИЕ"
+
+[node name="Population" type="Label" parent="Margin/VBox/PopBox"]
+layout_mode = 2
+text = "0"

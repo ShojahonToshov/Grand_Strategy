@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://c0123qwa810bd"]
+
+[ext_resource type="Script" path="res://GameHUD.gd" id="1_hud"]
+[ext_resource type="PackedScene" path="res://TopBar.tscn" id="2_topbar"]
+[ext_resource type="PackedScene" path="res://StateInfoPanel.tscn" id="3_stateinfo"]
+[ext_resource type="PackedScene" path="res://MapModesPanel.tscn" id="4_mapmodes"]
+
+[node name="GameHUD" type="CanvasLayer"]
+script = ExtResource("1_hud")
+
+[node name="TopBar" parent="." instance=ExtResource("2_topbar")]
+
+[node name="StateInfoPanel" parent="." instance=ExtResource("3_stateinfo")]
+visible = false
+
+[node name="MapModesPanel" parent="." instance=ExtResource("4_mapmodes")]

@@ -1,0 +1,89 @@
+[gd_scene format=3 uid="uid://cx600qwa810bb"]
+
+[ext_resource type="Script" path="res://TopBar.gd" id="1_topbar"]
+[ext_resource type="Texture2D" path="res://assets/ui/resources/money.png" id="2_money"]
+[ext_resource type="Texture2D" path="res://assets/ui/resources/gold.png" id="3_gold"]
+[ext_resource type="Texture2D" path="res://assets/ui/resources/wood.png" id="4_wood"]
+
+[node name="TopBar" type="PanelContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 56.0
+grow_horizontal = 2
+script = ExtResource("1_topbar")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 8
+
+[node name="HBox" type="HBoxContainer" parent="Margin"]
+layout_mode = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="Margin/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Обзор мира"
+vertical_alignment = 1
+
+[node name="Resources" type="HBoxContainer" parent="Margin/HBox"]
+texture_filter = 2
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="Money" type="HBoxContainer" parent="Margin/HBox/Resources"]
+layout_mode = 2
+tooltip_text = "Деньги"
+theme_override_constants/separation = 8
+
+[node name="Icon" type="TextureRect" parent="Margin/HBox/Resources/Money"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("2_money")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Margin/HBox/Resources/Money"]
+layout_mode = 2
+text = "0"
+vertical_alignment = 1
+
+[node name="Gold" type="HBoxContainer" parent="Margin/HBox/Resources"]
+layout_mode = 2
+tooltip_text = "Золото"
+theme_override_constants/separation = 8
+
+[node name="Icon" type="TextureRect" parent="Margin/HBox/Resources/Gold"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("3_gold")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Margin/HBox/Resources/Gold"]
+layout_mode = 2
+text = "0"
+vertical_alignment = 1
+
+[node name="Wood" type="HBoxContainer" parent="Margin/HBox/Resources"]
+layout_mode = 2
+tooltip_text = "Древесина"
+theme_override_constants/separation = 8
+
+[node name="Icon" type="TextureRect" parent="Margin/HBox/Resources/Wood"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("4_wood")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Margin/HBox/Resources/Wood"]
+layout_mode = 2
+text = "0"
+vertical_alignment = 1
