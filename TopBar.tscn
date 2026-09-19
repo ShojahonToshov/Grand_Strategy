@@ -4,12 +4,43 @@
 [ext_resource type="Texture2D" path="res://assets/ui/resources/money.png" id="2_money"]
 [ext_resource type="Texture2D" path="res://assets/ui/resources/gold.png" id="3_gold"]
 [ext_resource type="Texture2D" path="res://assets/ui/resources/wood.png" id="4_wood"]
+[ext_resource type="Texture2D" path="res://assets/ui/resources/science.png" id="5_science"]
+[ext_resource type="Texture2D" path="res://assets/ui/resources/iron.png" id="6_iron"]
+[ext_resource type="Texture2D" path="res://assets/ui/resources/steel.png" id="7_steel"]
+[ext_resource type="Texture2D" path="res://assets/ui/resources/oil.png" id="8_oil"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.12, 0.14, 0.16, 0.95)
+border_width_bottom = 2
+border_color = Color(0.25, 0.3, 0.35, 0.8)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_n"]
+bg_color = Color(0.18, 0.2, 0.25, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_h"]
+bg_color = Color(0.25, 0.28, 0.35, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_p"]
+bg_color = Color(0.1, 0.12, 0.15, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [node name="TopBar" type="PanelContainer"]
+custom_minimum_size = Vector2(0, 64)
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 56.0
 grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
 script = ExtResource("1_topbar")
 
 [node name="Margin" type="MarginContainer" parent="."]
@@ -21,69 +52,237 @@ theme_override_constants/margin_bottom = 8
 
 [node name="HBox" type="HBoxContainer" parent="Margin"]
 layout_mode = 2
-alignment = 1
-
-[node name="Title" type="Label" parent="Margin/HBox"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Обзор мира"
-vertical_alignment = 1
-
-[node name="Resources" type="HBoxContainer" parent="Margin/HBox"]
-texture_filter = 2
-layout_mode = 2
 theme_override_constants/separation = 24
 
-[node name="Money" type="HBoxContainer" parent="Margin/HBox/Resources"]
+[node name="LeftBox" type="HBoxContainer" parent="Margin/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Title" type="Label" parent="Margin/HBox/LeftBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Франция"
+vertical_alignment = 1
+
+[node name="CenterBox" type="HBoxContainer" parent="Margin/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+alignment = 1
+
+[node name="Resources" type="HBoxContainer" parent="Margin/HBox/CenterBox"]
+texture_filter = 2
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Money" type="HBoxContainer" parent="Margin/HBox/CenterBox/Resources"]
 layout_mode = 2
 tooltip_text = "Деньги"
-theme_override_constants/separation = 8
+theme_override_constants/separation = 6
 
-[node name="Icon" type="TextureRect" parent="Margin/HBox/Resources/Money"]
-custom_minimum_size = Vector2(32, 32)
+[node name="Icon" type="TextureRect" parent="Margin/HBox/CenterBox/Resources/Money"]
+custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 size_flags_vertical = 4
 texture = ExtResource("2_money")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="Margin/HBox/Resources/Money"]
+[node name="Label" type="Label" parent="Margin/HBox/CenterBox/Resources/Money"]
+custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 text = "0"
 vertical_alignment = 1
 
-[node name="Gold" type="HBoxContainer" parent="Margin/HBox/Resources"]
+[node name="SEP1" type="VSeparator" parent="Margin/HBox/CenterBox/Resources"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Gold" type="HBoxContainer" parent="Margin/HBox/CenterBox/Resources"]
 layout_mode = 2
 tooltip_text = "Золото"
-theme_override_constants/separation = 8
+theme_override_constants/separation = 6
 
-[node name="Icon" type="TextureRect" parent="Margin/HBox/Resources/Gold"]
-custom_minimum_size = Vector2(32, 32)
+[node name="Icon" type="TextureRect" parent="Margin/HBox/CenterBox/Resources/Gold"]
+custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 size_flags_vertical = 4
 texture = ExtResource("3_gold")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="Margin/HBox/Resources/Gold"]
+[node name="Label" type="Label" parent="Margin/HBox/CenterBox/Resources/Gold"]
+custom_minimum_size = Vector2(48, 0)
 layout_mode = 2
 text = "0"
 vertical_alignment = 1
 
-[node name="Wood" type="HBoxContainer" parent="Margin/HBox/Resources"]
+[node name="Wood" type="HBoxContainer" parent="Margin/HBox/CenterBox/Resources"]
 layout_mode = 2
 tooltip_text = "Древесина"
-theme_override_constants/separation = 8
+theme_override_constants/separation = 6
 
-[node name="Icon" type="TextureRect" parent="Margin/HBox/Resources/Wood"]
-custom_minimum_size = Vector2(32, 32)
+[node name="Icon" type="TextureRect" parent="Margin/HBox/CenterBox/Resources/Wood"]
+custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 size_flags_vertical = 4
 texture = ExtResource("4_wood")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="Margin/HBox/Resources/Wood"]
+[node name="Label" type="Label" parent="Margin/HBox/CenterBox/Resources/Wood"]
+custom_minimum_size = Vector2(48, 0)
 layout_mode = 2
 text = "0"
 vertical_alignment = 1
+
+[node name="Iron" type="HBoxContainer" parent="Margin/HBox/CenterBox/Resources"]
+layout_mode = 2
+tooltip_text = "Железо"
+theme_override_constants/separation = 6
+
+[node name="Icon" type="TextureRect" parent="Margin/HBox/CenterBox/Resources/Iron"]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("6_iron")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Margin/HBox/CenterBox/Resources/Iron"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+text = "0"
+vertical_alignment = 1
+
+[node name="Steel" type="HBoxContainer" parent="Margin/HBox/CenterBox/Resources"]
+layout_mode = 2
+tooltip_text = "Сталь"
+theme_override_constants/separation = 6
+
+[node name="Icon" type="TextureRect" parent="Margin/HBox/CenterBox/Resources/Steel"]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("7_steel")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Margin/HBox/CenterBox/Resources/Steel"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+text = "0"
+vertical_alignment = 1
+
+[node name="Oil" type="HBoxContainer" parent="Margin/HBox/CenterBox/Resources"]
+layout_mode = 2
+tooltip_text = "Нефть"
+theme_override_constants/separation = 6
+
+[node name="Icon" type="TextureRect" parent="Margin/HBox/CenterBox/Resources/Oil"]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("8_oil")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Margin/HBox/CenterBox/Resources/Oil"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+text = "0"
+vertical_alignment = 1
+
+[node name="SEP2" type="VSeparator" parent="Margin/HBox/CenterBox/Resources"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Science" type="HBoxContainer" parent="Margin/HBox/CenterBox/Resources"]
+layout_mode = 2
+tooltip_text = "Наука"
+theme_override_constants/separation = 6
+
+[node name="Icon" type="TextureRect" parent="Margin/HBox/CenterBox/Resources/Science"]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("5_science")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Margin/HBox/CenterBox/Resources/Science"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+text = "0"
+vertical_alignment = 1
+
+
+[node name="RightBox" type="HBoxContainer" parent="Margin/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+theme_override_constants/separation = 16
+
+[node name="Date" type="Label" parent="Margin/HBox/RightBox"]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "01.01.1936"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="DateSep" type="VSeparator" parent="Margin/HBox/RightBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TimeControls" type="HBoxContainer" parent="Margin/HBox/RightBox"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Pause" type="Button" parent="Margin/HBox/RightBox/TimeControls"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_n")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_h")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_p")
+text = "||"
+
+[node name="Speed1" type="Button" parent="Margin/HBox/RightBox/TimeControls"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_n")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_h")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_p")
+text = "1"
+
+[node name="Speed2" type="Button" parent="Margin/HBox/RightBox/TimeControls"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_n")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_h")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_p")
+text = "2"
+
+[node name="Speed3" type="Button" parent="Margin/HBox/RightBox/TimeControls"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_n")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_h")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_p")
+text = "3"
+
+[node name="Speed4" type="Button" parent="Margin/HBox/RightBox/TimeControls"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_n")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_h")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_p")
+text = "4"
+
+[node name="Speed5" type="Button" parent="Margin/HBox/RightBox/TimeControls"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_n")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_h")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_p")
+text = "5"

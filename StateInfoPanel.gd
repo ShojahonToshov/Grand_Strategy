@@ -70,16 +70,80 @@ func setup_session():
 			if sid == current_state_id and current_state_id != "":
 				update_buildings(current_state_id, current_owner_name)
 		)
+		session.time_changed.connect(func():
+			if current_state_id != "" and session.building_orders.has(current_state_id):
+				_update_progress_bar_only(current_state_id)
+		)
+
+func _update_progress_bar_only(state_id: String):
+	var session = get_tree().current_scene.get_node_or_null("GameSession")
+	var b_content = $Margin/VBox/BuildingBox/Content
+	for c in b_content.get_children():
+		if c is ProgressBar and session.building_orders.has(state_id):
+			var order = session.building_orders[state_id]
+			c.value = order.total_hours - order.hours_left
+
+func update_country_data(owner_tag: String, owner_name: String, owner_color: Color):
+	current_state_id = ""
+	current_owner_name = owner_tag
+	
+	var vbox = $Margin/VBox
+	vbox.get_node("Header/TitleBox/Subtitle").text = "СТРАНА"
+	vbox.get_node("Header/TitleBox/RegionName").text = owner_name
+	
+	vbox.get_node("OwnerBox").visible = false
+	vbox.get_node("HSeparator2").visible = false
+	
+	var total_pop = 0
+	var main_node = get_tree().current_scene
+	if main_node and main_node.get("states_data") != null:
+		var st_data = main_node.states_data
+		for k in st_data.keys():
+			if st_data[k].has("owner") and st_data[k]["owner"] == owner_tag:
+				total_pop += st_data[k].get("population", 0)
+				
+	var pop_str = str(int(total_pop))
+	var formatted_pop = ""
+	var c = 0
+	for i in range(pop_str.length() - 1, -1, -1):
+		formatted_pop = pop_str[i] + formatted_pop
+		c += 1
+		if c % 3 == 0 and i != 0:
+			formatted_pop = " " + formatted_pop
+			
+	vbox.get_node("PopBox/Population").text = formatted_pop
+	
+	vbox.get_node("ResourceBox").visible = false
+	vbox.get_node("ResSep").visible = false
+	vbox.get_node("BuildingBox").visible = false
+	vbox.get_node("BuildSep").visible = false
 
 func update_data(region_name: String, owner_name: String, owner_color: Color, resource_name: String = "", state_id: String = ""):
 	current_state_id = state_id
 	current_owner_name = owner_name
 	
 	var vbox = $Margin/VBox
+	vbox.get_node("Header/TitleBox/Subtitle").text = "РЕГИОН"
 	vbox.get_node("Header/TitleBox/RegionName").text = region_name
+	vbox.get_node("OwnerBox").visible = true
+	vbox.get_node("HSeparator2").visible = true
 	vbox.get_node("OwnerBox/OwnerRow/OwnerName").text = owner_name
 	vbox.get_node("OwnerBox/OwnerRow/ColorRect").color = owner_color
-	vbox.get_node("PopBox/Population").text = "0"
+	var pop = 0
+	var main_node = get_tree().current_scene
+	if main_node and main_node.get("states_data") and main_node.states_data.has(state_id):
+		pop = main_node.states_data[state_id].get("population", 0)
+	
+	var pop_str = str(int(pop))
+	var formatted_pop = ""
+	var c = 0
+	for i in range(pop_str.length() - 1, -1, -1):
+		formatted_pop = pop_str[i] + formatted_pop
+		c += 1
+		if c % 3 == 0 and i != 0:
+			formatted_pop = " " + formatted_pop
+			
+	vbox.get_node("PopBox/Population").text = formatted_pop
 	
 	var res_box = vbox.get_node("ResourceBox")
 	var res_sep = vbox.get_node("ResSep")
@@ -95,6 +159,8 @@ func update_data(region_name: String, owner_name: String, owner_color: Color, re
 			res_row.get_node("Icon").texture = load("res://assets/ui/resources/gold.png")
 		elif resource_name == "Древесина":
 			res_row.get_node("Icon").texture = load("res://assets/ui/resources/wood.png")
+		elif resource_name == "Железо":
+			res_row.get_node("Icon").texture = load("res://assets/ui/resources/iron.png")
 		else:
 			res_row.get_node("Icon").texture = null
 		
@@ -113,8 +179,8 @@ func update_data(region_name: String, owner_name: String, owner_color: Color, re
 func update_buildings(state_id: String, owner_name: String):
 	var session = get_tree().current_scene.get_node_or_null("GameSession")
 	var b_content = $Margin/VBox/BuildingBox/Content
-	for c in b_content.get_children():
-		c.queue_free()
+	for child in b_content.get_children():
+		child.queue_free()
 		
 	if not session: return
 	
@@ -124,15 +190,28 @@ func update_buildings(state_id: String, owner_name: String):
 	if session.completed_buildings.has(state_id):
 		var b = session.completed_buildings[state_id]
 		var title = Label.new()
-		title.text = "Шахта" if b.type == "GOLD_MINE" else "Лесозаготовка"
+		var b_name = "Постройка"
+		if b.type == "GOLD_MINE": b_name = "Золотая Шахта"
+		elif b.type == "LOGGING_CAMP": b_name = "Лесозаготовка"
+		elif b.type == "IRON_MINE": b_name = "Железный Рудник"
+		elif b.type == "STEEL_MILL": b_name = "Сталелитейный Завод"
+		elif b.type == "UNIVERSITY": b_name = "Университет"
+		title.text = b_name
 		title.add_theme_color_override("font_color", Color(0.8, 0.8, 0.85))
 		b_content.add_child(title)
 		
 		var status = Label.new()
 		var res_type = session.main_node.resource_distribution.get_resource_for_state(state_id)
-		var is_match = (b.type == "GOLD_MINE" and res_type == 1) or (b.type == "LOGGING_CAMP" and res_type == 2)
+		var is_match = (b.type == "GOLD_MINE" and res_type == 1) or (b.type == "LOGGING_CAMP" and res_type == 2) or (b.type == "IRON_MINE" and res_type == 3) or b.type == "STEEL_MILL" or b.type == "UNIVERSITY"
 		if is_match:
-			status.text = "Работает (Добыча: " + str(1 if b.type == "GOLD_MINE" else 10) + ")"
+			var prod_val = 0.0
+
+			if b.type == "GOLD_MINE": prod_val = BalanceConfig.GOLD_MINE_PROD_GOLD
+			elif b.type == "LOGGING_CAMP": prod_val = BalanceConfig.LOGGING_CAMP_PROD_WOOD
+			elif b.type == "IRON_MINE": prod_val = BalanceConfig.IRON_MINE_PROD_IRON
+			elif b.type == "STEEL_MILL": prod_val = BalanceConfig.STEEL_MILL_PROD_STEEL
+			elif b.type == "UNIVERSITY": prod_val = BalanceConfig.UNIVERSITY_PROD_SCIENCE
+			status.text = "Работает (Добыча: " + str(prod_val) + ")"
 			status.add_theme_color_override("font_color", Color(0.5, 1.0, 0.5))
 		else:
 			status.text = "Простаивает (Нет ресурса)"
@@ -148,7 +227,13 @@ func update_buildings(state_id: String, owner_name: String):
 	elif session.building_orders.has(state_id):
 		var order = session.building_orders[state_id]
 		var title = Label.new()
-		title.text = "Строится: " + ("Шахта" if order.type == "GOLD_MINE" else "Лесозаготовка")
+		var b_name = "Постройка"
+		if order.type == "GOLD_MINE": b_name = "Золотая Шахта"
+		elif order.type == "LOGGING_CAMP": b_name = "Лесозаготовка"
+		elif order.type == "IRON_MINE": b_name = "Железный Рудник"
+		elif order.type == "STEEL_MILL": b_name = "Сталелитейный Завод"
+		elif order.type == "UNIVERSITY": b_name = "Университет"
+		title.text = "Строится: " + b_name
 		b_content.add_child(title)
 		
 		var prog = ProgressBar.new()
@@ -171,8 +256,12 @@ func update_buildings(state_id: String, owner_name: String):
 		b_content.add_child(btn)
 
 func _show_build_modal(state_id: String):
+	var existing = get_tree().current_scene.get_node_or_null("BuildModalLayer")
+	if existing: existing.queue_free()
+
 	# Create a CanvasLayer so it stays on top of everything
 	var modal_layer = CanvasLayer.new()
+	modal_layer.name = "BuildModalLayer"
 	modal_layer.layer = 100
 	get_tree().current_scene.add_child(modal_layer)
 	
@@ -248,8 +337,12 @@ func _show_build_modal(state_id: String):
 	var session = get_tree().current_scene.get_node_or_null("GameSession")
 	var res_type = session.main_node.resource_distribution.get_resource_for_state(state_id)
 	
+
 	_create_build_card_modal("LOGGING_CAMP", state_id, res_type == 2, cards_box, session, modal_layer)
 	_create_build_card_modal("GOLD_MINE", state_id, res_type == 1, cards_box, session, modal_layer)
+	_create_build_card_modal("IRON_MINE", state_id, res_type == 3, cards_box, session, modal_layer)
+	_create_build_card_modal("STEEL_MILL", state_id, true, cards_box, session, modal_layer)
+	_create_build_card_modal("UNIVERSITY", state_id, true, cards_box, session, modal_layer)
 
 func _create_build_card_modal(b_type: String, state_id: String, is_match: bool, container: Node, session: Node, modal: Node):
 	var pan = PanelContainer.new()
@@ -272,7 +365,52 @@ func _create_build_card_modal(b_type: String, state_id: String, is_match: bool, 
 	margin.add_child(vb)
 	
 	var title = Label.new()
-	title.text = "Лесозаготовка" if b_type == "LOGGING_CAMP" else "Шахта"
+	var b_name = ""
+	var cost_m = 0
+	var cost_w = 0
+	var days = 0
+	var prod = 0.0
+	var prod_name = ""
+
+	
+	match b_type:
+		"LOGGING_CAMP":
+			b_name = "Лесозаготовка"
+			cost_m = BalanceConfig.LOGGING_CAMP_COST_MONEY
+			cost_w = BalanceConfig.LOGGING_CAMP_COST_WOOD
+			days = BalanceConfig.LOGGING_CAMP_DAYS
+			prod = BalanceConfig.LOGGING_CAMP_PROD_WOOD
+			prod_name = "Дерево"
+		"GOLD_MINE":
+			b_name = "Золотая Шахта"
+			cost_m = BalanceConfig.GOLD_MINE_COST_MONEY
+			cost_w = BalanceConfig.GOLD_MINE_COST_WOOD
+			days = BalanceConfig.GOLD_MINE_DAYS
+			prod = BalanceConfig.GOLD_MINE_PROD_GOLD
+			prod_name = "Золото"
+		"IRON_MINE":
+			b_name = "Железный Рудник"
+			cost_m = BalanceConfig.IRON_MINE_COST_MONEY
+			cost_w = BalanceConfig.IRON_MINE_COST_WOOD
+			days = BalanceConfig.IRON_MINE_DAYS
+			prod = BalanceConfig.IRON_MINE_PROD_IRON
+			prod_name = "Железо"
+		"STEEL_MILL":
+			b_name = "Сталелитейный Завод"
+			cost_m = BalanceConfig.STEEL_MILL_COST_MONEY
+			cost_w = BalanceConfig.STEEL_MILL_COST_WOOD
+			days = BalanceConfig.STEEL_MILL_DAYS
+			prod = BalanceConfig.STEEL_MILL_PROD_STEEL
+			prod_name = "Сталь (-10 Жел)"
+		"UNIVERSITY":
+			b_name = "Университет"
+			cost_m = BalanceConfig.UNIVERSITY_COST_MONEY
+			cost_w = BalanceConfig.UNIVERSITY_COST_WOOD
+			days = BalanceConfig.UNIVERSITY_DAYS
+			prod = BalanceConfig.UNIVERSITY_PROD_SCIENCE
+			prod_name = "Наука"
+			
+	title.text = b_name
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title.add_theme_font_size_override("font_size", 14)
 	vb.add_child(title)
@@ -280,20 +418,15 @@ func _create_build_card_modal(b_type: String, state_id: String, is_match: bool, 
 	var match_lbl = Label.new()
 	match_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	if is_match:
-		match_lbl.text = "Ресурс найден"
+		match_lbl.text = "Подходит"
 		match_lbl.add_theme_color_override("font_color", Color(0.5, 1.0, 0.5))
 	else:
-		match_lbl.text = "Нет ресурса (Добыча 0)"
+		match_lbl.text = "Нет ресурса"
 		match_lbl.add_theme_color_override("font_color", Color(1.0, 0.5, 0.5))
 	vb.add_child(match_lbl)
 	
-	var cost_m = BalanceConfig.LOGGING_CAMP_COST_MONEY if b_type == "LOGGING_CAMP" else BalanceConfig.GOLD_MINE_COST_MONEY
-	var cost_w = BalanceConfig.LOGGING_CAMP_COST_WOOD if b_type == "LOGGING_CAMP" else BalanceConfig.GOLD_MINE_COST_WOOD
-	var days = BalanceConfig.LOGGING_CAMP_DAYS if b_type == "LOGGING_CAMP" else BalanceConfig.GOLD_MINE_DAYS
-	var prod = BalanceConfig.LOGGING_CAMP_PROD_WOOD if b_type == "LOGGING_CAMP" else BalanceConfig.GOLD_MINE_PROD_GOLD
-	
 	var info = Label.new()
-	info.text = "Цена: %d $\nДерево: %d\nВремя: %d дн.\nДобыча: %d/д." % [cost_m, cost_w, days, prod if is_match else 0]
+	info.text = "Цена: %d $\nДерево: %d\nВремя: %d дн.\n%s: %.1f/д." % [cost_m, cost_w, days, prod_name, prod if is_match else 0]
 	info.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	info.add_theme_color_override("font_color", Color(0.7, 0.7, 0.75))
 	vb.add_child(info)
@@ -322,9 +455,11 @@ func _confirm_build_mismatch_modal(state_id: String, b_type: String, cost_m: int
 	dialog.title = "Внимание"
 	var rname = "деревьев" if b_type == "LOGGING_CAMP" else "золота"
 	dialog.dialog_text = "Здесь нет %s. Построить за %d денег и %d древесины?" % [rname, cost_m, cost_w]
+	dialog.canceled.connect(func(): dialog.queue_free())
 	dialog.confirmed.connect(func():
 		session.start_building(state_id, b_type)
 		modal.queue_free()
+		dialog.queue_free()
 	)
 	add_child(dialog)
 	dialog.popup_centered()
@@ -334,12 +469,15 @@ func _confirm_cancel(state_id: String, order: Dictionary):
 	var progress = 1.0 - (float(order.hours_left) / float(order.total_hours))
 	var rm = int(floor(order.cost_m * (1.0 - progress)))
 	var rw = int(floor(order.cost_w * (1.0 - progress)))
+	var rg = int(floor(order.cost_g * (1.0 - progress)))
 	
 	var dialog = ConfirmationDialog.new()
 	dialog.title = "Отмена строительства"
-	dialog.dialog_text = "Вернётся ресурсов:\nДеньги: %d\nДревесина: %d\n\nПродолжить?" % [rm, rw]
+	dialog.dialog_text = "Вернётся ресурсов:\nДеньги: %d\nДревесина: %d\nЗолото: %d\n\nПродолжить?" % [rm, rw, rg]
+	dialog.canceled.connect(func(): dialog.queue_free())
 	dialog.confirmed.connect(func():
 		session.cancel_building(state_id)
+		dialog.queue_free()
 	)
 	add_child(dialog)
 	dialog.popup_centered()
@@ -349,8 +487,10 @@ func _confirm_demolish(state_id: String, b_name: String):
 	var dialog = ConfirmationDialog.new()
 	dialog.title = "Снос здания"
 	dialog.dialog_text = "Снести %s в регионе %s?" % [b_name, state_id]
+	dialog.canceled.connect(func(): dialog.queue_free())
 	dialog.confirmed.connect(func():
 		session.demolish_building(state_id)
+		dialog.queue_free()
 	)
 	add_child(dialog)
 	dialog.popup_centered()

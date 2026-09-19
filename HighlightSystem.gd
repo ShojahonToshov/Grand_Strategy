@@ -103,4 +103,4 @@ func _draw_border(node: Node2D):
 	var width = max(2.0 / zoom, (base_width * 2.0) / zoom)
 	
 	for line in highlight_border_lines:
-		node.draw_polyline(line, outline_color, width, true)
+		node.draw_polyline(line, outline_color, width, false)

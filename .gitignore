@@ -26,3 +26,19 @@ Pipfile.lock
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Logs and Temp
+*.log
+tmp/
+temp/
+out*.txt
+scratch_*.py

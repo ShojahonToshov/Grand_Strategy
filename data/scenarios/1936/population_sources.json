@@ -1,0 +1,176 @@
+{
+  "FRA": {
+    "name": "France (Metropolitan)",
+    "population_1936": 41200000,
+    "source": "INSEE, 1936 Census (excluding colonies)",
+    "date": "March 1936"
+  },
+  "ENG": {
+    "name": "United Kingdom",
+    "population_1936": 47100000,
+    "source": "League of Nations Statistical Yearbook 1936/37",
+    "date": "1936 estimate"
+  },
+  "USA": {
+    "name": "United States of America",
+    "population_1936": 128053180,
+    "source": "US Census Bureau, Statistical Abstract (Continental US)",
+    "date": "July 1, 1936"
+  },
+  "GER": {
+    "name": "Germany",
+    "population_1936": 67350000,
+    "source": "League of Nations Statistical Yearbook 1936/37",
+    "date": "1936 estimate"
+  },
+  "SOV": {
+    "name": "Soviet Union",
+    "population_1936": 163800000,
+    "source": "Reconstruction based on 1937 and 1939 censuses",
+    "date": "January 1936"
+  },
+  "JAP": {
+    "name": "Japan (Metropolitan)",
+    "population_1936": 70590000,
+    "source": "League of Nations Statistical Yearbook 1936/37",
+    "date": "1936 estimate"
+  },
+  "CHI": {
+    "name": "Republic of China",
+    "population_1936": 400000000,
+    "source": "Estimated fraction of overall Chinese population (~450M total)",
+    "date": "1936 estimate"
+  },
+  "ITA": {
+    "name": "Italy",
+    "population_1936": 42950000,
+    "source": "League of Nations Statistical Yearbook 1936/37",
+    "date": "1936 estimate"
+  },
+  "POL": {
+    "name": "Poland",
+    "population_1936": 34000000,
+    "source": "League of Nations Statistical Yearbook 1936/37",
+    "date": "1936 estimate"
+  },
+  "RAJ": {
+    "name": "British India",
+    "population_1936": 368000000,
+    "source": "Reconstruction from 1931 and 1941 censuses",
+    "date": "1936 estimate"
+  },
+  "CAN": {
+    "name": "Canada",
+    "population_1936": 11000000,
+    "source": "League of Nations Statistical Yearbook 1936/37",
+    "date": "1936 estimate"
+  },
+  "AST": {
+    "name": "Australia",
+    "population_1936": 6770000,
+    "source": "League of Nations Statistical Yearbook 1936/37",
+    "date": "1936 estimate"
+  },
+  "SAF": {
+    "name": "South Africa",
+    "population_1936": 9700000,
+    "source": "League of Nations Statistical Yearbook 1936/37",
+    "date": "1936 estimate"
+  },
+  "NZL": {
+    "name": "New Zealand",
+    "population_1936": 1570000,
+    "source": "League of Nations Statistical Yearbook 1936/37",
+    "date": "1936 estimate"
+  },
+  "BRA": {
+    "name": "Brazil",
+    "population_1936": 38600000,
+    "source": "League of Nations Statistical Yearbook 1936/37",
+    "date": "1936 estimate"
+  },
+  "ARG": {
+    "name": "Argentina",
+    "population_1936": 12400000,
+    "source": "League of Nations Statistical Yearbook 1936/37",
+    "date": "1936 estimate"
+  },
+  "MEX": {
+    "name": "Mexico",
+    "population_1936": 18500000,
+    "source": "League of Nations Statistical Yearbook 1936/37",
+    "date": "1936 estimate"
+  },
+  "ROM": {
+    "name": "Romania",
+    "population_1936": 19400000,
+    "source": "League of Nations Statistical Yearbook 1936/37",
+    "date": "1936 estimate"
+  },
+  "YUG": {
+    "name": "Yugoslavia",
+    "population_1936": 15100000,
+    "source": "League of Nations Statistical Yearbook 1936/37",
+    "date": "1936 estimate"
+  },
+  "CZE": {
+    "name": "Czechoslovakia",
+    "population_1936": 15200000,
+    "source": "League of Nations Statistical Yearbook 1936/37",
+    "date": "1936 estimate"
+  },
+  "SPA": {
+    "name": "Spain (SPR)",
+    "population_1936": 24900000,
+    "source": "League of Nations Statistical Yearbook 1936/37",
+    "date": "1936 estimate"
+  },
+  "SPR": {
+    "name": "Spain",
+    "population_1936": 24900000,
+    "source": "League of Nations Statistical Yearbook 1936/37",
+    "date": "1936 estimate"
+  },
+  "TUR": {
+    "name": "Turkey",
+    "population_1936": 16500000,
+    "source": "League of Nations Statistical Yearbook 1936/37",
+    "date": "1936 estimate"
+  },
+  "MAN": {
+    "name": "Manchukuo",
+    "population_1936": 36000000,
+    "source": "Historical estimates",
+    "date": "1936 estimate"
+  },
+  "SWE": {
+    "name": "Sweden",
+    "population_1936": 6250000,
+    "source": "League of Nations Statistical Yearbook 1936/37",
+    "date": "1936 estimate"
+  },
+  "BEL": {
+    "name": "Belgium",
+    "population_1936": 8300000,
+    "source": "League of Nations Statistical Yearbook 1936/37",
+    "date": "1936 estimate"
+  },
+  "HOL": {
+    "name": "Netherlands",
+    "population_1936": 8500000,
+    "source": "League of Nations Statistical Yearbook 1936/37",
+    "date": "1936 estimate"
+  },
+  "INS": {
+    "name": "Dutch East Indies",
+    "population_1936": 65000000,
+    "source": "League of Nations Statistical Yearbook 1936/37",
+    "date": "1936 estimate"
+  },
+  "TAN": {
+    "name": "Tannu Tuva",
+    "population_1936": 90000,
+    "source": "Historical estimates",
+    "date": "1936 estimate"
+  }
+}

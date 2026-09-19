@@ -1,0 +1,3992 @@
+{
+  "40": {
+    "population": 982125,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "137": {
+    "population": 1134845,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "192": {
+    "population": 1059052,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "193": {
+    "population": 1038709,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "194": {
+    "population": 1088170,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "195": {
+    "population": 908978,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "196": {
+    "population": 1173353,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "197": {
+    "population": 1122560,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "198": {
+    "population": 1049446,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "199": {
+    "population": 1116848,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "200": {
+    "population": 1117872,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "201": {
+    "population": 1065073,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "202": {
+    "population": 919469,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "203": {
+    "population": 994722,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "204": {
+    "population": 974816,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "205": {
+    "population": 946219,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "206": {
+    "population": 1010006,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "207": {
+    "population": 1167816,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "208": {
+    "population": 924882,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "209": {
+    "population": 979152,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "210": {
+    "population": 1182842,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "213": {
+    "population": 926450,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "214": {
+    "population": 1119090,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "215": {
+    "population": 1200538,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "216": {
+    "population": 1158803,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "217": {
+    "population": 914377,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "218": {
+    "population": 964286,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "219": {
+    "population": 3547780,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "220": {
+    "population": 1124728,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "221": {
+    "population": 893036,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "222": {
+    "population": 1136321,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "223": {
+    "population": 1094684,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "224": {
+    "population": 1099687,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "225": {
+    "population": 1194363,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "226": {
+    "population": 1030731,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "227": {
+    "population": 967863,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "228": {
+    "population": 1106518,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "229": {
+    "population": 1061210,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "230": {
+    "population": 1118148,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "231": {
+    "population": 1176896,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "232": {
+    "population": 1017073,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "233": {
+    "population": 1032333,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "234": {
+    "population": 1190993,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "235": {
+    "population": 932907,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "236": {
+    "population": 1127194,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "237": {
+    "population": 1192526,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "238": {
+    "population": 907494,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "239": {
+    "population": 970708,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "240": {
+    "population": 936798,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "241": {
+    "population": 937889,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "242": {
+    "population": 1121310,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "243": {
+    "population": 925771,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "244": {
+    "population": 894401,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "245": {
+    "population": 1139643,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "246": {
+    "population": 1007003,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "247": {
+    "population": 1032532,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "248": {
+    "population": 1177874,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "249": {
+    "population": 1158983,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "250": {
+    "population": 1042587,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "251": {
+    "population": 1186499,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "252": {
+    "population": 1175027,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "253": {
+    "population": 1023389,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "254": {
+    "population": 1114304,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "255": {
+    "population": 1149065,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "256": {
+    "population": 1005854,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "257": {
+    "population": 930442,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "258": {
+    "population": 1120183,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "259": {
+    "population": 983655,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "260": {
+    "population": 1057881,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "262": {
+    "population": 1049716,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "263": {
+    "population": 915673,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "264": {
+    "population": 1112071,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "265": {
+    "population": 1006268,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "351": {
+    "population": 1161951,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "397": {
+    "population": 1199377,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "398": {
+    "population": 1009455,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "399": {
+    "population": 1184885,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "400": {
+    "population": 1037677,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "401": {
+    "population": 1124479,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "402": {
+    "population": 1109682,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "403": {
+    "population": 982738,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "404": {
+    "population": 993497,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "405": {
+    "population": 971590,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "406": {
+    "population": 1170952,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "407": {
+    "population": 976345,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "408": {
+    "population": 1065070,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "409": {
+    "population": 1064830,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "516": {
+    "population": 1151417,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "560": {
+    "population": 1028028,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "561": {
+    "population": 1067890,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "562": {
+    "population": 1065431,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "563": {
+    "population": 961988,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "564": {
+    "population": 948524,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "565": {
+    "population": 1141992,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "566": {
+    "population": 1030487,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "567": {
+    "population": 977643,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "568": {
+    "population": 1002268,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "569": {
+    "population": 1098356,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "570": {
+    "population": 1189482,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "571": {
+    "population": 1070837,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "572": {
+    "population": 940342,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "573": {
+    "population": 894176,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "574": {
+    "population": 993989,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "575": {
+    "population": 1169378,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "576": {
+    "population": 1189681,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "577": {
+    "population": 1200227,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "578": {
+    "population": 1147790,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "579": {
+    "population": 1131658,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "580": {
+    "population": 1129670,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "581": {
+    "population": 1129939,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "582": {
+    "population": 976930,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "583": {
+    "population": 1196480,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "584": {
+    "population": 1005027,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "585": {
+    "population": 1106569,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "586": {
+    "population": 996845,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "587": {
+    "population": 1127027,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "588": {
+    "population": 996243,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "589": {
+    "population": 1168420,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "590": {
+    "population": 1019922,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "637": {
+    "population": 1052790,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "644": {
+    "population": 980786,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "651": {
+    "population": 1087646,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "652": {
+    "population": 1190617,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "653": {
+    "population": 1154008,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "654": {
+    "population": 1079361,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "655": {
+    "population": 1051221,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "657": {
+    "population": 1172428,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "732": {
+    "population": 944345,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "742": {
+    "population": 1147110,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "821": {
+    "population": 1090590,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "822": {
+    "population": 1126000,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "823": {
+    "population": 998490,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "824": {
+    "population": 1047372,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "825": {
+    "population": 918653,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "826": {
+    "population": 1162164,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "827": {
+    "population": 1069867,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "828": {
+    "population": 1189331,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "829": {
+    "population": 1027952,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "830": {
+    "population": 1104299,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "831": {
+    "population": 987396,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "832": {
+    "population": 1107530,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "833": {
+    "population": 939119,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "834": {
+    "population": 1135711,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "874": {
+    "population": 904316,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "875": {
+    "population": 1167671,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "876": {
+    "population": 1012220,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "877": {
+    "population": 930382,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "878": {
+    "population": 1016496,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "879": {
+    "population": 1032327,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "880": {
+    "population": 1085746,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "881": {
+    "population": 1188389,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "882": {
+    "population": 1021973,
+    "owner_group": "SOV",
+    "owner": "SOV"
+  },
+  "38": {
+    "population": 390136,
+    "owner_group": "SWE",
+    "owner": "SWE"
+  },
+  "124": {
+    "population": 434713,
+    "owner_group": "SWE",
+    "owner": "SWE"
+  },
+  "138": {
+    "population": 463812,
+    "owner_group": "SWE",
+    "owner": "SWE"
+  },
+  "139": {
+    "population": 413735,
+    "owner_group": "SWE",
+    "owner": "SWE"
+  },
+  "140": {
+    "population": 395589,
+    "owner_group": "SWE",
+    "owner": "SWE"
+  },
+  "141": {
+    "population": 1228443,
+    "owner_group": "SWE",
+    "owner": "SWE"
+  },
+  "666": {
+    "population": 446374,
+    "owner_group": "SWE",
+    "owner": "SWE"
+  },
+  "913": {
+    "population": 427585,
+    "owner_group": "SWE",
+    "owner": "SWE"
+  },
+  "915": {
+    "population": 413877,
+    "owner_group": "SWE",
+    "owner": "SWE"
+  },
+  "916": {
+    "population": 388403,
+    "owner_group": "SWE",
+    "owner": "SWE"
+  },
+  "917": {
+    "population": 422710,
+    "owner_group": "SWE",
+    "owner": "SWE"
+  },
+  "918": {
+    "population": 374193,
+    "owner_group": "SWE",
+    "owner": "SWE"
+  },
+  "919": {
+    "population": 450430,
+    "owner_group": "SWE",
+    "owner": "SWE"
+  },
+  "10": {
+    "population": 4649287,
+    "owner_group": "POL",
+    "owner": "POL"
+  },
+  "85": {
+    "population": 1821756,
+    "owner_group": "POL",
+    "owner": "POL"
+  },
+  "86": {
+    "population": 1707866,
+    "owner_group": "POL",
+    "owner": "POL"
+  },
+  "87": {
+    "population": 1886520,
+    "owner_group": "POL",
+    "owner": "POL"
+  },
+  "88": {
+    "population": 1680248,
+    "owner_group": "POL",
+    "owner": "POL"
+  },
+  "89": {
+    "population": 1894243,
+    "owner_group": "POL",
+    "owner": "POL"
+  },
+  "90": {
+    "population": 1735787,
+    "owner_group": "POL",
+    "owner": "POL"
+  },
+  "91": {
+    "population": 1810424,
+    "owner_group": "POL",
+    "owner": "POL"
+  },
+  "92": {
+    "population": 1504860,
+    "owner_group": "POL",
+    "owner": "POL"
+  },
+  "93": {
+    "population": 1908165,
+    "owner_group": "POL",
+    "owner": "POL"
+  },
+  "94": {
+    "population": 1766643,
+    "owner_group": "POL",
+    "owner": "POL"
+  },
+  "95": {
+    "population": 1858531,
+    "owner_group": "POL",
+    "owner": "POL"
+  },
+  "96": {
+    "population": 1589466,
+    "owner_group": "POL",
+    "owner": "POL"
+  },
+  "97": {
+    "population": 1634067,
+    "owner_group": "POL",
+    "owner": "POL"
+  },
+  "98": {
+    "population": 1645377,
+    "owner_group": "POL",
+    "owner": "POL"
+  },
+  "762": {
+    "population": 1662140,
+    "owner_group": "POL",
+    "owner": "POL"
+  },
+  "784": {
+    "population": 1453055,
+    "owner_group": "POL",
+    "owner": "POL"
+  },
+  "807": {
+    "population": 1791565,
+    "owner_group": "POL",
+    "owner": "POL"
+  },
+  "7": {
+    "population": 3617162,
+    "owner_group": "HOL",
+    "owner": "HOL"
+  },
+  "35": {
+    "population": 1113322,
+    "owner_group": "HOL",
+    "owner": "HOL"
+  },
+  "36": {
+    "population": 1302428,
+    "owner_group": "HOL",
+    "owner": "HOL"
+  },
+  "309": {
+    "population": 1097987,
+    "owner_group": "HOL",
+    "owner": "HOL"
+  },
+  "695": {
+    "population": 1369101,
+    "owner_group": "HOL",
+    "owner": "HOL"
+  },
+  "120": {
+    "population": 2613096,
+    "owner_group": "ENG_METRO",
+    "owner": "ENG"
+  },
+  "121": {
+    "population": 2458210,
+    "owner_group": "ENG_METRO",
+    "owner": "ENG"
+  },
+  "122": {
+    "population": 2820792,
+    "owner_group": "ENG_METRO",
+    "owner": "ENG"
+  },
+  "123": {
+    "population": 2759969,
+    "owner_group": "ENG_METRO",
+    "owner": "ENG"
+  },
+  "125": {
+    "population": 2399458,
+    "owner_group": "ENG_METRO",
+    "owner": "ENG"
+  },
+  "126": {
+    "population": 8326389,
+    "owner_group": "ENG_METRO",
+    "owner": "ENG"
+  },
+  "127": {
+    "population": 2626871,
+    "owner_group": "ENG_METRO",
+    "owner": "ENG"
+  },
+  "128": {
+    "population": 2256378,
+    "owner_group": "ENG_METRO",
+    "owner": "ENG"
+  },
+  "129": {
+    "population": 2295706,
+    "owner_group": "ENG_METRO",
+    "owner": "ENG"
+  },
+  "130": {
+    "population": 2270537,
+    "owner_group": "ENG_METRO",
+    "owner": "ENG"
+  },
+  "131": {
+    "population": 2672711,
+    "owner_group": "ENG_METRO",
+    "owner": "ENG"
+  },
+  "132": {
+    "population": 2492860,
+    "owner_group": "ENG_METRO",
+    "owner": "ENG"
+  },
+  "133": {
+    "population": 2728963,
+    "owner_group": "ENG_METRO",
+    "owner": "ENG"
+  },
+  "136": {
+    "population": 2727381,
+    "owner_group": "ENG_METRO",
+    "owner": "ENG"
+  },
+  "338": {
+    "population": 2817355,
+    "owner_group": "ENG_METRO",
+    "owner": "ENG"
+  },
+  "931": {
+    "population": 2833324,
+    "owner_group": "ENG_METRO",
+    "owner": "ENG"
+  },
+  "268": {
+    "population": 1353693,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "272": {
+    "population": 1290441,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "286": {
+    "population": 1154801,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "310": {
+    "population": 1304941,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "320": {
+    "population": 1312951,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "458": {
+    "population": 1165295,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "459": {
+    "population": 1379416,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "460": {
+    "population": 1447192,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "461": {
+    "population": 1366098,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "462": {
+    "population": 1310716,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "513": {
+    "population": 1171070,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "514": {
+    "population": 1141359,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "515": {
+    "population": 1444908,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "539": {
+    "population": 1435905,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "543": {
+    "population": 1247600,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "556": {
+    "population": 1224469,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "557": {
+    "population": 1232442,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "635": {
+    "population": 1483873,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "641": {
+    "population": 1522145,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "660": {
+    "population": 1261195,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "665": {
+    "population": 1463453,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "670": {
+    "population": 1216605,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "671": {
+    "population": 1522090,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "694": {
+    "population": 1468469,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "706": {
+    "population": 1241308,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "708": {
+    "population": 1333317,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "713": {
+    "population": 1172310,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "728": {
+    "population": 1203702,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "730": {
+    "population": 1176839,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "741": {
+    "population": 1195995,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "772": {
+    "population": 1208245,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "773": {
+    "population": 1187196,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "774": {
+    "population": 1222619,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "775": {
+    "population": 1312938,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "776": {
+    "population": 1245347,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "777": {
+    "population": 1434930,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "778": {
+    "population": 1152916,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "779": {
+    "population": 1258254,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "780": {
+    "population": 1190840,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "781": {
+    "population": 1530712,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "782": {
+    "population": 1194324,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "786": {
+    "population": 1241807,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "898": {
+    "population": 1402945,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "899": {
+    "population": 1241482,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "1017": {
+    "population": 1247453,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "1066": {
+    "population": 1375777,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "1067": {
+    "population": 1511162,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "1068": {
+    "population": 1439963,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "1069": {
+    "population": 1184517,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "1071": {
+    "population": 1171975,
+    "owner_group": "FRA_COLONY",
+    "owner": "FRA"
+  },
+  "6": {
+    "population": 1840329,
+    "owner_group": "BEL",
+    "owner": "BEL"
+  },
+  "34": {
+    "population": 574336,
+    "owner_group": "BEL",
+    "owner": "BEL"
+  },
+  "295": {
+    "population": 625326,
+    "owner_group": "BEL",
+    "owner": "BEL"
+  },
+  "538": {
+    "population": 515241,
+    "owner_group": "BEL",
+    "owner": "BEL"
+  },
+  "718": {
+    "population": 586553,
+    "owner_group": "BEL",
+    "owner": "BEL"
+  },
+  "768": {
+    "population": 651240,
+    "owner_group": "BEL",
+    "owner": "BEL"
+  },
+  "769": {
+    "population": 577808,
+    "owner_group": "BEL",
+    "owner": "BEL"
+  },
+  "888": {
+    "population": 647197,
+    "owner_group": "BEL",
+    "owner": "BEL"
+  },
+  "889": {
+    "population": 600894,
+    "owner_group": "BEL",
+    "owner": "BEL"
+  },
+  "890": {
+    "population": 553888,
+    "owner_group": "BEL",
+    "owner": "BEL"
+  },
+  "977": {
+    "population": 626685,
+    "owner_group": "BEL",
+    "owner": "BEL"
+  },
+  "980": {
+    "population": 500503,
+    "owner_group": "BEL",
+    "owner": "BEL"
+  },
+  "5": {
+    "population": 3043877,
+    "owner_group": "GER",
+    "owner": "GER"
+  },
+  "42": {
+    "population": 2428058,
+    "owner_group": "GER",
+    "owner": "GER"
+  },
+  "50": {
+    "population": 2894476,
+    "owner_group": "GER",
+    "owner": "GER"
+  },
+  "51": {
+    "population": 2424876,
+    "owner_group": "GER",
+    "owner": "GER"
+  },
+  "52": {
+    "population": 2383406,
+    "owner_group": "GER",
+    "owner": "GER"
+  },
+  "53": {
+    "population": 2414841,
+    "owner_group": "GER",
+    "owner": "GER"
+  },
+  "54": {
+    "population": 2575648,
+    "owner_group": "GER",
+    "owner": "GER"
+  },
+  "55": {
+    "population": 2360798,
+    "owner_group": "GER",
+    "owner": "GER"
+  },
+  "56": {
+    "population": 2600720,
+    "owner_group": "GER",
+    "owner": "GER"
+  },
+  "57": {
+    "population": 2516052,
+    "owner_group": "GER",
+    "owner": "GER"
+  },
+  "58": {
+    "population": 2372601,
+    "owner_group": "GER",
+    "owner": "GER"
+  },
+  "59": {
+    "population": 2562666,
+    "owner_group": "GER",
+    "owner": "GER"
+  },
+  "60": {
+    "population": 2501574,
+    "owner_group": "GER",
+    "owner": "GER"
+  },
+  "61": {
+    "population": 2328246,
+    "owner_group": "GER",
+    "owner": "GER"
+  },
+  "62": {
+    "population": 2434408,
+    "owner_group": "GER",
+    "owner": "GER"
+  },
+  "63": {
+    "population": 2427381,
+    "owner_group": "GER",
+    "owner": "GER"
+  },
+  "64": {
+    "population": 9256452,
+    "owner_group": "GER",
+    "owner": "GER"
+  },
+  "65": {
+    "population": 2381073,
+    "owner_group": "GER",
+    "owner": "GER"
+  },
+  "66": {
+    "population": 2633526,
+    "owner_group": "GER",
+    "owner": "GER"
+  },
+  "67": {
+    "population": 2432719,
+    "owner_group": "GER",
+    "owner": "GER"
+  },
+  "68": {
+    "population": 2586762,
+    "owner_group": "GER",
+    "owner": "GER"
+  },
+  "763": {
+    "population": 2543544,
+    "owner_group": "GER",
+    "owner": "GER"
+  },
+  "909": {
+    "population": 2833043,
+    "owner_group": "GER",
+    "owner": "GER"
+  },
+  "978": {
+    "population": 2413253,
+    "owner_group": "GER",
+    "owner": "GER"
+  },
+  "116": {
+    "population": 874783,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "118": {
+    "population": 774513,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "119": {
+    "population": 825699,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "183": {
+    "population": 863993,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "269": {
+    "population": 693296,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "270": {
+    "population": 803979,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "274": {
+    "population": 856079,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "281": {
+    "population": 723507,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "299": {
+    "population": 743088,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "308": {
+    "population": 775627,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "311": {
+    "population": 678234,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "326": {
+    "population": 790536,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "331": {
+    "population": 794202,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "332": {
+    "population": 684537,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "422": {
+    "population": 882212,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "446": {
+    "population": 763873,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "447": {
+    "population": 838082,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "452": {
+    "population": 761473,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "453": {
+    "population": 835150,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "456": {
+    "population": 812303,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "457": {
+    "population": 761077,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "542": {
+    "population": 850940,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "545": {
+    "population": 711404,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "546": {
+    "population": 757482,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "547": {
+    "population": 788281,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "548": {
+    "population": 817107,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "549": {
+    "population": 776500,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "551": {
+    "population": 741407,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "552": {
+    "population": 861549,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "558": {
+    "population": 770360,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "634": {
+    "population": 834459,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "636": {
+    "population": 693185,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "639": {
+    "population": 657387,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "643": {
+    "population": 882699,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "658": {
+    "population": 768321,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "659": {
+    "population": 810849,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "687": {
+    "population": 712042,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "689": {
+    "population": 813596,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "690": {
+    "population": 814467,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "691": {
+    "population": 717375,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "692": {
+    "population": 729018,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "693": {
+    "population": 829724,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "696": {
+    "population": 693490,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "700": {
+    "population": 688657,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "701": {
+    "population": 699034,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "703": {
+    "population": 669659,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "704": {
+    "population": 712750,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "707": {
+    "population": 784939,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "709": {
+    "population": 699654,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "710": {
+    "population": 824345,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "711": {
+    "population": 820790,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "712": {
+    "population": 701282,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "720": {
+    "population": 725666,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "733": {
+    "population": 848646,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "734": {
+    "population": 689239,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "765": {
+    "population": 823121,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "767": {
+    "population": 685239,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "770": {
+    "population": 806894,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "771": {
+    "population": 843922,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "883": {
+    "population": 815294,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "884": {
+    "population": 799980,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "885": {
+    "population": 729264,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "886": {
+    "population": 878502,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "887": {
+    "population": 861471,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "900": {
+    "population": 762020,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "901": {
+    "population": 737489,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "902": {
+    "population": 697104,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "903": {
+    "population": 677469,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "904": {
+    "population": 785016,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "905": {
+    "population": 750221,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "906": {
+    "population": 758380,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "907": {
+    "population": 717937,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "932": {
+    "population": 687171,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "933": {
+    "population": 826562,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "981": {
+    "population": 799818,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "1014": {
+    "population": 699213,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "1021": {
+    "population": 686091,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "1065": {
+    "population": 739276,
+    "owner_group": "ENG_COLONY",
+    "owner": "ENG"
+  },
+  "46": {
+    "population": 3752498,
+    "owner_group": "ROM",
+    "owner": "ROM"
+  },
+  "76": {
+    "population": 1255336,
+    "owner_group": "ROM",
+    "owner": "ROM"
+  },
+  "77": {
+    "population": 1475397,
+    "owner_group": "ROM",
+    "owner": "ROM"
+  },
+  "78": {
+    "population": 1600800,
+    "owner_group": "ROM",
+    "owner": "ROM"
+  },
+  "79": {
+    "population": 1403166,
+    "owner_group": "ROM",
+    "owner": "ROM"
+  },
+  "80": {
+    "population": 1324084,
+    "owner_group": "ROM",
+    "owner": "ROM"
+  },
+  "81": {
+    "population": 1501663,
+    "owner_group": "ROM",
+    "owner": "ROM"
+  },
+  "82": {
+    "population": 1227250,
+    "owner_group": "ROM",
+    "owner": "ROM"
+  },
+  "83": {
+    "population": 1463130,
+    "owner_group": "ROM",
+    "owner": "ROM"
+  },
+  "84": {
+    "population": 1299924,
+    "owner_group": "ROM",
+    "owner": "ROM"
+  },
+  "766": {
+    "population": 1462987,
+    "owner_group": "ROM",
+    "owner": "ROM"
+  },
+  "971": {
+    "population": 1633765,
+    "owner_group": "ROM",
+    "owner": "ROM"
+  },
+  "9": {
+    "population": 3636830,
+    "owner_group": "CZE",
+    "owner": "CZE"
+  },
+  "69": {
+    "population": 1225098,
+    "owner_group": "CZE",
+    "owner": "CZE"
+  },
+  "70": {
+    "population": 1301381,
+    "owner_group": "CZE",
+    "owner": "CZE"
+  },
+  "71": {
+    "population": 1320607,
+    "owner_group": "CZE",
+    "owner": "CZE"
+  },
+  "72": {
+    "population": 1203844,
+    "owner_group": "CZE",
+    "owner": "CZE"
+  },
+  "73": {
+    "population": 1204410,
+    "owner_group": "CZE",
+    "owner": "CZE"
+  },
+  "74": {
+    "population": 1246819,
+    "owner_group": "CZE",
+    "owner": "CZE"
+  },
+  "75": {
+    "population": 1332719,
+    "owner_group": "CZE",
+    "owner": "CZE"
+  },
+  "664": {
+    "population": 1362926,
+    "owner_group": "CZE",
+    "owner": "CZE"
+  },
+  "972": {
+    "population": 1365366,
+    "owner_group": "CZE",
+    "owner": "CZE"
+  },
+  "1": {
+    "population": 1408373,
+    "owner_group": "FRA_METRO",
+    "owner": "FRA"
+  },
+  "14": {
+    "population": 1503769,
+    "owner_group": "FRA_METRO",
+    "owner": "FRA"
+  },
+  "15": {
+    "population": 1356542,
+    "owner_group": "FRA_METRO",
+    "owner": "FRA"
+  },
+  "16": {
+    "population": 4762627,
+    "owner_group": "FRA_METRO",
+    "owner": "FRA"
+  },
+  "17": {
+    "population": 1348071,
+    "owner_group": "FRA_METRO",
+    "owner": "FRA"
+  },
+  "18": {
+    "population": 1522162,
+    "owner_group": "FRA_METRO",
+    "owner": "FRA"
+  },
+  "19": {
+    "population": 1517416,
+    "owner_group": "FRA_METRO",
+    "owner": "FRA"
+  },
+  "20": {
+    "population": 1726944,
+    "owner_group": "FRA_METRO",
+    "owner": "FRA"
+  },
+  "21": {
+    "population": 1383937,
+    "owner_group": "FRA_METRO",
+    "owner": "FRA"
+  },
+  "22": {
+    "population": 1378293,
+    "owner_group": "FRA_METRO",
+    "owner": "FRA"
+  },
+  "23": {
+    "population": 1737626,
+    "owner_group": "FRA_METRO",
+    "owner": "FRA"
+  },
+  "24": {
+    "population": 1390068,
+    "owner_group": "FRA_METRO",
+    "owner": "FRA"
+  },
+  "25": {
+    "population": 1698923,
+    "owner_group": "FRA_METRO",
+    "owner": "FRA"
+  },
+  "26": {
+    "population": 1561128,
+    "owner_group": "FRA_METRO",
+    "owner": "FRA"
+  },
+  "27": {
+    "population": 1673890,
+    "owner_group": "FRA_METRO",
+    "owner": "FRA"
+  },
+  "28": {
+    "population": 1538150,
+    "owner_group": "FRA_METRO",
+    "owner": "FRA"
+  },
+  "29": {
+    "population": 1782032,
+    "owner_group": "FRA_METRO",
+    "owner": "FRA"
+  },
+  "30": {
+    "population": 1329020,
+    "owner_group": "FRA_METRO",
+    "owner": "FRA"
+  },
+  "31": {
+    "population": 1534042,
+    "owner_group": "FRA_METRO",
+    "owner": "FRA"
+  },
+  "32": {
+    "population": 1375180,
+    "owner_group": "FRA_METRO",
+    "owner": "FRA"
+  },
+  "33": {
+    "population": 1706432,
+    "owner_group": "FRA_METRO",
+    "owner": "FRA"
+  },
+  "735": {
+    "population": 1737797,
+    "owner_group": "FRA_METRO",
+    "owner": "FRA"
+  },
+  "785": {
+    "population": 1598673,
+    "owner_group": "FRA_METRO",
+    "owner": "FRA"
+  },
+  "806": {
+    "population": 1616531,
+    "owner_group": "FRA_METRO",
+    "owner": "FRA"
+  },
+  "851": {
+    "population": 1719430,
+    "owner_group": "FRA_METRO",
+    "owner": "FRA"
+  },
+  "276": {
+    "population": 1288319,
+    "owner_group": "CAN",
+    "owner": "CAN"
+  },
+  "464": {
+    "population": 403691,
+    "owner_group": "CAN",
+    "owner": "CAN"
+  },
+  "465": {
+    "population": 456954,
+    "owner_group": "CAN",
+    "owner": "CAN"
+  },
+  "466": {
+    "population": 456249,
+    "owner_group": "CAN",
+    "owner": "CAN"
+  },
+  "467": {
+    "population": 410103,
+    "owner_group": "CAN",
+    "owner": "CAN"
+  },
+  "468": {
+    "population": 471312,
+    "owner_group": "CAN",
+    "owner": "CAN"
+  },
+  "469": {
+    "population": 520944,
+    "owner_group": "CAN",
+    "owner": "CAN"
+  },
+  "470": {
+    "population": 412640,
+    "owner_group": "CAN",
+    "owner": "CAN"
+  },
+  "471": {
+    "population": 431070,
+    "owner_group": "CAN",
+    "owner": "CAN"
+  },
+  "472": {
+    "population": 517711,
+    "owner_group": "CAN",
+    "owner": "CAN"
+  },
+  "473": {
+    "population": 419105,
+    "owner_group": "CAN",
+    "owner": "CAN"
+  },
+  "682": {
+    "population": 443829,
+    "owner_group": "CAN",
+    "owner": "CAN"
+  },
+  "683": {
+    "population": 411189,
+    "owner_group": "CAN",
+    "owner": "CAN"
+  },
+  "739": {
+    "population": 396774,
+    "owner_group": "CAN",
+    "owner": "CAN"
+  },
+  "740": {
+    "population": 503488,
+    "owner_group": "CAN",
+    "owner": "CAN"
+  },
+  "860": {
+    "population": 473853,
+    "owner_group": "CAN",
+    "owner": "CAN"
+  },
+  "861": {
+    "population": 410119,
+    "owner_group": "CAN",
+    "owner": "CAN"
+  },
+  "862": {
+    "population": 434005,
+    "owner_group": "CAN",
+    "owner": "CAN"
+  },
+  "863": {
+    "population": 417260,
+    "owner_group": "CAN",
+    "owner": "CAN"
+  },
+  "864": {
+    "population": 464190,
+    "owner_group": "CAN",
+    "owner": "CAN"
+  },
+  "865": {
+    "population": 443452,
+    "owner_group": "CAN",
+    "owner": "CAN"
+  },
+  "866": {
+    "population": 401374,
+    "owner_group": "CAN",
+    "owner": "CAN"
+  },
+  "867": {
+    "population": 412369,
+    "owner_group": "CAN",
+    "owner": "CAN"
+  },
+  "261": {
+    "population": 2364138,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "357": {
+    "population": 2533346,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "358": {
+    "population": 1969829,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "359": {
+    "population": 2047442,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "360": {
+    "population": 2005282,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "361": {
+    "population": 7192729,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "362": {
+    "population": 2347657,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "363": {
+    "population": 2351959,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "364": {
+    "population": 2223044,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "365": {
+    "population": 2028044,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "366": {
+    "population": 2602111,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "367": {
+    "population": 2198092,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "368": {
+    "population": 2400956,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "369": {
+    "population": 2118476,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "370": {
+    "population": 2134465,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "371": {
+    "population": 2565445,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "372": {
+    "population": 2567076,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "373": {
+    "population": 2583926,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "374": {
+    "population": 2004276,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "375": {
+    "population": 2626169,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "376": {
+    "population": 2385231,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "377": {
+    "population": 2059361,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "378": {
+    "population": 2393507,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "379": {
+    "population": 2174242,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "380": {
+    "population": 2387561,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "381": {
+    "population": 2469128,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "382": {
+    "population": 2114556,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "383": {
+    "population": 2341266,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "384": {
+    "population": 2127226,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "385": {
+    "population": 2247406,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "386": {
+    "population": 2407197,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "387": {
+    "population": 2176929,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "388": {
+    "population": 2515689,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "389": {
+    "population": 2003757,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "390": {
+    "population": 2293371,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "391": {
+    "population": 2209912,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "392": {
+    "population": 2125851,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "393": {
+    "population": 2085754,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "394": {
+    "population": 2586085,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "395": {
+    "population": 2115290,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "396": {
+    "population": 2410273,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "463": {
+    "population": 2092845,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "629": {
+    "population": 2129273,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "630": {
+    "population": 2326245,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "631": {
+    "population": 2513168,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "632": {
+    "population": 2175525,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "638": {
+    "population": 1960243,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "642": {
+    "population": 2558850,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "650": {
+    "population": 2390219,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "685": {
+    "population": 2048325,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "686": {
+    "population": 2220556,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "727": {
+    "population": 1955215,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "816": {
+    "population": 2596618,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "1072": {
+    "population": 2592044,
+    "owner_group": "USA",
+    "owner": "USA"
+  },
+  "45": {
+    "population": 880245,
+    "owner_group": "YUG",
+    "owner": "YUG"
+  },
+  "102": {
+    "population": 780835,
+    "owner_group": "YUG",
+    "owner": "YUG"
+  },
+  "103": {
+    "population": 886296,
+    "owner_group": "YUG",
+    "owner": "YUG"
+  },
+  "104": {
+    "population": 764517,
+    "owner_group": "YUG",
+    "owner": "YUG"
+  },
+  "105": {
+    "population": 820726,
+    "owner_group": "YUG",
+    "owner": "YUG"
+  },
+  "106": {
+    "population": 855927,
+    "owner_group": "YUG",
+    "owner": "YUG"
+  },
+  "107": {
+    "population": 2467287,
+    "owner_group": "YUG",
+    "owner": "YUG"
+  },
+  "108": {
+    "population": 1017885,
+    "owner_group": "YUG",
+    "owner": "YUG"
+  },
+  "109": {
+    "population": 905076,
+    "owner_group": "YUG",
+    "owner": "YUG"
+  },
+  "764": {
+    "population": 992825,
+    "owner_group": "YUG",
+    "owner": "YUG"
+  },
+  "802": {
+    "population": 941674,
+    "owner_group": "YUG",
+    "owner": "YUG"
+  },
+  "803": {
+    "population": 919697,
+    "owner_group": "YUG",
+    "owner": "YUG"
+  },
+  "804": {
+    "population": 935741,
+    "owner_group": "YUG",
+    "owner": "YUG"
+  },
+  "853": {
+    "population": 985659,
+    "owner_group": "YUG",
+    "owner": "YUG"
+  },
+  "970": {
+    "population": 945610,
+    "owner_group": "YUG",
+    "owner": "YUG"
+  },
+  "2": {
+    "population": 4259876,
+    "owner_group": "ITA",
+    "owner": "ITA"
+  },
+  "39": {
+    "population": 1423662,
+    "owner_group": "ITA",
+    "owner": "ITA"
+  },
+  "114": {
+    "population": 1387115,
+    "owner_group": "ITA",
+    "owner": "ITA"
+  },
+  "115": {
+    "population": 1569132,
+    "owner_group": "ITA",
+    "owner": "ITA"
+  },
+  "117": {
+    "population": 1495148,
+    "owner_group": "ITA",
+    "owner": "ITA"
+  },
+  "156": {
+    "population": 1464959,
+    "owner_group": "ITA",
+    "owner": "ITA"
+  },
+  "157": {
+    "population": 1326678,
+    "owner_group": "ITA",
+    "owner": "ITA"
+  },
+  "158": {
+    "population": 1377697,
+    "owner_group": "ITA",
+    "owner": "ITA"
+  },
+  "159": {
+    "population": 1406121,
+    "owner_group": "ITA",
+    "owner": "ITA"
+  },
+  "160": {
+    "population": 1486469,
+    "owner_group": "ITA",
+    "owner": "ITA"
+  },
+  "161": {
+    "population": 1245532,
+    "owner_group": "ITA",
+    "owner": "ITA"
+  },
+  "162": {
+    "population": 1514929,
+    "owner_group": "ITA",
+    "owner": "ITA"
+  },
+  "163": {
+    "population": 1329913,
+    "owner_group": "ITA",
+    "owner": "ITA"
+  },
+  "164": {
+    "population": 1229497,
+    "owner_group": "ITA",
+    "owner": "ITA"
+  },
+  "273": {
+    "population": 1169455,
+    "owner_group": "ITA",
+    "owner": "ITA"
+  },
+  "448": {
+    "population": 1556477,
+    "owner_group": "ITA",
+    "owner": "ITA"
+  },
+  "449": {
+    "population": 1298929,
+    "owner_group": "ITA",
+    "owner": "ITA"
+  },
+  "450": {
+    "population": 1540582,
+    "owner_group": "ITA",
+    "owner": "ITA"
+  },
+  "451": {
+    "population": 1178116,
+    "owner_group": "ITA",
+    "owner": "ITA"
+  },
+  "550": {
+    "population": 1564634,
+    "owner_group": "ITA",
+    "owner": "ITA"
+  },
+  "559": {
+    "population": 1502782,
+    "owner_group": "ITA",
+    "owner": "ITA"
+  },
+  "661": {
+    "population": 1353836,
+    "owner_group": "ITA",
+    "owner": "ITA"
+  },
+  "662": {
+    "population": 1471949,
+    "owner_group": "ITA",
+    "owner": "ITA"
+  },
+  "663": {
+    "population": 1244750,
+    "owner_group": "ITA",
+    "owner": "ITA"
+  },
+  "736": {
+    "population": 1411519,
+    "owner_group": "ITA",
+    "owner": "ITA"
+  },
+  "844": {
+    "population": 1239842,
+    "owner_group": "ITA",
+    "owner": "ITA"
+  },
+  "849": {
+    "population": 1338553,
+    "owner_group": "ITA",
+    "owner": "ITA"
+  },
+  "850": {
+    "population": 1304063,
+    "owner_group": "ITA",
+    "owner": "ITA"
+  },
+  "852": {
+    "population": 1257785,
+    "owner_group": "ITA",
+    "owner": "ITA"
+  },
+  "49": {
+    "population": 2064001,
+    "owner_group": "TUR",
+    "owner": "TUR"
+  },
+  "339": {
+    "population": 729339,
+    "owner_group": "TUR",
+    "owner": "TUR"
+  },
+  "340": {
+    "population": 692399,
+    "owner_group": "TUR",
+    "owner": "TUR"
+  },
+  "341": {
+    "population": 716678,
+    "owner_group": "TUR",
+    "owner": "TUR"
+  },
+  "342": {
+    "population": 788530,
+    "owner_group": "TUR",
+    "owner": "TUR"
+  },
+  "343": {
+    "population": 848686,
+    "owner_group": "TUR",
+    "owner": "TUR"
+  },
+  "344": {
+    "population": 648606,
+    "owner_group": "TUR",
+    "owner": "TUR"
+  },
+  "345": {
+    "population": 686501,
+    "owner_group": "TUR",
+    "owner": "TUR"
+  },
+  "346": {
+    "population": 737979,
+    "owner_group": "TUR",
+    "owner": "TUR"
+  },
+  "347": {
+    "population": 765225,
+    "owner_group": "TUR",
+    "owner": "TUR"
+  },
+  "348": {
+    "population": 778404,
+    "owner_group": "TUR",
+    "owner": "TUR"
+  },
+  "349": {
+    "population": 647088,
+    "owner_group": "TUR",
+    "owner": "TUR"
+  },
+  "350": {
+    "population": 782941,
+    "owner_group": "TUR",
+    "owner": "TUR"
+  },
+  "352": {
+    "population": 667449,
+    "owner_group": "TUR",
+    "owner": "TUR"
+  },
+  "353": {
+    "population": 641503,
+    "owner_group": "TUR",
+    "owner": "TUR"
+  },
+  "354": {
+    "population": 782899,
+    "owner_group": "TUR",
+    "owner": "TUR"
+  },
+  "355": {
+    "population": 683490,
+    "owner_group": "TUR",
+    "owner": "TUR"
+  },
+  "356": {
+    "population": 644589,
+    "owner_group": "TUR",
+    "owner": "TUR"
+  },
+  "797": {
+    "population": 783343,
+    "owner_group": "TUR",
+    "owner": "TUR"
+  },
+  "798": {
+    "population": 706130,
+    "owner_group": "TUR",
+    "owner": "TUR"
+  },
+  "800": {
+    "population": 704220,
+    "owner_group": "TUR",
+    "owner": "TUR"
+  },
+  "41": {
+    "population": 2557792,
+    "owner_group": "SPR",
+    "owner": "SPR"
+  },
+  "165": {
+    "population": 891700,
+    "owner_group": "SPR",
+    "owner": "SPR"
+  },
+  "166": {
+    "population": 780415,
+    "owner_group": "SPR",
+    "owner": "SPR"
+  },
+  "167": {
+    "population": 887802,
+    "owner_group": "SPR",
+    "owner": "SPR"
+  },
+  "168": {
+    "population": 787140,
+    "owner_group": "SPR",
+    "owner": "SPR"
+  },
+  "169": {
+    "population": 844956,
+    "owner_group": "SPR",
+    "owner": "SPR"
+  },
+  "170": {
+    "population": 919731,
+    "owner_group": "SPR",
+    "owner": "SPR"
+  },
+  "171": {
+    "population": 830559,
+    "owner_group": "SPR",
+    "owner": "SPR"
+  },
+  "172": {
+    "population": 855612,
+    "owner_group": "SPR",
+    "owner": "SPR"
+  },
+  "173": {
+    "population": 979896,
+    "owner_group": "SPR",
+    "owner": "SPR"
+  },
+  "174": {
+    "population": 1007717,
+    "owner_group": "SPR",
+    "owner": "SPR"
+  },
+  "175": {
+    "population": 950283,
+    "owner_group": "SPR",
+    "owner": "SPR"
+  },
+  "176": {
+    "population": 961263,
+    "owner_group": "SPR",
+    "owner": "SPR"
+  },
+  "177": {
+    "population": 956059,
+    "owner_group": "SPR",
+    "owner": "SPR"
+  },
+  "178": {
+    "population": 918914,
+    "owner_group": "SPR",
+    "owner": "SPR"
+  },
+  "290": {
+    "population": 792083,
+    "owner_group": "SPR",
+    "owner": "SPR"
+  },
+  "297": {
+    "population": 979314,
+    "owner_group": "SPR",
+    "owner": "SPR"
+  },
+  "699": {
+    "population": 907392,
+    "owner_group": "SPR",
+    "owner": "SPR"
+  },
+  "783": {
+    "population": 803930,
+    "owner_group": "SPR",
+    "owner": "SPR"
+  },
+  "788": {
+    "population": 830452,
+    "owner_group": "SPR",
+    "owner": "SPR"
+  },
+  "789": {
+    "population": 1023156,
+    "owner_group": "SPR",
+    "owner": "SPR"
+  },
+  "790": {
+    "population": 1025488,
+    "owner_group": "SPR",
+    "owner": "SPR"
+  },
+  "791": {
+    "population": 787235,
+    "owner_group": "SPR",
+    "owner": "SPR"
+  },
+  "792": {
+    "population": 769516,
+    "owner_group": "SPR",
+    "owner": "SPR"
+  },
+  "793": {
+    "population": 853961,
+    "owner_group": "SPR",
+    "owner": "SPR"
+  },
+  "794": {
+    "population": 997634,
+    "owner_group": "SPR",
+    "owner": "SPR"
+  },
+  "328": {
+    "population": 11381691,
+    "owner_group": "MAN",
+    "owner": "MAN"
+  },
+  "610": {
+    "population": 4094400,
+    "owner_group": "MAN",
+    "owner": "MAN"
+  },
+  "714": {
+    "population": 3625107,
+    "owner_group": "MAN",
+    "owner": "MAN"
+  },
+  "715": {
+    "population": 4480120,
+    "owner_group": "MAN",
+    "owner": "MAN"
+  },
+  "716": {
+    "population": 3866503,
+    "owner_group": "MAN",
+    "owner": "MAN"
+  },
+  "717": {
+    "population": 4344445,
+    "owner_group": "MAN",
+    "owner": "MAN"
+  },
+  "761": {
+    "population": 4207734,
+    "owner_group": "MAN",
+    "owner": "MAN"
+  },
+  "282": {
+    "population": 6990749,
+    "owner_group": "JAP",
+    "owner": "JAP"
+  },
+  "524": {
+    "population": 1954307,
+    "owner_group": "JAP",
+    "owner": "JAP"
+  },
+  "525": {
+    "population": 2260378,
+    "owner_group": "JAP",
+    "owner": "JAP"
+  },
+  "526": {
+    "population": 2088798,
+    "owner_group": "JAP",
+    "owner": "JAP"
+  },
+  "527": {
+    "population": 2381749,
+    "owner_group": "JAP",
+    "owner": "JAP"
+  },
+  "528": {
+    "population": 1798309,
+    "owner_group": "JAP",
+    "owner": "JAP"
+  },
+  "529": {
+    "population": 2375139,
+    "owner_group": "JAP",
+    "owner": "JAP"
+  },
+  "530": {
+    "population": 2289497,
+    "owner_group": "JAP",
+    "owner": "JAP"
+  },
+  "531": {
+    "population": 2228480,
+    "owner_group": "JAP",
+    "owner": "JAP"
+  },
+  "532": {
+    "population": 1789725,
+    "owner_group": "JAP",
+    "owner": "JAP"
+  },
+  "533": {
+    "population": 2298434,
+    "owner_group": "JAP",
+    "owner": "JAP"
+  },
+  "534": {
+    "population": 2002423,
+    "owner_group": "JAP",
+    "owner": "JAP"
+  },
+  "535": {
+    "population": 2267401,
+    "owner_group": "JAP",
+    "owner": "JAP"
+  },
+  "536": {
+    "population": 1922386,
+    "owner_group": "JAP",
+    "owner": "JAP"
+  },
+  "537": {
+    "population": 2143408,
+    "owner_group": "JAP",
+    "owner": "JAP"
+  },
+  "555": {
+    "population": 2185200,
+    "owner_group": "JAP",
+    "owner": "JAP"
+  },
+  "609": {
+    "population": 2182292,
+    "owner_group": "JAP",
+    "owner": "JAP"
+  },
+  "633": {
+    "population": 2170711,
+    "owner_group": "JAP",
+    "owner": "JAP"
+  },
+  "645": {
+    "population": 2285002,
+    "owner_group": "JAP",
+    "owner": "JAP"
+  },
+  "646": {
+    "population": 2304155,
+    "owner_group": "JAP",
+    "owner": "JAP"
+  },
+  "647": {
+    "population": 2152934,
+    "owner_group": "JAP",
+    "owner": "JAP"
+  },
+  "648": {
+    "population": 2353181,
+    "owner_group": "JAP",
+    "owner": "JAP"
+  },
+  "684": {
+    "population": 1888928,
+    "owner_group": "JAP",
+    "owner": "JAP"
+  },
+  "745": {
+    "population": 1940634,
+    "owner_group": "JAP",
+    "owner": "JAP"
+  },
+  "1018": {
+    "population": 1791986,
+    "owner_group": "JAP",
+    "owner": "JAP"
+  },
+  "1019": {
+    "population": 2286965,
+    "owner_group": "JAP",
+    "owner": "JAP"
+  },
+  "1020": {
+    "population": 2153231,
+    "owner_group": "JAP",
+    "owner": "JAP"
+  },
+  "1028": {
+    "population": 1801069,
+    "owner_group": "JAP",
+    "owner": "JAP"
+  },
+  "1029": {
+    "population": 2206602,
+    "owner_group": "JAP",
+    "owner": "JAP"
+  },
+  "1030": {
+    "population": 2116029,
+    "owner_group": "JAP",
+    "owner": "JAP"
+  },
+  "1031": {
+    "population": 1979898,
+    "owner_group": "JAP",
+    "owner": "JAP"
+  },
+  "595": {
+    "population": 12901180,
+    "owner_group": "CHI",
+    "owner": "CHI"
+  },
+  "596": {
+    "population": 13438452,
+    "owner_group": "CHI",
+    "owner": "CHI"
+  },
+  "597": {
+    "population": 13344086,
+    "owner_group": "CHI",
+    "owner": "CHI"
+  },
+  "598": {
+    "population": 13036437,
+    "owner_group": "CHI",
+    "owner": "CHI"
+  },
+  "600": {
+    "population": 12347750,
+    "owner_group": "CHI",
+    "owner": "CHI"
+  },
+  "602": {
+    "population": 11702056,
+    "owner_group": "CHI",
+    "owner": "CHI"
+  },
+  "603": {
+    "population": 15119680,
+    "owner_group": "CHI",
+    "owner": "CHI"
+  },
+  "605": {
+    "population": 13054528,
+    "owner_group": "CHI",
+    "owner": "CHI"
+  },
+  "606": {
+    "population": 12913432,
+    "owner_group": "CHI",
+    "owner": "CHI"
+  },
+  "607": {
+    "population": 14110766,
+    "owner_group": "CHI",
+    "owner": "CHI"
+  },
+  "608": {
+    "population": 13869841,
+    "owner_group": "CHI",
+    "owner": "CHI"
+  },
+  "613": {
+    "population": 12608181,
+    "owner_group": "CHI",
+    "owner": "CHI"
+  },
+  "614": {
+    "population": 14388900,
+    "owner_group": "CHI",
+    "owner": "CHI"
+  },
+  "620": {
+    "population": 14821491,
+    "owner_group": "CHI",
+    "owner": "CHI"
+  },
+  "743": {
+    "population": 12178257,
+    "owner_group": "CHI",
+    "owner": "CHI"
+  },
+  "744": {
+    "population": 12999622,
+    "owner_group": "CHI",
+    "owner": "CHI"
+  },
+  "748": {
+    "population": 11277654,
+    "owner_group": "CHI",
+    "owner": "CHI"
+  },
+  "749": {
+    "population": 11973482,
+    "owner_group": "CHI",
+    "owner": "CHI"
+  },
+  "750": {
+    "population": 13260421,
+    "owner_group": "CHI",
+    "owner": "CHI"
+  },
+  "751": {
+    "population": 14291943,
+    "owner_group": "CHI",
+    "owner": "CHI"
+  },
+  "752": {
+    "population": 12809455,
+    "owner_group": "CHI",
+    "owner": "CHI"
+  },
+  "1034": {
+    "population": 13876126,
+    "owner_group": "CHI",
+    "owner": "CHI"
+  },
+  "1035": {
+    "population": 42668103,
+    "owner_group": "CHI",
+    "owner": "CHI"
+  },
+  "1036": {
+    "population": 13693384,
+    "owner_group": "CHI",
+    "owner": "CHI"
+  },
+  "1037": {
+    "population": 12485389,
+    "owner_group": "CHI",
+    "owner": "CHI"
+  },
+  "1038": {
+    "population": 14545584,
+    "owner_group": "CHI",
+    "owner": "CHI"
+  },
+  "1039": {
+    "population": 13207582,
+    "owner_group": "CHI",
+    "owner": "CHI"
+  },
+  "1041": {
+    "population": 13076218,
+    "owner_group": "CHI",
+    "owner": "CHI"
+  },
+  "423": {
+    "population": 9077860,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "424": {
+    "population": 8542367,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "425": {
+    "population": 10208924,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "426": {
+    "population": 10176845,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "427": {
+    "population": 10853930,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "428": {
+    "population": 9077593,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "429": {
+    "population": 8253194,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "430": {
+    "population": 9206359,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "431": {
+    "population": 10311642,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "432": {
+    "population": 9785035,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "433": {
+    "population": 10571831,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "434": {
+    "population": 8346194,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "435": {
+    "population": 9862204,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "436": {
+    "population": 10826396,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "437": {
+    "population": 9961140,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "438": {
+    "population": 9450286,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "439": {
+    "population": 31068374,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "440": {
+    "population": 10473722,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "441": {
+    "population": 9111344,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "442": {
+    "population": 9942166,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "443": {
+    "population": 10064267,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "444": {
+    "population": 9536043,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "445": {
+    "population": 9693701,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "787": {
+    "population": 10484798,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "982": {
+    "population": 9959721,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "983": {
+    "population": 8346559,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "984": {
+    "population": 9094893,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "985": {
+    "population": 9625865,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "986": {
+    "population": 9868445,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "987": {
+    "population": 8280757,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "988": {
+    "population": 9589958,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "989": {
+    "population": 9003887,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "990": {
+    "population": 10118267,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "991": {
+    "population": 9465188,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "992": {
+    "population": 11011943,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "1012": {
+    "population": 8748302,
+    "owner_group": "RAJ",
+    "owner": "RAJ"
+  },
+  "334": {
+    "population": 2686894,
+    "owner_group": "INS",
+    "owner": "INS"
+  },
+  "335": {
+    "population": 2516160,
+    "owner_group": "INS",
+    "owner": "INS"
+  },
+  "667": {
+    "population": 2621326,
+    "owner_group": "INS",
+    "owner": "INS"
+  },
+  "668": {
+    "population": 2431164,
+    "owner_group": "INS",
+    "owner": "INS"
+  },
+  "669": {
+    "population": 2612767,
+    "owner_group": "INS",
+    "owner": "INS"
+  },
+  "672": {
+    "population": 2915126,
+    "owner_group": "INS",
+    "owner": "INS"
+  },
+  "673": {
+    "population": 2866009,
+    "owner_group": "INS",
+    "owner": "INS"
+  },
+  "738": {
+    "population": 2626245,
+    "owner_group": "INS",
+    "owner": "INS"
+  },
+  "1022": {
+    "population": 3098504,
+    "owner_group": "INS",
+    "owner": "INS"
+  },
+  "1047": {
+    "population": 3049824,
+    "owner_group": "INS",
+    "owner": "INS"
+  },
+  "1048": {
+    "population": 2418214,
+    "owner_group": "INS",
+    "owner": "INS"
+  },
+  "1049": {
+    "population": 2507100,
+    "owner_group": "INS",
+    "owner": "INS"
+  },
+  "1050": {
+    "population": 2958318,
+    "owner_group": "INS",
+    "owner": "INS"
+  },
+  "1051": {
+    "population": 2513192,
+    "owner_group": "INS",
+    "owner": "INS"
+  },
+  "1052": {
+    "population": 2603713,
+    "owner_group": "INS",
+    "owner": "INS"
+  },
+  "1053": {
+    "population": 3242785,
+    "owner_group": "INS",
+    "owner": "INS"
+  },
+  "1054": {
+    "population": 2597808,
+    "owner_group": "INS",
+    "owner": "INS"
+  },
+  "1055": {
+    "population": 3142548,
+    "owner_group": "INS",
+    "owner": "INS"
+  },
+  "1056": {
+    "population": 2790360,
+    "owner_group": "INS",
+    "owner": "INS"
+  },
+  "1057": {
+    "population": 3235648,
+    "owner_group": "INS",
+    "owner": "INS"
+  },
+  "1058": {
+    "population": 9566295,
+    "owner_group": "INS",
+    "owner": "INS"
+  },
+  "285": {
+    "population": 841039,
+    "owner_group": "AST",
+    "owner": "AST"
+  },
+  "517": {
+    "population": 275451,
+    "owner_group": "AST",
+    "owner": "AST"
+  },
+  "518": {
+    "population": 355657,
+    "owner_group": "AST",
+    "owner": "AST"
+  },
+  "519": {
+    "population": 280782,
+    "owner_group": "AST",
+    "owner": "AST"
+  },
+  "520": {
+    "population": 311106,
+    "owner_group": "AST",
+    "owner": "AST"
+  },
+  "521": {
+    "population": 316446,
+    "owner_group": "AST",
+    "owner": "AST"
+  },
+  "522": {
+    "population": 305508,
+    "owner_group": "AST",
+    "owner": "AST"
+  },
+  "523": {
+    "population": 349191,
+    "owner_group": "AST",
+    "owner": "AST"
+  },
+  "674": {
+    "population": 344835,
+    "owner_group": "AST",
+    "owner": "AST"
+  },
+  "725": {
+    "population": 365147,
+    "owner_group": "AST",
+    "owner": "AST"
+  },
+  "737": {
+    "population": 337782,
+    "owner_group": "AST",
+    "owner": "AST"
+  },
+  "870": {
+    "population": 279281,
+    "owner_group": "AST",
+    "owner": "AST"
+  },
+  "871": {
+    "population": 277636,
+    "owner_group": "AST",
+    "owner": "AST"
+  },
+  "872": {
+    "population": 302144,
+    "owner_group": "AST",
+    "owner": "AST"
+  },
+  "873": {
+    "population": 291735,
+    "owner_group": "AST",
+    "owner": "AST"
+  },
+  "979": {
+    "population": 321374,
+    "owner_group": "AST",
+    "owner": "AST"
+  },
+  "1070": {
+    "population": 284068,
+    "owner_group": "AST",
+    "owner": "AST"
+  },
+  "1073": {
+    "population": 282229,
+    "owner_group": "AST",
+    "owner": "AST"
+  },
+  "1074": {
+    "population": 297246,
+    "owner_group": "AST",
+    "owner": "AST"
+  },
+  "1075": {
+    "population": 351343,
+    "owner_group": "AST",
+    "owner": "AST"
+  },
+  "280": {
+    "population": 1187866,
+    "owner_group": "BRA",
+    "owner": "BRA"
+  },
+  "495": {
+    "population": 1292141,
+    "owner_group": "BRA",
+    "owner": "BRA"
+  },
+  "496": {
+    "population": 1121686,
+    "owner_group": "BRA",
+    "owner": "BRA"
+  },
+  "497": {
+    "population": 1113215,
+    "owner_group": "BRA",
+    "owner": "BRA"
+  },
+  "498": {
+    "population": 1013389,
+    "owner_group": "BRA",
+    "owner": "BRA"
+  },
+  "499": {
+    "population": 1209195,
+    "owner_group": "BRA",
+    "owner": "BRA"
+  },
+  "500": {
+    "population": 3581515,
+    "owner_group": "BRA",
+    "owner": "BRA"
+  },
+  "501": {
+    "population": 1011390,
+    "owner_group": "BRA",
+    "owner": "BRA"
+  },
+  "502": {
+    "population": 1174168,
+    "owner_group": "BRA",
+    "owner": "BRA"
+  },
+  "503": {
+    "population": 1262800,
+    "owner_group": "BRA",
+    "owner": "BRA"
+  },
+  "504": {
+    "population": 1185141,
+    "owner_group": "BRA",
+    "owner": "BRA"
+  },
+  "505": {
+    "population": 1306915,
+    "owner_group": "BRA",
+    "owner": "BRA"
+  },
+  "935": {
+    "population": 1242860,
+    "owner_group": "BRA",
+    "owner": "BRA"
+  },
+  "936": {
+    "population": 1239020,
+    "owner_group": "BRA",
+    "owner": "BRA"
+  },
+  "937": {
+    "population": 1240773,
+    "owner_group": "BRA",
+    "owner": "BRA"
+  },
+  "938": {
+    "population": 1044787,
+    "owner_group": "BRA",
+    "owner": "BRA"
+  },
+  "939": {
+    "population": 1160996,
+    "owner_group": "BRA",
+    "owner": "BRA"
+  },
+  "940": {
+    "population": 1154519,
+    "owner_group": "BRA",
+    "owner": "BRA"
+  },
+  "941": {
+    "population": 1031512,
+    "owner_group": "BRA",
+    "owner": "BRA"
+  },
+  "942": {
+    "population": 1203857,
+    "owner_group": "BRA",
+    "owner": "BRA"
+  },
+  "943": {
+    "population": 1317620,
+    "owner_group": "BRA",
+    "owner": "BRA"
+  },
+  "944": {
+    "population": 1247613,
+    "owner_group": "BRA",
+    "owner": "BRA"
+  },
+  "961": {
+    "population": 1208903,
+    "owner_group": "BRA",
+    "owner": "BRA"
+  },
+  "962": {
+    "population": 1307295,
+    "owner_group": "BRA",
+    "owner": "BRA"
+  },
+  "963": {
+    "population": 1053227,
+    "owner_group": "BRA",
+    "owner": "BRA"
+  },
+  "964": {
+    "population": 1305121,
+    "owner_group": "BRA",
+    "owner": "BRA"
+  },
+  "965": {
+    "population": 976926,
+    "owner_group": "BRA",
+    "owner": "BRA"
+  },
+  "966": {
+    "population": 1162001,
+    "owner_group": "BRA",
+    "owner": "BRA"
+  },
+  "967": {
+    "population": 1067038,
+    "owner_group": "BRA",
+    "owner": "BRA"
+  },
+  "968": {
+    "population": 1146568,
+    "owner_group": "BRA",
+    "owner": "BRA"
+  },
+  "969": {
+    "population": 1029943,
+    "owner_group": "BRA",
+    "owner": "BRA"
+  },
+  "278": {
+    "population": 2255372,
+    "owner_group": "ARG",
+    "owner": "ARG"
+  },
+  "508": {
+    "population": 811078,
+    "owner_group": "ARG",
+    "owner": "ARG"
+  },
+  "509": {
+    "population": 857690,
+    "owner_group": "ARG",
+    "owner": "ARG"
+  },
+  "510": {
+    "population": 698504,
+    "owner_group": "ARG",
+    "owner": "ARG"
+  },
+  "511": {
+    "population": 681334,
+    "owner_group": "ARG",
+    "owner": "ARG"
+  },
+  "512": {
+    "population": 891459,
+    "owner_group": "ARG",
+    "owner": "ARG"
+  },
+  "953": {
+    "population": 783667,
+    "owner_group": "ARG",
+    "owner": "ARG"
+  },
+  "954": {
+    "population": 795967,
+    "owner_group": "ARG",
+    "owner": "ARG"
+  },
+  "955": {
+    "population": 759255,
+    "owner_group": "ARG",
+    "owner": "ARG"
+  },
+  "956": {
+    "population": 750790,
+    "owner_group": "ARG",
+    "owner": "ARG"
+  },
+  "957": {
+    "population": 738171,
+    "owner_group": "ARG",
+    "owner": "ARG"
+  },
+  "958": {
+    "population": 676493,
+    "owner_group": "ARG",
+    "owner": "ARG"
+  },
+  "959": {
+    "population": 826053,
+    "owner_group": "ARG",
+    "owner": "ARG"
+  },
+  "960": {
+    "population": 874167,
+    "owner_group": "ARG",
+    "owner": "ARG"
+  },
+  "275": {
+    "population": 3280978,
+    "owner_group": "SAF",
+    "owner": "SAF"
+  },
+  "541": {
+    "population": 1036940,
+    "owner_group": "SAF",
+    "owner": "SAF"
+  },
+  "681": {
+    "population": 1092951,
+    "owner_group": "SAF",
+    "owner": "SAF"
+  },
+  "719": {
+    "population": 1125581,
+    "owner_group": "SAF",
+    "owner": "SAF"
+  },
+  "893": {
+    "population": 1141598,
+    "owner_group": "SAF",
+    "owner": "SAF"
+  },
+  "894": {
+    "population": 1019887,
+    "owner_group": "SAF",
+    "owner": "SAF"
+  },
+  "895": {
+    "population": 1002065,
+    "owner_group": "SAF",
+    "owner": "SAF"
+  },
+  "284": {
+    "population": 582568,
+    "owner_group": "NZL",
+    "owner": "NZL"
+  },
+  "723": {
+    "population": 224701,
+    "owner_group": "NZL",
+    "owner": "NZL"
+  },
+  "726": {
+    "population": 197117,
+    "owner_group": "NZL",
+    "owner": "NZL"
+  },
+  "1079": {
+    "population": 179509,
+    "owner_group": "NZL",
+    "owner": "NZL"
+  },
+  "1080": {
+    "population": 173298,
+    "owner_group": "NZL",
+    "owner": "NZL"
+  },
+  "1081": {
+    "population": 212807,
+    "owner_group": "NZL",
+    "owner": "NZL"
+  },
+  "329": {
+    "population": 90000,
+    "owner_group": "TAN",
+    "owner": "TAN"
+  },
+  "277": {
+    "population": 3779644,
+    "owner_group": "MEX",
+    "owner": "MEX"
+  },
+  "474": {
+    "population": 1159903,
+    "owner_group": "MEX",
+    "owner": "MEX"
+  },
+  "475": {
+    "population": 1187532,
+    "owner_group": "MEX",
+    "owner": "MEX"
+  },
+  "476": {
+    "population": 1095606,
+    "owner_group": "MEX",
+    "owner": "MEX"
+  },
+  "477": {
+    "population": 1321014,
+    "owner_group": "MEX",
+    "owner": "MEX"
+  },
+  "478": {
+    "population": 1148656,
+    "owner_group": "MEX",
+    "owner": "MEX"
+  },
+  "479": {
+    "population": 1348628,
+    "owner_group": "MEX",
+    "owner": "MEX"
+  },
+  "480": {
+    "population": 1101620,
+    "owner_group": "MEX",
+    "owner": "MEX"
+  },
+  "481": {
+    "population": 1176606,
+    "owner_group": "MEX",
+    "owner": "MEX"
+  },
+  "482": {
+    "population": 1345406,
+    "owner_group": "MEX",
+    "owner": "MEX"
+  },
+  "483": {
+    "population": 1340128,
+    "owner_group": "MEX",
+    "owner": "MEX"
+  },
+  "484": {
+    "population": 1305983,
+    "owner_group": "MEX",
+    "owner": "MEX"
+  },
+  "485": {
+    "population": 1189274,
+    "owner_group": "MEX",
+    "owner": "MEX"
+  }
+}

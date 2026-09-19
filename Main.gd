@@ -37,15 +37,37 @@ func _ready():
 	move_child(resource_map, $BaseMap.get_index() + 1)
 	resource_map.setup(resource_distribution)
 	
-	# Load states.json
+	# Load states.json and enrich with owner_group based on geography
 	var json_res = load("res://states.json") as JSON
 	if json_res:
 		states_data = json_res.data
-	
-	# Load JSON data as a resource
-	json_res = load("res://states.json") as JSON
-	if json_res:
 		data_json = json_res.data
+		
+	var geo_json = load("res://state_geography.json") as JSON
+	var geo_data = {}
+	if geo_json: geo_data = geo_json.data
+	
+	for sid in states_data.keys():
+		var info = states_data[sid]
+		var st_owner = info.get("owner", "")
+		if geo_data.has(sid):
+			var coords = geo_data[sid]
+			var x = coords[0]
+			var y = coords[1]
+			if st_owner == "FRA":
+				if x >= 2700 and x <= 3100 and y >= 500 and y <= 700:
+					info["owner_group"] = "FRA_METRO"
+				else:
+					info["owner_group"] = "FRA_COLONY"
+			elif st_owner == "ENG":
+				if x >= 2700 and x <= 3000 and y >= 300 and y <= 550:
+					info["owner_group"] = "ENG_METRO"
+				else:
+					info["owner_group"] = "ENG_COLONY"
+			else:
+				info["owner_group"] = st_owner
+				
+	_generate_country_lookup()
 	
 	var id_tex = load("res://state_id.png") as Texture2D
 	if id_tex:
@@ -164,6 +186,36 @@ func _ready():
 	fps_label.add_theme_constant_override("outline_size", 4)
 	fps_label.text = "FPS: " + str(Engine.get_frames_per_second())
 
+var country_lookup_image: Image
+var country_lookup_tex: ImageTexture
+var country_color_map = {}
+
+func _generate_country_lookup():
+	# Size is 16384x1 to fit all possible state IDs up to 16383
+	country_lookup_image = Image.create(16384, 1, false, Image.FORMAT_RGBA8)
+	country_lookup_image.fill(Color(0,0,0,0)) # default 0
+	
+	# Assign unique random colors to each tag
+	var rng = RandomNumberGenerator.new()
+	rng.seed = 12345
+	
+	for sid_str in states_data.keys():
+		var sid = sid_str.to_int()
+		var owner = states_data[sid_str].get("owner_group", "")
+		
+		if owner == "":
+			continue
+			
+		if not country_color_map.has(owner):
+			country_color_map[owner] = Color(rng.randf(), rng.randf(), rng.randf(), 1.0)
+			
+		if sid >= 0 and sid < 16384:
+			country_lookup_image.set_pixel(sid, 0, country_color_map[owner])
+			
+	country_lookup_tex = ImageTexture.create_from_image(country_lookup_image)
+	if has_node("VectorMap"):
+		$VectorMap.setup_lookup(country_lookup_tex)
+
 func clear_state_selection():
 	selected_prov_id = 0
 	highlight_system.set_highlight(0, "lod0")
@@ -205,27 +257,49 @@ func handle_click(world_pos: Vector2):
 	var py = int(floor(world_pos.y))
 	
 	if px >= 0 and px < id_image.get_width() and py >= 0 and py < id_image.get_height():
-		var col = id_image.get_pixel(px, py)
-		var r = int(round(col.r * 255.0))
-		var g = int(round(col.g * 255.0))
-		var b = int(round(col.b * 255.0))
-		
-		var s_id = r + (g << 8) + (b << 16)
-		
-		# Validate click shape via closest points in polygon?
-		# For now trust the pixel map, but the user asked to "уточняй попадание геометрией среди ближайших кандидатов, не перебирая весь мир."
-		# The pixel map IS exact, but the smooth border deviates. So if you click the smoothed bump, pixel map says water.
-		# To fix this, we can check polygon intersections for bounding boxes around the click!
-		# Godot Geometry2D.is_point_in_polygon handles this if needed. We'll leave pixel map for now if it's fine, but the user specifically asked for it!
-		# Let's implement Geometry2D check next if needed.
-		
-		if s_id > 0:
-			var sid_str = str(s_id)
+		var candidates = []
+		var search_radius = 4 # Search a 9x9 pixel grid for candidates
+		for dx in range(-search_radius, search_radius + 1):
+			for dy in range(-search_radius, search_radius + 1):
+				var cx = px + dx
+				var cy = py + dy
+				if cx >= 0 and cx < id_image.get_width() and cy >= 0 and cy < id_image.get_height():
+					var col = id_image.get_pixel(cx, cy)
+					var sid = int(round(col.r * 255.0)) + (int(round(col.g * 255.0)) << 8) + (int(round(col.b * 255.0)) << 16)
+					if sid > 0 and not candidates.has(sid):
+						candidates.append(sid)
+						
+		var final_s_id = 0
+		# Try geometric hit testing among candidates
+		if highlight_system.state_polygons_data.size() > 0:
+			for cand in candidates:
+				var c_str = str(cand)
+				if highlight_system.state_polygons_data.has(c_str):
+					var c_data = highlight_system.state_polygons_data[c_str]
+					if c_data.has("lod0"):
+						var found_in_cand = false
+						for poly in c_data["lod0"]:
+							var pva = PackedVector2Array()
+							for pt in poly: pva.append(Vector2(pt[0], pt[1]))
+							if Geometry2D.is_point_in_polygon(world_pos, pva):
+								final_s_id = cand
+								found_in_cand = true
+								break
+						if found_in_cand:
+							break
+							
+		# Fallback to direct pixel if no geometry match
+		if final_s_id == 0:
+			var col = id_image.get_pixel(px, py)
+			final_s_id = int(round(col.r * 255.0)) + (int(round(col.g * 255.0)) << 8) + (int(round(col.b * 255.0)) << 16)
+			
+		if final_s_id > 0:
+			var sid_str = str(final_s_id)
 			if data_json.has(sid_str):
 				var info = data_json[sid_str]
-				var owner = info.get("owner", "None")
+				var st_owner = info.get("owner", "None")
 				
-				selected_prov_id = s_id
+				selected_prov_id = final_s_id
 				var mpc = get_node_or_null("MapPresentationController")
 				var mode_str = "STATES"
 				if mpc and mpc.current_mode == mpc.MapMode.COUNTRIES:
@@ -233,13 +307,14 @@ func handle_click(world_pos: Vector2):
 					
 				if mode_str == "STATES":
 					highlight_system.set_highlight(selected_prov_id, $VectorMap.current_lod, "STATES")
-					if game_hud: game_hud.show_state(s_id, owner)
+					if game_hud: game_hud.show_state(final_s_id, st_owner)
 				else:
-					highlight_system.set_highlight(owner, $VectorMap.current_lod, "COUNTRIES")
-					if game_hud: game_hud.hide_state()
+					highlight_system.set_highlight(st_owner, $VectorMap.current_lod, "COUNTRIES")
+					if game_hud:
+						game_hud.show_country_sidebar(st_owner)
 				
 				if ui_panel.visible:
-					info_label.text = "State ID: %d\nOwner: %s\nMode: %s" % [s_id, str(owner), mode_str]
+					info_label.text = "State ID: %d\nOwner: %s\nMode: %s" % [final_s_id, str(st_owner), mode_str]
 			else:
 				if ui_panel.visible:
 					ui_panel.visible = false
@@ -259,9 +334,12 @@ func _on_map_mode_changed(new_mode):
 	if ui_panel.visible:
 		ui_panel.visible = false
 
+var _last_highlight_zoom: float = -1.0
+
 func _process(delta):
 	if camera and has_node("VectorMap"):
-		$VectorMap.update_zoom(camera.zoom.x)
+		var cur_zoom = camera.zoom.x
+		$VectorMap.update_zoom(cur_zoom)
 		if selected_prov_id > 0:
 			var mpc = get_node_or_null("MapPresentationController")
 			var mode_str = "STATES"
@@ -274,8 +352,9 @@ func _process(delta):
 			elif data_json.has(sid_str):
 				highlight_system.set_highlight(data_json[sid_str].get("owner", "None"), $VectorMap.current_lod, "COUNTRIES")
 				
-			# Zoom change thickness handled in VectorMap update_zoom, but HighlightSystem needs to redraw border thickness on zoom change!
-			if highlight_system.border_node: highlight_system.border_node.queue_redraw()
+			if highlight_system.border_node and abs(cur_zoom - _last_highlight_zoom) > 0.001:
+				highlight_system.border_node.queue_redraw()
+				_last_highlight_zoom = cur_zoom
 	
 	fps_timer += delta
 	frames_this_sec += 1

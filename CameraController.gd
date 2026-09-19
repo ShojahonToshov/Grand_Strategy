@@ -108,6 +108,10 @@ func _process(delta):
 		var prev_zoom = zoom
 		zoom = zoom.lerp(target_zoom, 1.0 - exp(-zoom_speed * delta))
 		
+		# Snap to target to prevent infinite micro-updates (fixes endless redraws)
+		if zoom.distance_to(target_zoom) < 0.005:
+			zoom = target_zoom
+		
 		# Keep the point under the cursor stationary
 		var mouse_pos = get_viewport().get_mouse_position()
 		var world_mouse = position + mouse_pos / prev_zoom
@@ -213,28 +217,38 @@ func clamp_position():
 	if overstep_y:
 		current_velocity.y = 0
 
+var cached_panel: Control
+var cached_hud: Node
+var cached_top: Control
+var cached_side: Control
+var cached_modes: Control
+
 func is_mouse_over_ui() -> bool:
 	var mouse_pos = get_viewport().get_mouse_position()
 	
-	var panel = get_node("../CanvasLayer/Panel")
-	if panel and panel.visible:
-		var rect = Rect2(panel.global_position, panel.size)
+	if not cached_panel:
+		cached_panel = get_node_or_null("../CanvasLayer/Panel")
+	if cached_panel and cached_panel.visible:
+		var rect = Rect2(cached_panel.global_position, cached_panel.size)
 		if rect.has_point(mouse_pos):
 			return true
 			
-	var hud = get_node_or_null("../GameHUD")
-	if hud:
-		var top = hud.get_node_or_null("TopBar")
-		if top and top.visible:
-			var rect = Rect2(top.global_position, top.size)
+	if not cached_hud:
+		cached_hud = get_node_or_null("../GameHUD")
+		if cached_hud:
+			cached_top = cached_hud.get_node_or_null("TopBar")
+			cached_side = cached_hud.get_node_or_null("StateInfoPanel")
+			cached_modes = cached_hud.get_node_or_null("MapModesPanel")
+			
+	if cached_hud:
+		if cached_top and cached_top.visible:
+			var rect = Rect2(cached_top.global_position, cached_top.size)
 			if rect.has_point(mouse_pos): return true
-		var side = hud.get_node_or_null("StateInfoPanel")
-		if side and side.visible:
-			var rect = Rect2(side.global_position, side.size)
+		if cached_side and cached_side.visible:
+			var rect = Rect2(cached_side.global_position, cached_side.size)
 			if rect.has_point(mouse_pos): return true
-		var modes = hud.get_node_or_null("MapModesPanel")
-		if modes:
-			for child in modes.get_children():
+		if cached_modes:
+			for child in cached_modes.get_children():
 				if child is Control and child.visible:
 					var r = Rect2(child.global_position, child.size)
 					if r.has_point(mouse_pos): return true

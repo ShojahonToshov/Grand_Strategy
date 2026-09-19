@@ -64,6 +64,25 @@ func _on_theme_button_pressed(idx: int):
 func hide_state():
 	$StateInfoPanel.hide_panel()
 
+func show_country_sidebar(owner_tag: String):
+	var country_name = owner_tag
+	if ui_data.has("countries") and ui_data["countries"].has(owner_tag):
+		country_name = ui_data["countries"][owner_tag]
+		
+	var color = Color(0.4, 0.4, 0.4)
+	if country_colors.has(owner_tag):
+		var rgb = country_colors[owner_tag]
+		color = Color(rgb[0]/255.0, rgb[1]/255.0, rgb[2]/255.0)
+		
+	$StateInfoPanel.update_country_data(owner_tag, country_name, color)
+	$StateInfoPanel.show_panel()
+
+func show_country_modal(tag: String):
+	var country_name = tag
+	if ui_data.has("countries") and ui_data["countries"].has(tag):
+		country_name = ui_data["countries"][tag]
+	$TopBar._show_country_modal(tag, country_name)
+
 func _on_panel_close():
 	# Notify main to clear selection
 	var main = get_parent()
