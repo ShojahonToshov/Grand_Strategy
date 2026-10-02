@@ -1,12 +1,17 @@
 extends Node2D
 
 @export var debug_mode: bool = false
-var font: SystemFont
+var font: Font
 
 func setup():
-	font = SystemFont.new()
-	font.font_names = ["Garamond", "Georgia", "Times New Roman", "serif"]
-	font.generate_mipmaps = true # Better scaling
+	font = load("res://assets/ui/resources/Roboto-Regular.ttf") as FontFile
+	if font:
+		font.multichannel_signed_distance_field = true
+		font.generate_mipmaps = true
+	else:
+		# Fallback just in case
+		font = SystemFont.new()
+		font.multichannel_signed_distance_field = true
 	
 	var json_res = load("res://labels.json") as JSON
 	if json_res:
@@ -20,6 +25,7 @@ func setup():
 			
 			var label = Label.new()
 			label.text = cap.name
+			label.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR # MANDATORY FOR MSDF!
 			label.add_theme_font_override("font", font)
 			label.add_theme_font_size_override("font_size", int(cap.font_size))
 			label.add_theme_color_override("font_color", Color(1.0, 1.0, 0.95, 1.0))

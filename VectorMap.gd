@@ -98,19 +98,26 @@ func _process(_delta):
 
 func _on_internal_chunk_draw(bpos: Vector2, node: Node2D):
 	if not show_state: return
-	var width = state_width * 0.5 # Fixed width based on max zoom!
-	var col_int = Color(0.2, 0.2, 0.2, 0.7)
+	# IDEAL SIZE: 0.85 screen pixels. 
+	# With antialiasing=true, Godot renders this as a perfectly smooth, delicate line.
+	var target_screen_width = 0.85
+	var width = target_screen_width / zoom
+	
+	var col_int = Color(0.15, 0.15, 0.15, 0.45) # Softer, less intrusive opacity
 	var arr = internal_lines[current_lod].get(bpos)
 	if arr and arr.size() > 0:
-		node.draw_multiline(arr, col_int, width, false)
+		node.draw_multiline(arr, col_int, width, true) # true for antialiased
 
 func _on_external_chunk_draw(bpos: Vector2, node: Node2D):
 	if not show_state: return
-	var width = state_width * 0.8 # Slightly thicker for external borders
-	var col_ext = Color(0.0, 0.0, 0.0, 0.85)
+	# IDEAL SIZE: 1.5 screen pixels for country borders. Bold enough to separate, but not "heavy".
+	var target_screen_width = 1.5
+	var width = target_screen_width / zoom
+	
+	var col_ext = Color(0.0, 0.0, 0.0, 0.75) # Deep black but slightly transparent
 	var arr = external_lines[current_lod].get(bpos)
 	if arr and arr.size() > 0:
-		node.draw_multiline(arr, col_ext, width, false)
+		node.draw_multiline(arr, col_ext, width, true) # true for antialiased
 
 func update_zoom(z: float, force: bool = false):
 	if abs(zoom - z) > 0.001 or force:
@@ -130,10 +137,15 @@ func update_zoom(z: float, force: bool = false):
 			elif current_lod == "lod2" and zoom > 0.35:
 				new_lod = "lod1"
 				
-		if current_lod != new_lod:
-			current_lod = new_lod
-			# Only redraw chunks when LOD level changes physically
-			for node in internal_nodes.values():
+		var lod_changed = (current_lod != new_lod)
+		current_lod = new_lod
+		
+		# Redraw to update line width smoothly (only visible chunks for performance)
+		for bpos in internal_nodes.keys():
+			var node = internal_nodes[bpos]
+			if node.visible or lod_changed:
 				node.queue_redraw()
-			for node in external_nodes.values():
+		for bpos in external_nodes.keys():
+			var node = external_nodes[bpos]
+			if node.visible or lod_changed:
 				node.queue_redraw()

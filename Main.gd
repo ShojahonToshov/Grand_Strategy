@@ -25,6 +25,18 @@ func _notification(what):
 			game_session.time_changed.emit()
 
 func _ready():
+	# True AAA Map Rendering: We use the raster map (to keep lakes and perfect geometry)
+	# but apply a Subpixel Anti-Aliasing (Smooth Pixel) shader. 
+	# This mathematically eliminates pixelation without making the map blurry.
+	var detail_mat = ShaderMaterial.new()
+	detail_mat.shader = load("res://SmoothPixel.gdshader")
+	
+	if has_node("BaseMap"):
+		var base_map = $BaseMap as Sprite2D
+		base_map.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+		base_map.material = detail_mat
+		base_map.modulate = Color(1.0, 1.0, 1.0, 1.0) # Restore original colors
+		
 	resource_distribution = load("res://ResourceDistribution.gd").new()
 	add_child(resource_distribution)
 	resource_distribution.generate_distribution()
