@@ -24,6 +24,23 @@ func _ready():
 	$StateInfoPanel.hide()
 	$StateInfoPanel.close_requested.connect(_on_panel_close)
 	$MapModesPanel.mode_button_pressed.connect(_on_theme_button_pressed)
+	
+	# Delay connection until next frame to ensure camera is fully initialized
+	call_deferred("_connect_camera")
+
+func _connect_camera():
+	var main = get_parent()
+	if main:
+		var cam = main.get_node_or_null("Camera2D")
+		if cam:
+			cam.zoom_changed.connect(func(z):
+				$MapModesPanel.set_zoom_value(z.x, cam.min_zoom_limit, cam.max_zoom_limit)
+			)
+			$MapModesPanel.zoom_set.connect(func(v):
+				cam.set_target_zoom_level(v)
+			)
+			# initial sync
+			$MapModesPanel.set_zoom_value(cam.target_zoom.x, cam.min_zoom_limit, cam.max_zoom_limit)
 
 func show_state(state_id: int, owner_tag: String):
 	var s_id_str = str(state_id)
@@ -56,10 +73,10 @@ func _on_theme_button_pressed(idx: int):
 	if mpc:
 		if idx == 0:
 			mpc.set_theme(mpc.MapTheme.POLITICAL)
-			if $MapModesPanel.has_node("LegendPanel"): $MapModesPanel/LegendPanel.hide()
+			if $MapModesPanel.has_method("set_legend_visible"): $MapModesPanel.set_legend_visible(false)
 		elif idx == 1:
 			mpc.set_theme(mpc.MapTheme.RESOURCES)
-			if $MapModesPanel.has_node("LegendPanel"): $MapModesPanel/LegendPanel.show()
+			if $MapModesPanel.has_method("set_legend_visible"): $MapModesPanel.set_legend_visible(true)
 
 func hide_state():
 	$StateInfoPanel.hide_panel()
@@ -88,3 +105,4 @@ func _on_panel_close():
 	var main = get_parent()
 	if main.has_method("clear_state_selection"):
 		main.clear_state_selection()
+	hide_state()

@@ -21,8 +21,8 @@ var country_labels_alpha: float = 0.0
 var capital_stars_alpha: float = 1.0
 var internal_borders_alpha: float = 1.0
 
-@export var states_threshold: float = 0.36
-@export var countries_threshold: float = 0.42
+@export var states_threshold: float = 0.125
+@export var countries_threshold: float = 0.131
 
 var map_width: float = 5632.0 # Default HOI4 map width
 
@@ -55,7 +55,7 @@ func _process(_delta):
 		current_mode = new_mode
 		mode_changed.emit(current_mode)
 		
-	var fade = smoothstep(0.30, 0.48, overview_ratio)
+	var fade = smoothstep(0.122, 0.134, overview_ratio)
 	
 	if current_theme == MapTheme.RESOURCES:
 		country_labels_alpha = 0.0

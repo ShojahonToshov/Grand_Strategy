@@ -1,5 +1,7 @@
 extends Camera2D
 
+signal zoom_changed(new_zoom: Vector2)
+
 # Settings
 var base_speed = 900.0 # Screen pixels per second
 var acceleration_time = 0.15
@@ -19,10 +21,20 @@ var zoom_speed = 10.0
 var mouse_in_window = true
 var app_focused = true
 
-@export var max_physical_pixels_per_map_pixel: float = 2.5
+@export var max_physical_pixels_per_map_pixel: float = 4.0
 
 var min_zoom_limit = 0.1
 var max_zoom_limit = 2.5
+var zoom_margin = 0.5
+
+func set_zoom_margin(val: float):
+	zoom_margin = val
+	calc_limits()
+
+func set_target_zoom_level(val: float):
+	target_zoom = Vector2(val, val)
+	target_zoom = target_zoom.clamp(Vector2(min_zoom_limit, min_zoom_limit), Vector2(max_zoom_limit, max_zoom_limit))
+	zoom_changed.emit(target_zoom)
 
 func _ready():
 	target_zoom = zoom
@@ -37,7 +49,10 @@ func calc_limits():
 	var scale_factor = float(physical_size.x) / float(vsize.x)
 	if scale_factor <= 0.0: scale_factor = 1.0
 	
-	var min_z = max(vsize.x / map_size.x, vsize.y / map_size.y)
+	# Allow zooming out to see exactly zoom_margin of screen height as extra space on all sides
+	var min_z_x = vsize.x / (map_size.x + vsize.y * zoom_margin)
+	var min_z_y = vsize.y / (map_size.y + vsize.y * zoom_margin)
+	var min_z = max(min_z_x, min_z_y)
 	
 	# X physical pixels per map pixel. zoom * scale_factor = max_physical
 	var max_z = max_physical_pixels_per_map_pixel / scale_factor
@@ -52,6 +67,7 @@ func calc_limits():
 	target_zoom.y = target_zoom.x
 	zoom.x = clamp(zoom.x, min_zoom_limit, max_zoom_limit)
 	zoom.y = zoom.x
+	zoom_changed.emit(target_zoom)
 	
 	clamp_position()
 
@@ -101,6 +117,7 @@ func _unhandled_input(event):
 func do_zoom(factor, mouse_pos):
 	target_zoom *= factor
 	target_zoom = target_zoom.clamp(Vector2(min_zoom_limit, min_zoom_limit), Vector2(max_zoom_limit, max_zoom_limit))
+	zoom_changed.emit(target_zoom)
 
 func _process(delta):
 	# Smooth zoom around current mouse position
@@ -183,13 +200,15 @@ func _process(delta):
 
 func clamp_position():
 	var vsize = get_viewport_rect().size / zoom
-	var limits_min = Vector2.ZERO
-	var limits_max = map_size - vsize
+	var margin_val = vsize.y * (zoom_margin / 2.0) # Same physical distance on all sides
+	var margin = Vector2(margin_val, margin_val)
+	var limits_min = -margin
+	var limits_max = map_size + margin - vsize
 	
 	var overstep_x = false
 	var overstep_y = false
 	
-	if map_size.x < vsize.x:
+	if (map_size.x + margin.x * 2) < vsize.x:
 		position.x = (map_size.x - vsize.x) / 2.0
 		overstep_x = true
 	else:
@@ -200,7 +219,7 @@ func clamp_position():
 			position.x = limits_max.x
 			overstep_x = true
 			
-	if map_size.y < vsize.y:
+	if (map_size.y + margin.y * 2) < vsize.y:
 		position.y = (map_size.y - vsize.y) / 2.0
 		overstep_y = true
 	else:

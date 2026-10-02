@@ -161,6 +161,8 @@ func update_data(region_name: String, owner_name: String, owner_color: Color, re
 			res_row.get_node("Icon").texture = load("res://assets/ui/resources/wood.png")
 		elif resource_name == "Железо":
 			res_row.get_node("Icon").texture = load("res://assets/ui/resources/iron.png")
+		elif resource_name == "Нефть":
+			res_row.get_node("Icon").texture = load("res://assets/ui/resources/oil.png")
 		else:
 			res_row.get_node("Icon").texture = null
 		
@@ -196,13 +198,14 @@ func update_buildings(state_id: String, owner_name: String):
 		elif b.type == "IRON_MINE": b_name = "Железный Рудник"
 		elif b.type == "STEEL_MILL": b_name = "Сталелитейный Завод"
 		elif b.type == "UNIVERSITY": b_name = "Университет"
+		elif b.type == "OIL_RIG": b_name = "Нефтяная Вышка"
 		title.text = b_name
 		title.add_theme_color_override("font_color", Color(0.8, 0.8, 0.85))
 		b_content.add_child(title)
 		
 		var status = Label.new()
 		var res_type = session.main_node.resource_distribution.get_resource_for_state(state_id)
-		var is_match = (b.type == "GOLD_MINE" and res_type == 1) or (b.type == "LOGGING_CAMP" and res_type == 2) or (b.type == "IRON_MINE" and res_type == 3) or b.type == "STEEL_MILL" or b.type == "UNIVERSITY"
+		var is_match = (b.type == "GOLD_MINE" and res_type == 1) or (b.type == "LOGGING_CAMP" and res_type == 2) or (b.type == "IRON_MINE" and res_type == 3) or (b.type == "OIL_RIG" and res_type == 4) or b.type == "STEEL_MILL" or b.type == "UNIVERSITY"
 		if is_match:
 			var prod_val = 0.0
 
@@ -211,6 +214,7 @@ func update_buildings(state_id: String, owner_name: String):
 			elif b.type == "IRON_MINE": prod_val = BalanceConfig.IRON_MINE_PROD_IRON
 			elif b.type == "STEEL_MILL": prod_val = BalanceConfig.STEEL_MILL_PROD_STEEL
 			elif b.type == "UNIVERSITY": prod_val = BalanceConfig.UNIVERSITY_PROD_SCIENCE
+			elif b.type == "OIL_RIG": prod_val = BalanceConfig.OIL_RIG_PROD_OIL
 			status.text = "Работает (Добыча: " + str(prod_val) + ")"
 			status.add_theme_color_override("font_color", Color(0.5, 1.0, 0.5))
 		else:
@@ -233,6 +237,7 @@ func update_buildings(state_id: String, owner_name: String):
 		elif order.type == "IRON_MINE": b_name = "Железный Рудник"
 		elif order.type == "STEEL_MILL": b_name = "Сталелитейный Завод"
 		elif order.type == "UNIVERSITY": b_name = "Университет"
+		elif order.type == "OIL_RIG": b_name = "Нефтяная Вышка"
 		title.text = "Строится: " + b_name
 		b_content.add_child(title)
 		
@@ -341,6 +346,7 @@ func _show_build_modal(state_id: String):
 	_create_build_card_modal("LOGGING_CAMP", state_id, res_type == 2, cards_box, session, modal_layer)
 	_create_build_card_modal("GOLD_MINE", state_id, res_type == 1, cards_box, session, modal_layer)
 	_create_build_card_modal("IRON_MINE", state_id, res_type == 3, cards_box, session, modal_layer)
+	_create_build_card_modal("OIL_RIG", state_id, res_type == 4, cards_box, session, modal_layer)
 	_create_build_card_modal("STEEL_MILL", state_id, true, cards_box, session, modal_layer)
 	_create_build_card_modal("UNIVERSITY", state_id, true, cards_box, session, modal_layer)
 
@@ -409,6 +415,13 @@ func _create_build_card_modal(b_type: String, state_id: String, is_match: bool, 
 			days = BalanceConfig.UNIVERSITY_DAYS
 			prod = BalanceConfig.UNIVERSITY_PROD_SCIENCE
 			prod_name = "Наука"
+		"OIL_RIG":
+			b_name = "Нефтяная Вышка"
+			cost_m = BalanceConfig.OIL_RIG_COST_MONEY
+			cost_w = BalanceConfig.OIL_RIG_COST_WOOD
+			days = BalanceConfig.OIL_RIG_DAYS
+			prod = BalanceConfig.OIL_RIG_PROD_OIL
+			prod_name = "Нефть"
 			
 	title.text = b_name
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -453,7 +466,12 @@ func _confirm_build_mismatch_modal(state_id: String, b_type: String, cost_m: int
 	var session = get_tree().current_scene.get_node_or_null("GameSession")
 	var dialog = ConfirmationDialog.new()
 	dialog.title = "Внимание"
-	var rname = "деревьев" if b_type == "LOGGING_CAMP" else "золота"
+	var rname = "нужного ресурса"
+	if b_type == "LOGGING_CAMP": rname = "деревьев"
+	elif b_type == "GOLD_MINE": rname = "золота"
+	elif b_type == "IRON_MINE": rname = "железа"
+	elif b_type == "OIL_RIG": rname = "нефти"
+	
 	dialog.dialog_text = "Здесь нет %s. Построить за %d денег и %d древесины?" % [rname, cost_m, cost_w]
 	dialog.canceled.connect(func(): dialog.queue_free())
 	dialog.confirmed.connect(func():

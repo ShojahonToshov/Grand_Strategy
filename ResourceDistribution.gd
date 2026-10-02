@@ -1,7 +1,7 @@
 class_name ResourceDistribution
 extends Node
 
-enum ResourceType { NONE, GOLD, WOOD, IRON }
+enum ResourceType { NONE, GOLD, WOOD, IRON, OIL }
 
 var state_resources = {}
 
@@ -58,21 +58,28 @@ func generate_distribution(fixed_seed: int = -1):
 		var iron_noise = noise.get_noise_2d(cx + 5000.0, cy - 5000.0) * 0.5 + 0.5
 		var iron_suitability = pow(iron_noise, 2.0) * rng.randf_range(0.8, 1.2)
 		
+		# Oil suitability
+		var oil_noise = noise.get_noise_2d(cx - 5000.0, cy + 5000.0) * 0.5 + 0.5
+		var oil_suitability = pow(oil_noise, 3.0) * rng.randf_range(0.6, 1.4)
+		
 		candidates.append({
 			"id": s_id_str,
 			"wood": wood_suitability,
 			"gold": gold_suitability,
-			"iron": iron_suitability
+			"iron": iron_suitability,
+			"oil": oil_suitability
 		})
 		
 	var total_states = candidates.size()
 	var target_gold = int(total_states * rng.randf_range(0.03, 0.06))
 	var target_iron = int(total_states * rng.randf_range(0.08, 0.12))
+	var target_oil = int(total_states * rng.randf_range(0.04, 0.08))
 	var target_wood = int(total_states * rng.randf_range(0.25, 0.40))
 	
 	state_resources.clear()
 	gold_count = 0
 	var iron_count = 0
+	var oil_count = 0
 	wood_count = 0
 	none_count = 0
 	
@@ -94,7 +101,15 @@ func generate_distribution(fixed_seed: int = -1):
 		state_resources[iron_candidates[i].id] = ResourceType.IRON
 		iron_count += 1
 		
-	# Remove gold/iron from wood candidates
+	# Assign Oil
+	var oil_candidates = candidates.filter(func(c): return state_resources[c.id] == ResourceType.NONE)
+	oil_candidates.sort_custom(func(a, b): return a.oil > b.oil)
+	var actual_oil = min(target_oil, oil_candidates.size())
+	for i in range(actual_oil):
+		state_resources[oil_candidates[i].id] = ResourceType.OIL
+		oil_count += 1
+		
+	# Remove gold/iron/oil from wood candidates
 	var wood_candidates = candidates.filter(func(c): return state_resources[c.id] == ResourceType.NONE)
 	wood_candidates.sort_custom(func(a, b): return a.wood > b.wood)
 	
@@ -103,13 +118,14 @@ func generate_distribution(fixed_seed: int = -1):
 		state_resources[wood_candidates[i].id] = ResourceType.WOOD
 		wood_count += 1
 		
-	none_count = total_states - gold_count - iron_count - wood_count
+	none_count = total_states - gold_count - iron_count - oil_count - wood_count
 	
 	print("--- Resource Distribution Generated ---")
 	print("Seed: ", seed_value)
 	print("Total States: ", total_states)
 	print("GOLD: ", gold_count)
 	print("IRON: ", iron_count)
+	print("OIL: ", oil_count)
 	print("WOOD: ", wood_count)
 	print("NONE: ", none_count)
 	print("---------------------------------------")
@@ -127,6 +143,8 @@ func get_resource_color(res_type: ResourceType) -> Color:
 			return Color("#986744")
 		ResourceType.IRON:
 			return Color("#A0A5A9")
+		ResourceType.OIL:
+			return Color("#1A1A1A")
 		ResourceType.NONE:
 			return Color("#E8E9EA")
 	return Color("#E8E9EA")
@@ -139,6 +157,8 @@ func get_resource_name(res_type: ResourceType) -> String:
 			return "Древесина"
 		ResourceType.IRON:
 			return "Железо"
+		ResourceType.OIL:
+			return "Нефть"
 		ResourceType.NONE:
 			return "Нет ресурса"
 	return "Нет ресурса"

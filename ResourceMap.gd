@@ -64,11 +64,13 @@ func _draw():
 	var gold_color = distribution_node.get_resource_color(1) # GOLD
 	var wood_color = distribution_node.get_resource_color(2) # WOOD
 	var iron_color = distribution_node.get_resource_color(3) # IRON
+	var oil_color = distribution_node.get_resource_color(4) # OIL
 	var none_color = distribution_node.get_resource_color(0) # NONE
 	
 	var gold_arr = PackedColorArray([gold_color])
 	var wood_arr = PackedColorArray([wood_color])
 	var iron_arr = PackedColorArray([iron_color])
+	var oil_arr = PackedColorArray([oil_color])
 	var none_arr = PackedColorArray([none_color])
 	
 	for state_id in state_polys.keys():
@@ -77,6 +79,7 @@ func _draw():
 		if res == 1: c_arr = gold_arr
 		elif res == 2: c_arr = wood_arr
 		elif res == 3: c_arr = iron_arr
+		elif res == 4: c_arr = oil_arr
 		
 		for p in state_polys[state_id]:
 			if Geometry2D.triangulate_polygon(p).size() == 0:

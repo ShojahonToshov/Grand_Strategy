@@ -77,25 +77,27 @@ func tick_hour():
 var tax_rate: float = BalanceConfig.DEFAULT_TAX_RATE
 
 func do_daily_payout():
-	var income_money = 0.0
+	var income_money: float = 0.0
 	
 	# Calculate tax income from population using owner_group classification
 	if main_node and main_node.get("states_data") != null:
 		var st_data = main_node.states_data
-		for k in st_data.keys():
-			var state_info = st_data[k]
-			if state_info.has("owner") and state_info["owner"] == "FRA":
-				var pop = state_info.get("population", 0)
-				var o_group = state_info.get("owner_group", "DEFAULT")
-				var base_tax = BalanceConfig.TAX_BASE_PER_CAPITA.get(o_group, BalanceConfig.TAX_BASE_PER_CAPITA["DEFAULT"])
-				var daily_tax_per_person = (base_tax / 365.0) * (tax_rate / 100.0)
-				income_money += pop * daily_tax_per_person
+		if typeof(st_data) == TYPE_DICTIONARY:
+			for k in st_data.keys():
+				var state_info = st_data[k]
+				if typeof(state_info) == TYPE_DICTIONARY and state_info.get("owner", "") == "FRA":
+					var pop: float = float(state_info.get("population", 0))
+					var o_group: String = state_info.get("owner_group", "DEFAULT")
+					var base_tax: float = BalanceConfig.TAX_BASE_PER_CAPITA.get(o_group, BalanceConfig.TAX_BASE_PER_CAPITA["DEFAULT"])
+					var daily_tax_per_person: float = (base_tax / 365.0) * (tax_rate / 100.0)
+					income_money += pop * daily_tax_per_person
 	
-	var income_wood = 0
-	var income_gold = 0
-	var income_iron = 0
-	var income_steel = 0
-	var income_science = 0
+	var income_wood: float = 0.0
+	var income_gold: float = 0.0
+	var income_iron: float = 0.0
+	var income_steel: float = 0.0
+	var income_science: float = 0.0
+	var income_oil: float = 0.0
 	
 	for state_id in completed_buildings.keys():
 		var st_owner = main_node.get_state_owner(state_id)
@@ -116,6 +118,8 @@ func do_daily_payout():
 			income_iron += BalanceConfig.IRON_MINE_PROD_IRON
 		elif b.type == "UNIVERSITY":
 			income_science += BalanceConfig.UNIVERSITY_PROD_SCIENCE
+		elif b.type == "OIL_RIG" and res_type == ResourceDistribution.ResourceType.OIL:
+			income_oil += BalanceConfig.OIL_RIG_PROD_OIL
 			
 	# Process Steel Mills after everything else to ensure we have iron first
 	for state_id in completed_buildings.keys():
@@ -137,6 +141,7 @@ func do_daily_payout():
 	iron += income_iron
 	steel += income_steel
 	science += income_science
+	oil += income_oil
 	
 	resources_changed.emit()
 
@@ -212,6 +217,8 @@ func can_build(state_id: String, type: String) -> bool:
 		return money >= BalanceConfig.STEEL_MILL_COST_MONEY and wood >= BalanceConfig.STEEL_MILL_COST_WOOD and gold >= BalanceConfig.STEEL_MILL_COST_GOLD
 	elif type == "UNIVERSITY":
 		return money >= BalanceConfig.UNIVERSITY_COST_MONEY and wood >= BalanceConfig.UNIVERSITY_COST_WOOD and gold >= BalanceConfig.UNIVERSITY_COST_GOLD
+	elif type == "OIL_RIG":
+		return money >= BalanceConfig.OIL_RIG_COST_MONEY and wood >= BalanceConfig.OIL_RIG_COST_WOOD and gold >= BalanceConfig.OIL_RIG_COST_GOLD
 	return false
 
 func start_building(state_id: String, type: String):
@@ -247,6 +254,11 @@ func start_building(state_id: String, type: String):
 		cost_w = BalanceConfig.UNIVERSITY_COST_WOOD
 		cost_g = BalanceConfig.UNIVERSITY_COST_GOLD
 		days = BalanceConfig.UNIVERSITY_DAYS
+	elif type == "OIL_RIG":
+		cost_m = BalanceConfig.OIL_RIG_COST_MONEY
+		cost_w = BalanceConfig.OIL_RIG_COST_WOOD
+		cost_g = BalanceConfig.OIL_RIG_COST_GOLD
+		days = BalanceConfig.OIL_RIG_DAYS
 		
 	money -= cost_m
 	wood -= cost_w
