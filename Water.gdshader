@@ -10,6 +10,37 @@ uniform vec4 color_water_main : source_color = vec4(0.1294, 0.2824, 0.3569, 1.0)
 uniform vec4 color_water_var : source_color = vec4(0.1569, 0.3451, 0.4157, 1.0);  // #28586A
 uniform vec4 color_water_coast : source_color = vec4(0.2235, 0.4549, 0.5216, 1.0); // #397485
 
+// Detail settings for Land (Paradox Style)
+uniform float detail_scale = 8.0;
+uniform float detail_intensity = 0.15;
+
+float random(vec2 uv) {
+    return fract(sin(dot(uv, vec2(12.9898, 78.233))) * 43758.5453123);
+}
+
+float noise(vec2 uv) {
+    vec2 i = floor(uv);
+    vec2 f = fract(uv);
+    vec2 u = f * f * (3.0 - 2.0 * f);
+    float a = random(i);
+    float b = random(i + vec2(1.0, 0.0));
+    float c = random(i + vec2(0.0, 1.0));
+    float d = random(i + vec2(1.0, 1.0));
+    return mix(mix(a, b, u.x), mix(c, d, u.x), u.y);
+}
+
+float fbm(vec2 uv) {
+    float value = 0.0;
+    float amplitude = 0.5;
+    float frequency = 1.0;
+    for (int i = 0; i < 4; i++) {
+        value += amplitude * noise(uv * frequency);
+        frequency *= 2.0;
+        amplitude *= 0.5;
+    }
+    return value;
+}
+
 void fragment() {
     vec4 base_color = texture(TEXTURE, UV);
     vec4 mask = texture(water_mask, UV);
@@ -49,6 +80,16 @@ void fragment() {
         
         COLOR = mix(base_color, water_color, is_water);
     } else {
-        COLOR = base_color;
+        // Land Rendering: Apply Paradox-style parchment map detail
+        vec2 screen_detail = SCREEN_UV * detail_scale;
+        float paper = fbm(screen_detail);
+        
+        // Blend map color with parchment texture
+        float blend = 1.0 + (paper - 0.5) * detail_intensity * 2.0;
+        
+        // Optional: darken edges near coast slightly to give embossed feeling
+        // (If mask.r is inverted or distance outside water, but we don't know mask generation here.
+        // So just apply the paper blend).
+        COLOR = vec4(base_color.rgb * blend, base_color.a);
     }
 }

@@ -119,7 +119,12 @@ func _on_external_chunk_draw(bpos: Vector2, node: Node2D):
 	if arr and arr.size() > 0:
 		node.draw_multiline(arr, col_ext, width, true) # true for antialiased
 
+var _last_drawn_zoom = -1.0
+
 func update_zoom(z: float, force: bool = false):
+	var cam = get_viewport().get_camera_2d()
+	var target_z = cam.target_zoom.x if cam and "target_zoom" in cam else z
+	
 	if abs(zoom - z) > 0.001 or force:
 		zoom = z
 		
@@ -140,12 +145,24 @@ func update_zoom(z: float, force: bool = false):
 		var lod_changed = (current_lod != new_lod)
 		current_lod = new_lod
 		
+		var settled = abs(zoom - target_z) < 0.005
+		var pct_change = 0.0
+		if _last_drawn_zoom > 0.0:
+			pct_change = abs(_last_drawn_zoom - zoom) / _last_drawn_zoom
+			
 		# Redraw to update line width smoothly (only visible chunks for performance)
-		for bpos in internal_nodes.keys():
-			var node = internal_nodes[bpos]
-			if node.visible or lod_changed:
-				node.queue_redraw()
-		for bpos in external_nodes.keys():
-			var node = external_nodes[bpos]
-			if node.visible or lod_changed:
-				node.queue_redraw()
+		# OPTIMIZATION: Only redraw if settled, forced, LOD changed, or changed by more than 15% 
+		if force or lod_changed or settled or pct_change > 0.15:
+			if settled:
+				_last_drawn_zoom = target_z
+			else:
+				_last_drawn_zoom = zoom
+				
+			for bpos in internal_nodes.keys():
+				var node = internal_nodes[bpos]
+				if node.visible or lod_changed:
+					node.queue_redraw()
+			for bpos in external_nodes.keys():
+				var node = external_nodes[bpos]
+				if node.visible or lod_changed:
+					node.queue_redraw()

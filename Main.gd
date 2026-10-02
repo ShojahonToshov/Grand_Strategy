@@ -364,9 +364,15 @@ func _process(delta):
 			elif data_json.has(sid_str):
 				highlight_system.set_highlight(data_json[sid_str].get("owner", "None"), $VectorMap.current_lod, "COUNTRIES")
 				
-			if highlight_system.border_node and abs(cur_zoom - _last_highlight_zoom) > 0.001:
-				highlight_system.border_node.queue_redraw()
-				_last_highlight_zoom = cur_zoom
+			if highlight_system.border_node:
+				var settled = abs(cur_zoom - camera.target_zoom.x) < 0.005
+				var pct_change = 0.0
+				if _last_highlight_zoom > 0.0:
+					pct_change = abs(_last_highlight_zoom - cur_zoom) / _last_highlight_zoom
+					
+				if settled or pct_change > 0.15:
+					_last_highlight_zoom = camera.target_zoom.x if settled else cur_zoom
+					highlight_system.border_node.queue_redraw()
 	
 	fps_timer += delta
 	frames_this_sec += 1
