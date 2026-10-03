@@ -4,10 +4,13 @@
 
 [node name="StateInfoPanel" type="PanelContainer"]
 custom_minimum_size = Vector2(320, 0)
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
 offset_left = 24.0
 offset_top = 80.0
 offset_right = 344.0
-offset_bottom = 300.0
+offset_bottom = -24.0
 script = ExtResource("1_stateinfo")
 
 [node name="Margin" type="MarginContainer" parent="."]
