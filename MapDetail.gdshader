@@ -43,11 +43,11 @@ void fragment() {
     // 1. Read the base map color
     vec4 base_color = texture(TEXTURE, UV);
     
-    // 2. Generate detail based on SCREEN_UV so it never pixelates
-    // We adjust aspect ratio to avoid stretching the paper texture
-    vec2 screen_detail = SCREEN_UV * detail_scale;
+    // 2. Generate detail based on map UV so it sticks to the map
+    // We adjust by map dimensions so it scales correctly
+    vec2 map_detail = UV * vec2(5632.0 / 256.0, 2048.0 / 256.0) * detail_scale * 0.5;
     
-    float paper = fbm(screen_detail);
+    float paper = fbm(map_detail);
     
     // 3. Blend them (Multiply / Soft Light approach)
     // Map paper to [1.0 - intensity, 1.0 + intensity]
