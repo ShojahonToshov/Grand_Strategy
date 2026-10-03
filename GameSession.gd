@@ -21,6 +21,8 @@ var oil: float = 0.0
 
 var building_orders: Dictionary = {}
 var completed_buildings: Dictionary = {}
+var mobilization_orders: Dictionary = {}
+var armies: Array = []
 
 var main_node: Node
 var last_payout_day: int = 0
@@ -72,6 +74,23 @@ func tick_hour():
 			"type": order.type,
 			"completed_hour": current_hours
 		}
+		building_updated.emit(state_id)
+
+	# Update mobilization progress
+	var mob_to_complete = []
+	for state_id in mobilization_orders.keys():
+		var order = mobilization_orders[state_id]
+		var st_owner = main_node.get_state_owner(state_id)
+		if st_owner == "FRA":
+			order.hours_left -= 1
+			if order.hours_left <= 0:
+				mob_to_complete.append(state_id)
+				
+	for state_id in mob_to_complete:
+		var order = mobilization_orders[state_id]
+		mobilization_orders.erase(state_id)
+		if main_node.has_method("spawn_army"):
+			main_node.spawn_army(state_id, order.population, "FRA")
 		building_updated.emit(state_id)
 
 var tax_rate: float = BalanceConfig.DEFAULT_TAX_RATE
@@ -295,3 +314,28 @@ func demolish_building(state_id: String):
 	if completed_buildings.has(state_id):
 		completed_buildings.erase(state_id)
 		building_updated.emit(state_id)
+
+func can_mobilize(state_id: String) -> bool:
+	if main_node.get_state_owner(state_id) != "FRA": return false
+	if mobilization_orders.has(state_id): return false
+	
+	if main_node.get("states_data") and main_node.states_data.has(state_id):
+		var pop = main_node.states_data[state_id].get("population", 0)
+		if pop >= 1000: # Min population to mobilize
+			return true
+	return false
+
+func start_mobilization(state_id: String):
+	if not can_mobilize(state_id): return
+	
+	var pop = main_node.states_data[state_id].get("population", 0)
+	var mobilized_pop = int(pop * 0.05) # 5%
+	main_node.states_data[state_id]["population"] -= mobilized_pop
+	
+	mobilization_orders[state_id] = {
+		"hours_left": 48, # 2 days
+		"total_hours": 48,
+		"population": mobilized_pop
+	}
+	resources_changed.emit()
+	building_updated.emit(state_id)

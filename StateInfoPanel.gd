@@ -69,9 +69,10 @@ func setup_session():
 		session.building_updated.connect(func(sid):
 			if sid == current_state_id and current_state_id != "":
 				update_buildings(current_state_id, current_owner_name)
+				_refresh_population(current_state_id)
 		)
 		session.time_changed.connect(func():
-			if current_state_id != "" and session.building_orders.has(current_state_id):
+			if current_state_id != "" and (session.building_orders.has(current_state_id) or session.mobilization_orders.has(current_state_id)):
 				_update_progress_bar_only(current_state_id)
 		)
 
@@ -79,9 +80,32 @@ func _update_progress_bar_only(state_id: String):
 	var session = get_tree().current_scene.get_node_or_null("GameSession")
 	var b_content = $Margin/VBox/BuildingBox/Content
 	for c in b_content.get_children():
-		if c is ProgressBar and session.building_orders.has(state_id):
-			var order = session.building_orders[state_id]
-			c.value = order.total_hours - order.hours_left
+		if c is ProgressBar:
+			if c.name == "MobProgress" and session.mobilization_orders.has(state_id):
+				var order = session.mobilization_orders[state_id]
+				c.value = order.total_hours - order.hours_left
+			elif session.building_orders.has(state_id):
+				var order = session.building_orders[state_id]
+				c.value = order.total_hours - order.hours_left
+
+func _refresh_population(state_id: String):
+	var pop = 0
+	var main_node = get_tree().current_scene
+	if main_node and main_node.get("states_data") and main_node.states_data.has(state_id):
+		pop = main_node.states_data[state_id].get("population", 0)
+	
+	var pop_str = str(int(pop))
+	var formatted_pop = ""
+	var c = 0
+	for i in range(pop_str.length() - 1, -1, -1):
+		formatted_pop = pop_str[i] + formatted_pop
+		c += 1
+		if c % 3 == 0 and i != 0:
+			formatted_pop = " " + formatted_pop
+			
+	var vbox = $Margin/VBox
+	vbox.get_node("PopBox/Population").text = formatted_pop
+
 
 func update_country_data(owner_tag: String, owner_name: String, owner_color: Color):
 	current_state_id = ""
@@ -259,6 +283,27 @@ func update_buildings(state_id: String, owner_name: String):
 		btn.custom_minimum_size.y = 30
 		btn.pressed.connect(func(): _show_build_modal(state_id))
 		b_content.add_child(btn)
+
+	if session.mobilization_orders.has(state_id):
+		var order = session.mobilization_orders[state_id]
+		var mob_title = Label.new()
+		mob_title.text = "Идет мобилизация..."
+		b_content.add_child(mob_title)
+		
+		var prog = ProgressBar.new()
+		prog.max_value = order.total_hours
+		prog.value = order.total_hours - order.hours_left
+		prog.custom_minimum_size.y = 10
+		prog.name = "MobProgress" # To identify it easily
+		b_content.add_child(prog)
+	else:
+		var mob_btn = Button.new()
+		mob_btn.text = "Мобилизация"
+		mob_btn.disabled = not session.can_mobilize(state_id)
+		mob_btn.pressed.connect(func(): session.start_mobilization(state_id))
+		mob_btn.custom_minimum_size.y = 30
+		b_content.add_child(mob_btn)
+
 
 func _show_build_modal(state_id: String):
 	var existing = get_tree().current_scene.get_node_or_null("BuildModalLayer")

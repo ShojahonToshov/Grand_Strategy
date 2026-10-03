@@ -21,7 +21,7 @@ var zoom_speed = 10.0
 var mouse_in_window = true
 var app_focused = true
 
-@export var max_physical_pixels_per_map_pixel: float = 4.0
+@export var max_physical_pixels_per_map_pixel: float = 10.0
 
 var min_zoom_limit = 0.1
 var max_zoom_limit = 2.5
@@ -46,17 +46,15 @@ func _ready():
 
 func calc_limits():
 	var vsize = get_viewport_rect().size
-	var physical_size = DisplayServer.window_get_size()
-	var scale_factor = float(physical_size.x) / float(vsize.x)
-	if scale_factor <= 0.0: scale_factor = 1.0
 	
 	# Allow zooming out to see exactly zoom_margin of screen height as extra space on all sides
 	var min_z_x = vsize.x / (map_size.x + vsize.y * zoom_margin)
 	var min_z_y = vsize.y / (map_size.y + vsize.y * zoom_margin)
 	var min_z = max(min_z_x, min_z_y)
 	
-	# X physical pixels per map pixel. zoom * scale_factor = max_physical
-	var max_z = max_physical_pixels_per_map_pixel / scale_factor
+	# Fix maximum zoom strictly to a reasonable level (e.g. 250%).
+	# We use max_physical_pixels_per_map_pixel as a direct absolute zoom limit now for consistency.
+	var max_z = max_physical_pixels_per_map_pixel
 	
 	if min_z > max_z:
 		max_z = min_z # resolve conflict

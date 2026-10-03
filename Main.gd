@@ -245,30 +245,6 @@ func get_state_owner(state_id: String) -> String:
 		return data_json[state_id].get("owner", "None")
 	return "None"
 
-func _unhandled_input(event):
-	if event is InputEventKey:
-		var focus_owner = get_viewport().gui_get_focus_owner()
-		var in_text_input = focus_owner is LineEdit or focus_owner is TextEdit
-		
-		if not in_text_input and event.pressed:
-			if event.keycode == KEY_SPACE:
-				game_session.is_paused = not game_session.is_paused
-				game_session.time_changed.emit()
-			elif event.keycode >= KEY_1 and event.keycode <= KEY_5:
-				game_session.speed_idx = event.keycode - KEY_1
-				game_session.time_changed.emit()
-				
-		if event.pressed and event.keycode == KEY_F3:
-			ui_panel.visible = not ui_panel.visible
-		elif event.pressed and event.keycode == KEY_ESCAPE:
-			if selected_prov_id != 0:
-				clear_state_selection()
-				if game_hud: game_hud.hide_state()
-			
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			handle_click(get_global_mouse_position())
-
 func handle_click(world_pos: Vector2):
 	if not id_image:
 		return
@@ -390,3 +366,66 @@ func _process(delta):
 			fps_label.text = "FPS: %d (%.1f ms)" % [Engine.get_frames_per_second(), frame_time]
 		fps_timer = 0.0
 		frames_this_sec = 0
+
+var active_armies = []
+var selected_army = null
+
+func spawn_army(state_id: String, population: int, owner_tag: String):
+	var army = load("res://ArmyBanner.gd").new()
+	army.set_script(load("res://ArmyBanner.gd"))
+	army.set_data(state_id, population, owner_tag)
+	
+	# Find position for the army. We can average the polygon points for the state
+	var pos = Vector2(0, 0)
+	if highlight_system.state_polygons_data.has(state_id):
+		var c_data = highlight_system.state_polygons_data[state_id]
+		if c_data.has("lod0") and c_data["lod0"].size() > 0:
+			var poly = c_data["lod0"][0] # Just use the first polygon
+			var pt_count = poly.size()
+			for pt in poly:
+				pos += Vector2(pt[0], pt[1])
+			pos /= pt_count
+			
+	army.position = pos
+	army.clicked.connect(_on_army_clicked)
+	add_child(army)
+	active_armies.append(army)
+
+func _on_army_clicked(army):
+	if selected_army:
+		selected_army.set_selected(false)
+	selected_army = army
+	selected_army.set_selected(true)
+	
+func _unhandled_input(event):
+	# Move selected army on right click
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+		if selected_army:
+			selected_army.target_pos = get_global_mouse_position()
+			selected_army.is_moving = true
+	# Original unhandled input
+	var focus_owner = get_viewport().gui_get_focus_owner()
+	var in_text_input = focus_owner is LineEdit or focus_owner is TextEdit
+	
+	if event is InputEventKey:
+		if not in_text_input and event.pressed:
+			if event.keycode == KEY_SPACE:
+				game_session.is_paused = not game_session.is_paused
+				game_session.time_changed.emit()
+			elif event.keycode >= KEY_1 and event.keycode <= KEY_5:
+				game_session.speed_idx = event.keycode - KEY_1
+				game_session.time_changed.emit()
+				
+		if event.pressed and event.keycode == KEY_F3:
+			ui_panel.visible = not ui_panel.visible
+		elif event.pressed and event.keycode == KEY_ESCAPE:
+			if selected_army:
+				selected_army.set_selected(false)
+				selected_army = null
+			elif selected_prov_id != 0:
+				clear_state_selection()
+				if game_hud: game_hud.hide_state()
+		
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			handle_click(get_global_mouse_position())
