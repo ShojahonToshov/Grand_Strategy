@@ -205,6 +205,30 @@ func _ready():
 	fps_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 1))
 	fps_label.add_theme_constant_override("outline_size", 4)
 	fps_label.text = "FPS: " + str(Engine.get_frames_per_second())
+	
+	_generate_initial_ai_armies()
+
+func _generate_initial_ai_armies():
+	var ger_states = []
+	for sid in states_data.keys():
+		var owner = states_data[sid].get("owner", "")
+		if owner == "GER":
+			var pop = states_data[sid].get("population", 0)
+			if pop >= 1000:
+				ger_states.append(sid)
+	
+	var rng = RandomNumberGenerator.new()
+	rng.randomize()
+	
+	ger_states.shuffle()
+	
+	var armies_to_spawn = min(5, ger_states.size())
+	for i in range(armies_to_spawn):
+		var state_id = ger_states[i]
+		var pop = states_data[state_id].get("population", 0)
+		var mobilized_pop = int(pop * 0.05)
+		states_data[state_id]["population"] = max(0, pop - mobilized_pop)
+		spawn_army(state_id, mobilized_pop, "GER")
 
 var country_lookup_image: Image
 var country_lookup_tex: ImageTexture

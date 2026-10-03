@@ -139,6 +139,32 @@ func _draw():
 			Vector2(left_out, flag_bottom), Vector2(left_in, mid_y)
 		])
 		draw_polygon(eng_pts, PackedColorArray([Color(0.8, 0.1, 0.1)]))
+	elif owner_tag == "GER":
+		var div1_y = flag_top + flag_h / 3.0
+		var div2_y = flag_top + (flag_h * 2.0) / 3.0
+		var lx_1 = left_out + (left_in - left_out) * (2.0/3.0)
+		var rx_1 = right_out + (right_in - right_out) * (2.0/3.0)
+		
+		# Black
+		var black_pts = PackedVector2Array([
+			Vector2(left_out, flag_top), Vector2(right_out, flag_top),
+			Vector2(rx_1, div1_y), Vector2(lx_1, div1_y)
+		])
+		draw_polygon(black_pts, PackedColorArray([Color(0.15, 0.15, 0.15)]))
+		# White
+		var white_pts = PackedVector2Array([
+			Vector2(lx_1, div1_y), Vector2(rx_1, div1_y),
+			Vector2(right_in, mid_y),
+			Vector2(rx_1, div2_y), Vector2(lx_1, div2_y),
+			Vector2(left_in, mid_y)
+		])
+		draw_polygon(white_pts, PackedColorArray([Color(0.95, 0.95, 0.95)]))
+		# Red
+		var red_pts = PackedVector2Array([
+			Vector2(lx_1, div2_y), Vector2(rx_1, div2_y),
+			Vector2(right_out, flag_bottom), Vector2(left_out, flag_bottom)
+		])
+		draw_polygon(red_pts, PackedColorArray([Color(0.8, 0.15, 0.15)]))
 	else:
 		var gen_pts = PackedVector2Array([
 			Vector2(left_out, flag_top), Vector2(right_out, flag_top),
@@ -147,22 +173,15 @@ func _draw():
 		])
 		draw_polygon(gen_pts, PackedColorArray([Color(0.5, 0.5, 0.5)]))
 		
-	# Flag Volume/Shading (darken edges to simulate curve)
-	var shadow_left = PackedVector2Array([
-		Vector2(left_out, flag_top), Vector2(div1, flag_top),
-		Vector2(div1, flag_bottom), Vector2(left_out, flag_bottom),
-		Vector2(left_in, mid_y)
-	])
-	draw_polygon(shadow_left, PackedColorArray([Color(0, 0, 0, 0.15)]))
-	var shadow_right = PackedVector2Array([
-		Vector2(div2, flag_top), Vector2(right_out, flag_top),
-		Vector2(right_in, mid_y), Vector2(right_out, flag_bottom),
-		Vector2(div2, flag_bottom)
-	])
-	draw_polygon(shadow_right, PackedColorArray([Color(0, 0, 0, 0.25)]))
 	
-	# 3. Label Box (Blue border, White center)
-	draw_rect(Rect2(left_out, label_top, flag_w, label_h), Color(0.12, 0.2, 0.45))
+	# 3. Label Box (Border, White center)
+	var label_border = Color(0.12, 0.2, 0.45)
+	if owner_tag == "GER":
+		label_border = Color(0.15, 0.15, 0.15)
+	elif owner_tag == "ENG":
+		label_border = Color(0.8, 0.1, 0.1)
+		
+	draw_rect(Rect2(left_out, label_top, flag_w, label_h), label_border)
 	draw_rect(Rect2(left_out + 1.0, label_top + 1.0, flag_w - 2.0, label_h - 2.0), Color(0.95, 0.95, 0.95))
 	
 	# 4. Metal Crossbars
@@ -180,11 +199,16 @@ func _draw():
 		draw_circle(Vector2(bar_x, y - 0.5), 1.0, Color(1.0, 1.0, 1.0)) # knob highlight
 		draw_circle(Vector2(bar_x + bar_w, y - 0.5), 1.0, Color(1.0, 1.0, 1.0)) # knob highlight
 		
-	# 5. Top Finial (French Cockade)
+	# 5. Top Finial (Cockade)
 	var cockade_pos = Vector2(0, label_top - 4.5)
-	draw_circle(cockade_pos, 4.0, Color(0.8, 0.15, 0.15)) # Red
-	draw_circle(cockade_pos, 2.5, Color(0.95, 0.95, 0.95)) # White
-	draw_circle(cockade_pos, 1.2, Color(0.12, 0.2, 0.45)) # Blue
+	if owner_tag == "GER":
+		draw_circle(cockade_pos, 4.0, Color(0.15, 0.15, 0.15)) # Black
+		draw_circle(cockade_pos, 2.5, Color(0.95, 0.95, 0.95)) # White
+		draw_circle(cockade_pos, 1.2, Color(0.8, 0.15, 0.15)) # Red
+	else:
+		draw_circle(cockade_pos, 4.0, Color(0.8, 0.15, 0.15)) # Red
+		draw_circle(cockade_pos, 2.5, Color(0.95, 0.95, 0.95)) # White
+		draw_circle(cockade_pos, 1.2, Color(0.12, 0.2, 0.45)) # Blue
 	
 	if selected:
 		# Selection outline
