@@ -366,6 +366,16 @@ func _process(delta):
 			fps_label.text = "FPS: %d (%.1f ms)" % [Engine.get_frames_per_second(), frame_time]
 		fps_timer = 0.0
 		frames_this_sec = 0
+		
+	var mpc = get_node_or_null("MapPresentationController")
+	if mpc:
+		var flags_alpha = mpc.army_flags_alpha
+		var flags_visible = flags_alpha > 0.01
+		for army in active_armies:
+			army.visible = flags_visible
+			if flags_visible:
+				army.modulate.a = flags_alpha
+
 
 var active_armies = []
 var selected_army = null

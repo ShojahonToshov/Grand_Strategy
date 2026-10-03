@@ -20,6 +20,7 @@ var overview_ratio: float = 0.0
 var country_labels_alpha: float = 0.0
 var capital_stars_alpha: float = 1.0
 var internal_borders_alpha: float = 1.0
+var army_flags_alpha: float = 1.0
 
 @export var states_threshold: float = 0.125
 @export var countries_threshold: float = 0.131
@@ -61,8 +62,10 @@ func _process(_delta):
 		country_labels_alpha = 0.0
 		capital_stars_alpha = 0.0
 		internal_borders_alpha = 1.0
+		army_flags_alpha = 1.0
 	else:
 		country_labels_alpha = fade
 		capital_stars_alpha = 1.0 - fade
 		internal_borders_alpha = 1.0 - fade
+		army_flags_alpha = 1.0 - fade
 

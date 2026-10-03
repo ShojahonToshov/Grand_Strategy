@@ -55,13 +55,35 @@ func set_data(p_state_id, p_pop, p_owner):
 
 func _process(delta):
 	if is_moving:
+		var main = get_parent()
+		if not main or not main.has_node("GameSession"):
+			return
+			
+		var game_session = main.get_node("GameSession")
+		
+		# 1) If game time is paused, armies do not move
+		if game_session.is_paused:
+			return
+			
+		# 2) Deep realistic analysis of movement speed:
+		# - An average human walking speed is ~5 km/h.
+		# - Therefore, the army moves at 5.0 pixels per in-game hour.
+		var realistic_speed_km_per_hour = 5.0
+		
+		# Calculate how many game hours passed in this frame
+		var game_speed = game_session.speed_hours_per_sec[game_session.speed_idx]
+		var game_hours_passed = delta * game_speed
+		
+		# Step distance for this frame
+		var step_dist = realistic_speed_km_per_hour * game_hours_passed
+		
 		var dist = position.distance_to(target_pos)
-		if dist < 2.0:
+		if dist <= step_dist or dist < 0.1:
 			position = target_pos
 			is_moving = false
 		else:
 			var dir = (target_pos - position).normalized()
-			position += dir * move_speed * delta
+			position += dir * step_dist
 
 func _draw():
 	# Dimensions exactly matching the reference
@@ -174,6 +196,8 @@ func set_selected(val):
 	queue_redraw()
 
 func _input(event):
+	if not is_visible_in_tree():
+		return
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		var local_mouse = get_local_mouse_position()
 		var bar_w = 46.0
