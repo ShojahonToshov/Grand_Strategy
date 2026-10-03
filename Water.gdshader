@@ -14,25 +14,30 @@ uniform vec4 color_water_coast : source_color = vec4(0.2235, 0.4549, 0.5216, 1.0
 uniform float detail_scale = 8.0;
 uniform float detail_intensity = 0.15;
 
+varying vec2 map_uv;
+
+void vertex() {
+    map_uv = VERTEX / vec2(5632.0, 2048.0);
+}
 
 void fragment() {
-    // --- Smooth Pixel Anti-Aliasing ---
+    // --- Smooth Pixel Anti-Aliasing (Only useful for Raster BaseMap) ---
     vec2 tex_size = vec2(textureSize(TEXTURE, 0));
-    vec2 uv_pixel = UV * tex_size;
+    vec2 uv_pixel = map_uv * tex_size; // Use map_uv instead of UV
     
-    // Calculate the derivatives to know how fast UV changes per screen pixel
     vec2 duv = fwidth(uv_pixel);
-    
-    // Smoothstep the fractional part of the UV to create a sharp but anti-aliased edge
     vec2 fractional = fract(uv_pixel);
     vec2 smooth_frac = clamp(0.5 + (fractional - 0.5) / duv, 0.0, 1.0);
-    
-    // Reconstruct the UV
     vec2 final_uv = (floor(uv_pixel) + smooth_frac - 0.5) / tex_size;
-    // ----------------------------------
     
-    vec4 base_color = texture(TEXTURE, final_uv);
-    vec4 mask = texture(water_mask, final_uv);
+    // Fallback: If tex_size is 1x1 (no texture, e.g. drawing polygons), final_uv will be map_uv
+    if (tex_size.x <= 1.0) {
+        final_uv = map_uv;
+    }
+    
+    // Blend TEXTURE with vertex COLOR (allows vector polygons to supply color)
+    vec4 base_color = texture(TEXTURE, final_uv) * COLOR;
+    vec4 mask = texture(water_mask, map_uv); // Use exact map_uv for mask to prevent warping
     
     // Green channel is 1.0 for water, 0.0 for land.
     // Red channel is distance to coast (0.0 at coast, 1.0 at max_dist (50px)).
@@ -48,7 +53,7 @@ void fragment() {
         
         // UV is 0..1 over the map.
         // Map is 5632x2048. We want noise scale independent of screen.
-        vec2 noise_uv = UV * vec2(5632.0 / 256.0, 2048.0 / 256.0) * 0.4;
+        vec2 noise_uv = map_uv * vec2(5632.0 / 256.0, 2048.0 / 256.0) * 0.4;
         
         float noise_val = texture(noise_tex, noise_uv).r;
         
@@ -71,7 +76,7 @@ void fragment() {
     } else {
         // Land Rendering: Apply Paradox-style parchment map detail
         // Fix: Replace blocky procedural value noise (fbm) with the smooth noise_tex
-        vec2 map_detail = UV * vec2(5632.0 / 256.0, 2048.0 / 256.0) * (detail_scale * 0.1);
+        vec2 map_detail = map_uv * vec2(5632.0 / 256.0, 2048.0 / 256.0) * (detail_scale * 0.1);
         float paper = texture(noise_tex, map_detail).r;
         
         // Blend map color with parchment texture

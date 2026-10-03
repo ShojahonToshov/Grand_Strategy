@@ -91,8 +91,15 @@ func _ready():
 	highlight_system.load_data()
 	$VectorMap.load_data()
 	
-	var tex_political = load("res://map_political.png") as Texture2D
-	var tex_flat = load("res://map_flat.png") as Texture2D
+	var pol_layer = Node2D.new()
+	pol_layer.name = "PoliticalMapLayer"
+	pol_layer.set_script(load("res://PoliticalMapLayer.gd"))
+	add_child(pol_layer)
+	move_child(pol_layer, $BaseMap.get_index() + 1)
+	pol_layer.setup(states_data)
+	
+	if has_node("BaseMap"):
+		$BaseMap.texture = load("res://map_flat.png") as Texture2D
 	
 	var water_shader = load("res://Water.gdshader")
 	if water_shader:
@@ -115,7 +122,9 @@ func _ready():
 		if w_noise_tex:
 			mat.set_shader_parameter("noise_tex", w_noise_tex)
 			
+		# Apply shader to BOTH BaseMap (for water/flat) and PolLayer (for parchment land)
 		$BaseMap.material = mat
+		pol_layer.material = mat
 	
 	$CanvasLayer/Panel/VBoxContainer/CheckState.toggled.connect(func(t): 
 		$VectorMap.show_state = t
@@ -126,7 +135,10 @@ func _ready():
 	var check_pol = CheckBox.new()
 	check_pol.text = "Political / Flat"
 	check_pol.button_pressed = true
-	check_pol.toggled.connect(func(t): $BaseMap.texture = tex_political if t else tex_flat)
+	check_pol.toggled.connect(func(t): 
+		pol_layer.show_political = t
+		pol_layer.queue_redraw()
+	)
 	$CanvasLayer/Panel/VBoxContainer.add_child(check_pol)
 	check_pol.get_parent().move_child(check_pol, 0)
 	
