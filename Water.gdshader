@@ -21,22 +21,10 @@ void vertex() {
 }
 
 void fragment() {
-    // --- Smooth Pixel Anti-Aliasing (Only useful for Raster BaseMap) ---
-    vec2 tex_size = vec2(textureSize(TEXTURE, 0));
-    vec2 uv_pixel = map_uv * tex_size; // Use map_uv instead of UV
-    
-    vec2 duv = fwidth(uv_pixel);
-    vec2 fractional = fract(uv_pixel);
-    vec2 smooth_frac = clamp(0.5 + (fractional - 0.5) / duv, 0.0, 1.0);
-    vec2 final_uv = (floor(uv_pixel) + smooth_frac - 0.5) / tex_size;
-    
-    // Fallback: If tex_size is 1x1 (no texture, e.g. drawing polygons), final_uv will be map_uv
-    if (tex_size.x <= 1.0) {
-        final_uv = map_uv;
-    }
-    
     // Blend TEXTURE with vertex COLOR (allows vector polygons to supply color)
-    vec4 base_color = texture(TEXTURE, final_uv) * COLOR;
+    // We use map_uv with linear filtering so the raster background (sand) is smooth,
+    // eliminating pixelated shores.
+    vec4 base_color = texture(TEXTURE, map_uv) * COLOR;
     vec4 mask = texture(water_mask, map_uv); // Use exact map_uv for mask to prevent warping
     
     // Green channel is 1.0 for water, 0.0 for land.
