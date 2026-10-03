@@ -32,6 +32,7 @@ func set_zoom_margin(val: float):
 	calc_limits()
 
 func set_target_zoom_level(val: float):
+	zoom_anchor_screen = get_viewport_rect().size / 2.0
 	target_zoom = Vector2(val, val)
 	target_zoom = target_zoom.clamp(Vector2(min_zoom_limit, min_zoom_limit), Vector2(max_zoom_limit, max_zoom_limit))
 	zoom_changed.emit(target_zoom)
@@ -114,23 +115,31 @@ func _unhandled_input(event):
 		last_mouse_pos = event.position
 		clamp_position()
 
+var zoom_anchor_screen = Vector2()
+
 func do_zoom(factor, mouse_pos):
+	zoom_anchor_screen = mouse_pos
 	target_zoom *= factor
 	target_zoom = target_zoom.clamp(Vector2(min_zoom_limit, min_zoom_limit), Vector2(max_zoom_limit, max_zoom_limit))
 	zoom_changed.emit(target_zoom)
 
 func _process(delta):
 	# Smooth zoom around current mouse position
-	if zoom.distance_to(target_zoom) > 0.001:
+	var is_zooming = not zoom.is_equal_approx(target_zoom)
+	
+	if is_zooming:
 		var prev_zoom = zoom
 		zoom = zoom.lerp(target_zoom, 1.0 - exp(-zoom_speed * delta))
 		
-		# Snap to target to prevent infinite micro-updates (fixes endless redraws)
-		if zoom.distance_to(target_zoom) < 0.005:
+		# Snap to target using a relative threshold rather than an absolute distance.
+		# This prevents massive jumps when the map is zoomed out (e.g. at zoom = 0.1)
+		if abs(zoom.x - target_zoom.x) / target_zoom.x < 0.001:
 			zoom = target_zoom
 		
-		# Keep the point under the cursor stationary
-		var mouse_pos = get_viewport().get_mouse_position()
+		# Keep the point under the cursor stationary.
+		# By using the anchored screen position from when the scroll occurred,
+		# we prevent floating point drift and jittering if the mouse moves during the lerp.
+		var mouse_pos = zoom_anchor_screen
 		var world_mouse = position + mouse_pos / prev_zoom
 		var new_world_mouse = position + mouse_pos / zoom
 		position += world_mouse - new_world_mouse
