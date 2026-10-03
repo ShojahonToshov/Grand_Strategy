@@ -16,8 +16,23 @@ uniform float detail_intensity = 0.15;
 
 
 void fragment() {
-    vec4 base_color = texture(TEXTURE, UV);
-    vec4 mask = texture(water_mask, UV);
+    // --- Smooth Pixel Anti-Aliasing ---
+    vec2 tex_size = vec2(textureSize(TEXTURE, 0));
+    vec2 uv_pixel = UV * tex_size;
+    
+    // Calculate the derivatives to know how fast UV changes per screen pixel
+    vec2 duv = fwidth(uv_pixel);
+    
+    // Smoothstep the fractional part of the UV to create a sharp but anti-aliased edge
+    vec2 fractional = fract(uv_pixel);
+    vec2 smooth_frac = clamp(0.5 + (fractional - 0.5) / duv, 0.0, 1.0);
+    
+    // Reconstruct the UV
+    vec2 final_uv = (floor(uv_pixel) + smooth_frac - 0.5) / tex_size;
+    // ----------------------------------
+    
+    vec4 base_color = texture(TEXTURE, final_uv);
+    vec4 mask = texture(water_mask, final_uv);
     
     // Green channel is 1.0 for water, 0.0 for land.
     // Red channel is distance to coast (0.0 at coast, 1.0 at max_dist (50px)).
