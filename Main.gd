@@ -399,7 +399,47 @@ func _process(delta):
 			army.visible = flags_visible
 			if flags_visible:
 				army.modulate.a = flags_alpha
+				
+	# Cursor logic
+	var cursor_is_attack = false
+	if selected_army != null and selected_army.owner_tag == "FRA":
+		for army in active_armies:
+			if army.owner_tag != "FRA" and army.is_visible_in_tree():
+				var local_mouse = army.get_local_mouse_position()
+				var bar_w = 46.0
+				var pole_top = -64.0
+				var click_rect = Rect2(-bar_w/2.0 - 4, pole_top - 8, bar_w + 8, -pole_top + 12)
+				if click_rect.has_point(local_mouse):
+					cursor_is_attack = true
+					break
+					
+	if cursor_is_attack:
+		if attack_cursor_tex == null:
+			_create_attack_cursor()
+		Input.set_custom_mouse_cursor(attack_cursor_tex, Input.CURSOR_ARROW, Vector2(16, 16))
+	else:
+		Input.set_custom_mouse_cursor(null, Input.CURSOR_ARROW)
 
+var attack_cursor_tex: ImageTexture
+
+func _create_attack_cursor():
+	var svg = """<svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(16,16) rotate(45) translate(-16,-16)">
+    <!-- Sword 1 -->
+	<rect x="14" y="2" width="4" height="22" fill="#d32f2f" stroke="black" stroke-width="1" />
+	<rect x="10" y="24" width="12" height="2" fill="black" />
+	<rect x="14" y="26" width="4" height="4" fill="#555" stroke="black" stroke-width="1" />
+  </g>
+  <g transform="translate(16,16) rotate(-45) translate(-16,-16)">
+    <!-- Sword 2 -->
+	<rect x="14" y="2" width="4" height="22" fill="#d32f2f" stroke="black" stroke-width="1" />
+	<rect x="10" y="24" width="12" height="2" fill="black" />
+	<rect x="14" y="26" width="4" height="4" fill="#555" stroke="black" stroke-width="1" />
+  </g>
+</svg>"""
+	var img = Image.new()
+	img.load_svg_from_string(svg)
+	attack_cursor_tex = ImageTexture.create_from_image(img)
 
 var active_armies = []
 var selected_army = null
@@ -431,12 +471,35 @@ func _on_army_clicked(army):
 	selected_army = army
 	selected_army.set_selected(true)
 	
+func start_combat(army_a, army_b):
+	var battle = load("res://Battle.gd").new()
+	battle.setup(army_a, army_b)
+	add_child(battle)
+	
 func _unhandled_input(event):
 	# Move selected army on right click
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
-		if selected_army:
-			selected_army.target_pos = get_global_mouse_position()
-			selected_army.is_moving = true
+		if selected_army and not selected_army.in_combat:
+			var target_found = null
+			for army in active_armies:
+				if army != selected_army and army.owner_tag != selected_army.owner_tag and army.is_visible_in_tree():
+					var local_mouse = army.get_local_mouse_position()
+					var bar_w = 46.0
+					var pole_top = -64.0
+					var click_rect = Rect2(-bar_w/2.0 - 4, pole_top - 8, bar_w + 8, -pole_top + 12)
+					if click_rect.has_point(local_mouse):
+						target_found = army
+						break
+			if target_found:
+				selected_army.target_army = target_found
+				selected_army.target_pos = target_found.position
+				selected_army.is_moving = true
+				selected_army.in_combat = false
+			else:
+				selected_army.target_army = null
+				selected_army.target_pos = get_global_mouse_position()
+				selected_army.is_moving = true
+				selected_army.in_combat = false
 	# Original unhandled input
 	var focus_owner = get_viewport().gui_get_focus_owner()
 	var in_text_input = focus_owner is LineEdit or focus_owner is TextEdit

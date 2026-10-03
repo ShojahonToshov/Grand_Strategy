@@ -8,6 +8,12 @@ var target_pos: Vector2
 
 var is_moving: bool = false
 var move_speed: float = 150.0
+var in_combat: bool = false
+var target_army: Node2D = null
+var combat_pos: Vector2
+
+var is_dying: bool = false
+var death_timer: float = 0.0
 
 signal clicked(army)
 
@@ -16,11 +22,46 @@ func _ready():
 	target_pos = position
 	scale = Vector2(0.25, 0.25)
 
+func die():
+	is_dying = true
+	in_combat = false
+	is_moving = false
+
 func set_data(p_state_id, p_pop, p_owner):
 	state_id = p_state_id
 	population = p_pop
 	owner_tag = p_owner
 	
+	_update_label_text()
+	
+	if not has_node("PopLabel"):
+		var lbl = Label.new()
+		lbl.name = "PopLabel"
+		
+		# 4x scaling for crisp text
+		var ls = LabelSettings.new()
+		ls.font_size = 40
+		ls.font_color = Color(0.1, 0.1, 0.1)
+		ls.outline_size = 4
+		ls.outline_color = Color(1.0, 1.0, 1.0, 0.5)
+		lbl.label_settings = ls
+		
+		lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		
+		var flag_w = 40.0
+		var label_top = -58.0
+		var label_h = 14.0
+		
+		lbl.scale = Vector2(0.25, 0.25)
+		lbl.size = Vector2(flag_w - 2.0, label_h - 2.0) * 4.0
+		lbl.position = Vector2(-flag_w/2.0 + 1.0, label_top + 1.0)
+		add_child(lbl)
+		
+	_update_label_text()
+	queue_redraw()
+
+func _update_label_text():
 	var pop_str = ""
 	if population >= 1000000:
 		pop_str = "%.1fM" % (population / 1000000.0)
@@ -28,32 +69,27 @@ func set_data(p_state_id, p_pop, p_owner):
 		pop_str = "%dK" % (population / 1000)
 	else:
 		pop_str = str(population)
-	
-	var lbl = Label.new()
-	lbl.name = "PopLabel"
-	lbl.text = pop_str
-	
-	var ls = LabelSettings.new()
-	ls.font_size = 10
-	ls.font_color = Color(0.1, 0.1, 0.1)
-	ls.outline_size = 1
-	ls.outline_color = Color(1.0, 1.0, 1.0, 0.5)
-	lbl.label_settings = ls
-	
-	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	
-	# Position exactly inside the white label box
-	var flag_w = 40.0
-	var label_top = -58.0
-	var label_h = 14.0
-	lbl.size = Vector2(flag_w - 2.0, label_h - 2.0)
-	lbl.position = Vector2(-flag_w/2.0 + 1.0, label_top + 1.0)
-	
-	add_child(lbl)
-	queue_redraw()
+		
+	if has_node("PopLabel"):
+		get_node("PopLabel").text = pop_str
 
 func _process(delta):
+	if is_dying:
+		death_timer += delta
+		modulate.a = max(0.0, 1.0 - death_timer * 2.0)
+		position.y += delta * 15.0 # sink into ground
+		if death_timer >= 0.5:
+			var main = get_parent()
+			if main.active_armies.has(self):
+				main.active_armies.erase(self)
+			queue_free()
+		return
+		
+	if in_combat:
+		if position.distance_to(combat_pos) > 0.5:
+			position = position.lerp(combat_pos, 1.0 - exp(-delta * 4.0)) # Frame-independent smooth lerp
+		return
+		
 	if is_moving:
 		var main = get_parent()
 		if not main or not main.has_node("GameSession"):
@@ -61,23 +97,42 @@ func _process(delta):
 			
 		var game_session = main.get_node("GameSession")
 		
-		# 1) If game time is paused, armies do not move
 		if game_session.is_paused:
 			return
 			
-		# 2) Deep realistic analysis of movement speed:
-		# - An average human walking speed is ~5 km/h.
-		# - Therefore, the army moves at 5.0 pixels per in-game hour.
 		var realistic_speed_km_per_hour = 5.0
-		
-		# Calculate how many game hours passed in this frame
 		var game_speed = game_session.speed_hours_per_sec[game_session.speed_idx]
 		var game_hours_passed = delta * game_speed
-		
-		# Step distance for this frame
 		var step_dist = realistic_speed_km_per_hour * game_hours_passed
 		
+		if target_army != null and is_instance_valid(target_army):
+			target_pos = target_army.position
+			
 		var dist = position.distance_to(target_pos)
+		
+		if target_army != null and is_instance_valid(target_army) and dist < 20.0:
+			# Enter combat
+			is_moving = false
+			in_combat = true
+			target_army.is_moving = false
+			target_army.in_combat = true
+			target_army.target_army = self
+			
+			# Setup combat positions based on who is on which side
+			var center = (position + target_army.position) / 2.0
+			var offset_x = 6.0
+			
+			if position.x <= target_army.position.x:
+				self.combat_pos = center + Vector2(-offset_x, 0)
+				target_army.combat_pos = center + Vector2(offset_x, 0)
+			else:
+				self.combat_pos = center + Vector2(offset_x, 0)
+				target_army.combat_pos = center + Vector2(-offset_x, 0)
+			
+			if main.has_method("start_combat"):
+				main.start_combat(self, target_army)
+			return
+			
 		if dist <= step_dist or dist < 0.1:
 			position = target_pos
 			is_moving = false
