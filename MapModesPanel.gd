@@ -35,8 +35,6 @@ func _ready():
 	btn_resources = _create_mode_button(load("res://assets/ui/icons/resources.svg"), "Ресурсы")
 	btn_diplomacy = _create_mode_button(load("res://assets/ui/icons/diplomacy.svg"), "Дипломатия")
 	
-	btn_diplomacy.disabled = true
-	
 	# Settings/Editor Button
 	var btn_editor = Button.new()
 	btn_editor.text = "⚙"

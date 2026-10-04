@@ -77,6 +77,9 @@ func _on_theme_button_pressed(idx: int):
 		elif idx == 1:
 			mpc.set_theme(mpc.MapTheme.RESOURCES)
 			if $MapModesPanel.has_method("set_legend_visible"): $MapModesPanel.set_legend_visible(true)
+		elif idx == 2:
+			mpc.set_theme(mpc.MapTheme.DIPLOMACY)
+			if $MapModesPanel.has_method("set_legend_visible"): $MapModesPanel.set_legend_visible(false)
 
 func hide_state():
 	$StateInfoPanel.hide_panel()

@@ -61,6 +61,24 @@ func _ready():
 	
 	vbox.add_child(b_box)
 	
+	# DiplomacyBox
+	var sep3 = HSeparator.new()
+	sep3.name = "DiploSep"
+	vbox.add_child(sep3)
+	
+	var d_box = VBoxContainer.new()
+	d_box.name = "DiplomacyBox"
+	var d_sub = Label.new()
+	d_sub.text = "ДИПЛОМАТИЯ"
+	d_sub.add_theme_color_override("font_color", Color(0.6, 0.6, 0.65))
+	d_sub.add_theme_font_size_override("font_size", 12)
+	d_box.add_child(d_sub)
+	
+	var d_content = VBoxContainer.new()
+	d_content.name = "Content"
+	d_box.add_child(d_content)
+	vbox.add_child(d_box)
+	
 	call_deferred("setup_session")
 
 func setup_session():
@@ -141,6 +159,64 @@ func update_country_data(owner_tag: String, owner_name: String, owner_color: Col
 	vbox.get_node("ResSep").visible = false
 	vbox.get_node("BuildingBox").visible = false
 	vbox.get_node("BuildSep").visible = false
+	
+	_update_diplomacy(owner_tag)
+
+func _update_diplomacy(target_tag: String):
+	var vbox = $Margin/VBox
+	var d_box = vbox.get_node("DiplomacyBox")
+	var d_sep = vbox.get_node("DiploSep")
+	var d_content = d_box.get_node("Content")
+	
+	for child in d_content.get_children():
+		child.queue_free()
+		
+	# Only show diplomacy if not looking at ourselves
+	if target_tag == "FRA":
+		d_box.visible = false
+		d_sep.visible = false
+		return
+		
+	d_box.visible = true
+	d_sep.visible = true
+	
+	var session = get_tree().current_scene.get_node_or_null("GameSession")
+	if session:
+		var rel = session.get_relation("FRA", target_tag)
+		
+		var status = Label.new()
+		if rel == "WAR":
+			status.text = "Статус: ВОЙНА"
+			status.add_theme_color_override("font_color", Color(1.0, 0.3, 0.3))
+		else:
+			status.text = "Статус: МИР"
+			status.add_theme_color_override("font_color", Color(0.5, 1.0, 0.5))
+		d_content.add_child(status)
+		
+		if rel != "WAR":
+			var btn = Button.new()
+			btn.text = "Объявить Войну"
+			btn.custom_minimum_size.y = 30
+			btn.pressed.connect(func():
+				session.declare_war("FRA", target_tag)
+				_update_diplomacy(target_tag)
+				var main = get_tree().root.get_node_or_null("Main")
+				if main and main.has_method("force_diplomacy_redraw"):
+					main.force_diplomacy_redraw()
+			)
+			d_content.add_child(btn)
+		else:
+			var btn = Button.new()
+			btn.text = "Заключить Мир"
+			btn.custom_minimum_size.y = 30
+			btn.pressed.connect(func():
+				session.make_peace("FRA", target_tag)
+				_update_diplomacy(target_tag)
+				var main = get_tree().root.get_node_or_null("Main")
+				if main and main.has_method("force_diplomacy_redraw"):
+					main.force_diplomacy_redraw()
+			)
+			d_content.add_child(btn)
 
 func update_data(region_name: String, owner_name: String, owner_color: Color, resource_name: String = "", state_id: String = ""):
 	current_state_id = state_id
@@ -201,6 +277,11 @@ func update_data(region_name: String, owner_name: String, owner_color: Color, re
 		b_sep.visible = true
 		if state_id != "":
 			update_buildings(state_id, owner_name)
+			
+	var d_box = vbox.get_node("DiplomacyBox")
+	var d_sep = vbox.get_node("DiploSep")
+	if d_box: d_box.visible = false
+	if d_sep: d_sep.visible = false
 
 func update_buildings(state_id: String, owner_name: String):
 	var session = get_tree().current_scene.get_node_or_null("GameSession")

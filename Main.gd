@@ -8,6 +8,7 @@ extends Node2D
 var data_json = {}
 var states_data = {}
 var id_image: Image
+var state_neighbors = {}
 
 var selected_prov_id = 0
 
@@ -45,11 +46,26 @@ func _ready():
 	move_child(resource_map, $BaseMap.get_index() + 1)
 	resource_map.setup(resource_distribution)
 	
+	var diplomacy_map = Node2D.new()
+	diplomacy_map.name = "DiplomacyMap"
+	diplomacy_map.set_script(load("res://DiplomacyMap.gd"))
+	diplomacy_map.set_process(true)
+	add_child(diplomacy_map)
+	move_child(diplomacy_map, resource_map.get_index() + 1)
+	diplomacy_map.setup()
+	
 	# Load states.json and enrich with owner_group based on geography
 	var json_res = load("res://states.json") as JSON
 	if json_res:
 		states_data = json_res.data
 		data_json = json_res.data
+		
+	var n_file = FileAccess.open("res://state_neighbors.json", FileAccess.READ)
+	if n_file:
+		var n_text = n_file.get_as_text()
+		var n_json_inst = JSON.new()
+		if n_json_inst.parse(n_text) == OK:
+			state_neighbors = n_json_inst.data
 		
 	var geo_json = load("res://state_geography.json") as JSON
 	var geo_data = {}
@@ -194,6 +210,13 @@ func _ready():
 	add_child(countries_layer)
 	countries_layer.setup()
 	
+	var paths_layer = Node2D.new()
+	paths_layer.name = "ArmyPathsLayer"
+	paths_layer.z_index = 40
+	paths_layer.set_script(load("res://ArmyPathsLayer.gd"))
+	add_child(paths_layer)
+	paths_layer.set("main_node", self)
+	
 	fps_label = Label.new()
 	fps_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	fps_container.add_child(fps_label)
@@ -269,9 +292,9 @@ func get_state_owner(state_id: String) -> String:
 		return data_json[state_id].get("owner", "None")
 	return "None"
 
-func handle_click(world_pos: Vector2):
+func get_state_at_pos(world_pos: Vector2) -> int:
 	if not id_image:
-		return
+		return 0
 		
 	var px = int(floor(world_pos.x))
 	var py = int(floor(world_pos.y))
@@ -313,39 +336,44 @@ func handle_click(world_pos: Vector2):
 			var col = id_image.get_pixel(px, py)
 			final_s_id = int(round(col.r * 255.0)) + (int(round(col.g * 255.0)) << 8) + (int(round(col.b * 255.0)) << 16)
 			
-		if final_s_id > 0:
-			var sid_str = str(final_s_id)
-			if data_json.has(sid_str):
-				var info = data_json[sid_str]
-				var st_owner = info.get("owner", "None")
+		return final_s_id
+	return 0
+
+func handle_click(world_pos: Vector2):
+	var final_s_id = get_state_at_pos(world_pos)
+	if final_s_id > 0:
+		var sid_str = str(final_s_id)
+		if data_json.has(sid_str):
+			var info = data_json[sid_str]
+			var st_owner = info.get("owner", "None")
+			
+			selected_prov_id = final_s_id
+			var mpc = get_node_or_null("MapPresentationController")
+			var mode_str = "STATES"
+			if mpc and mpc.current_mode == mpc.MapMode.COUNTRIES:
+				mode_str = "COUNTRIES"
 				
-				selected_prov_id = final_s_id
-				var mpc = get_node_or_null("MapPresentationController")
-				var mode_str = "STATES"
-				if mpc and mpc.current_mode == mpc.MapMode.COUNTRIES:
-					mode_str = "COUNTRIES"
-					
-				if mode_str == "STATES":
-					highlight_system.set_highlight(selected_prov_id, $VectorMap.current_lod, "STATES")
-					if game_hud: game_hud.show_state(final_s_id, st_owner)
-				else:
-					highlight_system.set_highlight(st_owner, $VectorMap.current_lod, "COUNTRIES")
-					if game_hud:
-						game_hud.show_country_sidebar(st_owner)
-				
-				if ui_panel.visible:
-					info_label.text = "State ID: %d\nOwner: %s\nMode: %s" % [final_s_id, str(st_owner), mode_str]
+			if mode_str == "STATES":
+				highlight_system.set_highlight(selected_prov_id, $VectorMap.current_lod, "STATES")
+				if game_hud: game_hud.show_state(final_s_id, st_owner)
 			else:
-				if ui_panel.visible:
-					ui_panel.visible = false
-				clear_state_selection()
-				if game_hud: game_hud.hide_state()
+				highlight_system.set_highlight(st_owner, $VectorMap.current_lod, "COUNTRIES")
+				if game_hud:
+					game_hud.show_country_sidebar(st_owner)
+			
+			if ui_panel.visible:
+				info_label.text = "State ID: %d\nOwner: %s\nMode: %s" % [final_s_id, str(st_owner), mode_str]
 		else:
-			# Clicked water
-			clear_state_selection()
-			if game_hud: game_hud.hide_state()
 			if ui_panel.visible:
 				ui_panel.visible = false
+			clear_state_selection()
+			if game_hud: game_hud.hide_state()
+	else:
+		# Clicked water
+		clear_state_selection()
+		if game_hud: game_hud.hide_state()
+		if ui_panel.visible:
+			ui_panel.visible = false
 
 func _on_map_mode_changed(new_mode):
 	# Clear selection when mode changes
@@ -471,15 +499,187 @@ func _on_army_clicked(army):
 	selected_army = army
 	selected_army.set_selected(true)
 	
-func start_combat(army_a, army_b):
+var active_battles = []
+
+func get_battle_for_army(army) -> Node:
+	for b in active_battles:
+		if is_instance_valid(b) and b.has_method("has_army") and b.has_army(army) and not b.is_ending:
+			return b
+	return null
+
+func join_or_start_combat(attacker, defender):
+	# Clean up invalid battles first
+	for i in range(active_battles.size() - 1, -1, -1):
+		if not is_instance_valid(active_battles[i]) or active_battles[i].is_ending:
+			active_battles.remove_at(i)
+
+	var b_def = get_battle_for_army(defender)
+	if b_def:
+		b_def.add_army(attacker)
+		return
+		
+	var b_att = get_battle_for_army(attacker)
+	if b_att:
+		b_att.add_army(defender)
+		return
+		
 	var battle = load("res://Battle.gd").new()
-	battle.setup(army_a, army_b)
+	battle.setup(attacker, defender)
 	add_child(battle)
+	active_battles.append(battle)
 	
+func get_state_center(state_id: String) -> Vector2:
+	var pos = Vector2(0, 0)
+	if highlight_system.state_polygons_data.has(state_id):
+		var c_data = highlight_system.state_polygons_data[state_id]
+		if c_data.has("lod0") and c_data["lod0"].size() > 0:
+			var poly = c_data["lod0"][0]
+			for pt in poly: pos += Vector2(pt[0], pt[1])
+			pos /= poly.size()
+	return pos
+
+func force_diplomacy_redraw():
+	var dmap = get_node_or_null("DiplomacyMap")
+	if dmap:
+		dmap.queue_redraw()
+
+func find_path_to_home(start_sid: String, owner_tag: String, allowed_passage_tag: String) -> Array:
+	var owner = get_state_owner(start_sid)
+	if owner == owner_tag: return [] # Already home
+	
+	if not state_neighbors.has(start_sid): return []
+	
+	var q = [start_sid]
+	var visited = {start_sid: true}
+	var parent = {}
+	
+	var head = 0
+	var found_target = ""
+	
+	while head < q.size():
+		var curr = q[head]
+		head += 1
+		
+		if get_state_owner(curr) == owner_tag:
+			found_target = curr
+			break
+			
+		if state_neighbors.has(curr):
+			for n in state_neighbors[curr]:
+				var n_str = str(n)
+				if not visited.has(n_str):
+					var n_owner = get_state_owner(n_str)
+					# Realism: Army can only march through the country they just made peace with (allowed_passage_tag)
+					# or their own country. They cannot violate neutrality of third parties.
+					if n_owner == owner_tag or n_owner == allowed_passage_tag:
+						visited[n_str] = true
+						parent[n_str] = curr
+						q.append(n_str)
+					
+	if found_target == "": return []
+	
+	var path = []
+	var curr = found_target
+	while curr != start_sid:
+		path.append(curr)
+		curr = parent[curr]
+	path.reverse()
+	
+	var path_vectors = []
+	for s in path:
+		path_vectors.append(get_state_center(s))
+		
+	return path_vectors
+
+func find_path(start_sid: String, target_sid: String, owner_tag: String, allowed_passage_tag: String = "") -> Array:
+	if start_sid == target_sid: return []
+	
+	if not state_neighbors.has(start_sid) or not state_neighbors.has(target_sid): return []
+	
+	var q = [start_sid]
+	var visited = {start_sid: true}
+	var parent = {}
+	
+	var head = 0
+	var found = false
+	while head < q.size():
+		var curr = q[head]
+		head += 1
+		if curr == target_sid:
+			found = true
+			break
+			
+		if state_neighbors.has(curr):
+			for n in state_neighbors[curr]:
+				var n_str = str(n)
+				if not visited.has(n_str):
+					var n_owner = get_state_owner(n_str)
+					var rel = game_session.get_relation(owner_tag, n_owner)
+					if rel == "OWN" or rel == "WAR" or (allowed_passage_tag != "" and n_owner == allowed_passage_tag):
+						visited[n_str] = true
+						parent[n_str] = curr
+						q.append(n_str)
+	if not found:
+		return []
+		
+	var path = []
+	var curr = target_sid
+	while curr != start_sid:
+		path.append(curr)
+		curr = parent[curr]
+	path.reverse()
+	
+	var path_vectors = []
+	for s in path:
+		path_vectors.append(get_state_center(s))
+		
+	return path_vectors
+
 func _unhandled_input(event):
 	# Move selected army on right click
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 		if selected_army and not selected_army.in_combat:
+			var target_pos = get_global_mouse_position()
+			var target_sid = get_state_at_pos(target_pos)
+			
+			if target_sid == 0:
+				# Clicked on water or void
+				return
+				
+			var target_sid_str = str(target_sid)
+			var start_sid = str(get_state_at_pos(selected_army.position))
+			
+			var target_owner = get_state_owner(target_sid_str)
+			var owner_tag = selected_army.owner_tag
+			
+			# Ensure we can enter the target state at all
+			var target_rel = game_session.get_relation(owner_tag, target_owner)
+			if target_rel != "OWN" and target_rel != "WAR":
+				# Not allowed to enter
+				var dialog = AcceptDialog.new()
+				if target_owner == "None" or target_owner == "":
+					dialog.dialog_text = "Флот пока не реализован. Нельзя перемещать армию по воде или пустошам."
+				else:
+					dialog.dialog_text = "Дипломатический инцидент!\nНельзя вторгаться на территорию страны " + target_owner + " без объявления войны."
+				add_child(dialog)
+				dialog.popup_centered()
+				return
+				
+			var allowed_passage = ""
+			var start_owner = get_state_owner(start_sid)
+			if start_owner != owner_tag and start_owner != "None" and start_owner != "":
+				allowed_passage = start_owner
+				
+			var path = find_path(start_sid, target_sid_str, owner_tag, allowed_passage)
+			
+			if path.is_empty() and start_sid != target_sid_str:
+				# No route
+				var dialog = AcceptDialog.new()
+				dialog.dialog_text = "Нет пути к цели! Армия заблокирована нейтральными территориями или водой."
+				add_child(dialog)
+				dialog.popup_centered()
+				return
+				
 			var target_found = null
 			for army in active_armies:
 				if army != selected_army and army.owner_tag != selected_army.owner_tag and army.is_visible_in_tree():
@@ -490,16 +690,20 @@ func _unhandled_input(event):
 					if click_rect.has_point(local_mouse):
 						target_found = army
 						break
+			
 			if target_found:
 				selected_army.target_army = target_found
-				selected_army.target_pos = target_found.position
-				selected_army.is_moving = true
-				selected_army.in_combat = false
 			else:
 				selected_army.target_army = null
-				selected_army.target_pos = get_global_mouse_position()
-				selected_army.is_moving = true
-				selected_army.in_combat = false
+				
+			selected_army.path = path
+			if selected_army.path.size() > 0:
+				selected_army.target_pos = selected_army.path.pop_front()
+			else:
+				selected_army.target_pos = target_pos
+				
+			selected_army.is_moving = true
+			selected_army.in_combat = false
 	# Original unhandled input
 	var focus_owner = get_viewport().gui_get_focus_owner()
 	var in_text_input = focus_owner is LineEdit or focus_owner is TextEdit

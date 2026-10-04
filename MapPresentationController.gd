@@ -10,7 +10,8 @@ enum MapMode {
 
 enum MapTheme {
 	POLITICAL,
-	RESOURCES
+	RESOURCES,
+	DIPLOMACY
 }
 
 var current_theme: MapTheme = MapTheme.POLITICAL
@@ -46,6 +47,8 @@ func _process(_delta):
 	
 	if current_theme == MapTheme.RESOURCES:
 		new_mode = MapMode.STATES
+	elif current_theme == MapTheme.DIPLOMACY:
+		new_mode = MapMode.COUNTRIES
 	else:
 		if overview_ratio > countries_threshold:
 			new_mode = MapMode.COUNTRIES
@@ -63,6 +66,11 @@ func _process(_delta):
 		capital_stars_alpha = 0.0
 		internal_borders_alpha = 1.0
 		army_flags_alpha = 1.0
+	elif current_theme == MapTheme.DIPLOMACY:
+		country_labels_alpha = 1.0
+		capital_stars_alpha = 1.0
+		internal_borders_alpha = 0.0
+		army_flags_alpha = 0.0
 	else:
 		country_labels_alpha = fade
 		capital_stars_alpha = 1.0 - fade

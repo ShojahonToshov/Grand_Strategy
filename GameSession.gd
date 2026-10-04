@@ -24,6 +24,62 @@ var completed_buildings: Dictionary = {}
 var mobilization_orders: Dictionary = {}
 var armies: Array = []
 
+var diplomacy_relations: Dictionary = {} # tag -> { tag2: "WAR" / "PEACE" }
+
+func get_relation(tag1: String, tag2: String) -> String:
+	if tag1 == tag2: return "OWN"
+	if diplomacy_relations.has(tag1) and diplomacy_relations[tag1].has(tag2):
+		return diplomacy_relations[tag1][tag2]
+	return "PEACE"
+
+func declare_war(attacker: String, defender: String):
+	if not diplomacy_relations.has(attacker): diplomacy_relations[attacker] = {}
+	if not diplomacy_relations.has(defender): diplomacy_relations[defender] = {}
+	diplomacy_relations[attacker][defender] = "WAR"
+	diplomacy_relations[defender][attacker] = "WAR"
+	# emit signal if needed, e.g., diplomacy_changed
+	print("WAR DECLARED: ", attacker, " vs ", defender)
+
+func make_peace(attacker: String, defender: String):
+	if diplomacy_relations.has(attacker) and diplomacy_relations[attacker].has(defender):
+		diplomacy_relations[attacker][defender] = "PEACE"
+	if diplomacy_relations.has(defender) and diplomacy_relations[defender].has(attacker):
+		diplomacy_relations[defender][attacker] = "PEACE"
+	print("PEACE MADE: ", attacker, " and ", defender)
+	
+	if main_node and main_node.get("active_armies") != null:
+		for army in main_node.active_armies:
+			if army.owner_tag == attacker or army.owner_tag == defender:
+				if army.target_army and (army.target_army.owner_tag == attacker or army.target_army.owner_tag == defender):
+					army.target_army = null
+				
+				army.in_combat = false
+				
+				var current_sid = army.state_id
+				var current_owner = main_node.get_state_owner(current_sid)
+				if current_owner != army.owner_tag and current_owner != "None" and current_owner != "":
+					# Stranded in foreign territory - EXILE RETURN!
+					if main_node.has_method("find_path_to_home"):
+						# Pass current_owner so they can only walk through the country they were just fighting.
+						var escape_path = main_node.find_path_to_home(current_sid, army.owner_tag, current_owner)
+						if escape_path.size() > 0:
+							army.path = escape_path
+							army.target_pos = escape_path.pop_front()
+							army.is_moving = true
+							print("EXILE: Routing army home for ", army.owner_tag)
+						else:
+							army.path.clear()
+							army.target_pos = army.position
+							army.is_moving = false
+					else:
+						army.path.clear()
+						army.target_pos = army.position
+						army.is_moving = false
+				else:
+					army.path.clear()
+					army.target_pos = army.position
+					army.is_moving = false
+
 var main_node: Node
 var last_payout_day: int = 0
 
@@ -49,6 +105,33 @@ func _process(delta: float):
 
 func tick_hour():
 	current_hours += 1
+	
+	# Army Exile Attrition Logic
+	if main_node and main_node.get("active_armies") != null:
+		for army in main_node.active_armies:
+			if army.get("is_dying") and army.is_dying: continue
+			
+			var current_sid = army.state_id
+			var current_owner = main_node.get_state_owner(current_sid)
+			
+			# If on water or own territory, reset exile. 
+			if current_owner == army.owner_tag or current_owner == "None" or current_owner == "":
+				if "exile_hours" in army: army.exile_hours = 0
+			else:
+				var rel = get_relation(army.owner_tag, current_owner)
+				# If at war or allied, they are supplied. If peace, they are in exile.
+				if rel == "PEACE":
+					if "exile_hours" in army:
+						army.exile_hours += 1
+						
+						# Grace period of 14 days = 336 hours
+						if army.exile_hours > 336:
+							# Suffer 0.5% attrition per hour (about 12% per day)
+							var attrition = max(1, int(army.population * 0.005))
+							if army.has_method("apply_attrition"):
+								army.apply_attrition(attrition)
+				else:
+					if "exile_hours" in army: army.exile_hours = 0
 	
 	# Check day boundary
 	var current_day = current_hours / 24

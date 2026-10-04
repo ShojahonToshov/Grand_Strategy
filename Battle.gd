@@ -1,7 +1,10 @@
 extends Node2D
 
-var army_a
-var army_b
+var side_a_armies: Array = []
+var side_b_armies: Array = []
+
+var side_a_tag: String
+var side_b_tag: String
 
 var prog: float = 0.5 
 var duration_hours_passed: float = 0.0
@@ -15,20 +18,31 @@ var lbl_b: Label
 var is_ending: bool = false
 var end_timer: float = 0.0
 
-func setup(a, b):
-	army_a = a
-	army_b = b
+func setup(first_a, first_b):
+	side_a_armies.append(first_a)
+	side_b_armies.append(first_b)
 	
-	color_a = get_tag_color(army_a.owner_tag)
-	color_b = get_tag_color(army_b.owner_tag)
+	first_a.in_combat = true
+	first_a.is_moving = false
+	first_a.target_army = null
+	
+	first_b.in_combat = true
+	first_b.is_moving = false
+	first_b.target_army = null
+	
+	side_a_tag = first_a.owner_tag
+	side_b_tag = first_b.owner_tag
+	
+	color_a = get_tag_color(side_a_tag)
+	color_b = get_tag_color(side_b_tag)
 	
 	scale = Vector2(0.25, 0.25)
-	position = (army_a.position + army_b.position) / 2.0
-	position.y -= 18 # closer to flags
+	
+	position = first_b.position
+	position.y -= 25
 	
 	z_index = 60
 	
-	# Setup labels using high font size and internal downscaling for crispness
 	var ls = LabelSettings.new()
 	ls.font_size = 32
 	ls.font_color = Color(1, 1, 1)
@@ -58,6 +72,19 @@ func get_tag_color(tag: String) -> Color:
 	if tag == "ENG": return Color(0.8, 0.1, 0.1)
 	return Color(0.5, 0.5, 0.5)
 
+func has_army(army) -> bool:
+	return side_a_armies.has(army) or side_b_armies.has(army)
+
+func add_army(army):
+	if army.owner_tag == side_a_tag:
+		if not side_a_armies.has(army): side_a_armies.append(army)
+	else:
+		if not side_b_armies.has(army): side_b_armies.append(army)
+		
+	army.in_combat = true
+	army.is_moving = false
+	army.target_army = null
+
 func _process(delta):
 	if is_ending:
 		end_timer += delta
@@ -66,9 +93,29 @@ func _process(delta):
 			queue_free()
 		return
 		
-	if not is_instance_valid(army_a) or not is_instance_valid(army_b):
-		queue_free()
+	# Clean up dead or invalid armies
+	for i in range(side_a_armies.size() - 1, -1, -1):
+		if not is_instance_valid(side_a_armies[i]) or side_a_armies[i].is_dying or not side_a_armies[i].in_combat:
+			if is_instance_valid(side_a_armies[i]): side_a_armies[i].in_combat = false
+			side_a_armies.remove_at(i)
+			
+	for i in range(side_b_armies.size() - 1, -1, -1):
+		if not is_instance_valid(side_b_armies[i]) or side_b_armies[i].is_dying or not side_b_armies[i].in_combat:
+			if is_instance_valid(side_b_armies[i]): side_b_armies[i].in_combat = false
+			side_b_armies.remove_at(i)
+			
+	if side_a_armies.size() == 0 or side_b_armies.size() == 0:
+		end_battle()
 		return
+		
+	# Arrange visually
+	for i in range(side_a_armies.size()):
+		var a = side_a_armies[i]
+		a.combat_pos = position + Vector2(-12.0 - (i*24.0), 25.0)
+		
+	for i in range(side_b_armies.size()):
+		var b = side_b_armies[i]
+		b.combat_pos = position + Vector2(12.0 + (i*24.0), 25.0)
 		
 	var main = get_tree().current_scene
 	var gs = main.get_node_or_null("GameSession")
@@ -80,29 +127,41 @@ func _process(delta):
 	
 	duration_hours_passed += hours
 	
-	var a_pop = float(army_a.population)
-	var b_pop = float(army_b.population)
+	var a_pop = 0.0
+	for a in side_a_armies: a_pop += float(a.population)
 	
-	var a_dmg = (b_pop * 0.05) * (hours / 24.0)
-	var b_dmg = (a_pop * 0.05) * (hours / 24.0)
+	var b_pop = 0.0
+	for b in side_b_armies: b_pop += float(b.population)
 	
-	army_a.population = max(0, int(a_pop - a_dmg))
-	army_b.population = max(0, int(b_pop - b_dmg))
+	# Distribute damage proportionally
+	var a_dmg_total = (b_pop * 0.05) * (hours / 24.0)
+	var b_dmg_total = (a_pop * 0.05) * (hours / 24.0)
 	
-	var total = float(army_a.population + army_b.population)
+	for a in side_a_armies:
+		var ratio = float(a.population) / max(a_pop, 1.0)
+		a.population = max(0, int(a.population - (a_dmg_total * ratio)))
+		a.set_data(a.state_id, a.population, a.owner_tag)
+		if a.population <= 0:
+			a.die()
+			
+	for b in side_b_armies:
+		var ratio = float(b.population) / max(b_pop, 1.0)
+		b.population = max(0, int(b.population - (b_dmg_total * ratio)))
+		b.set_data(b.state_id, b.population, b.owner_tag)
+		if b.population <= 0:
+			b.die()
+			
+	var new_a_pop = 0.0
+	for a in side_a_armies: new_a_pop += float(a.population)
+	var new_b_pop = 0.0
+	for b in side_b_armies: new_b_pop += float(b.population)
+	
+	var total = new_a_pop + new_b_pop
 	if total > 0:
-		prog = float(army_a.population) / total
+		prog = new_a_pop / total
 		
-	army_a.set_data(army_a.state_id, army_a.population, army_a.owner_tag)
-	army_b.set_data(army_b.state_id, army_b.population, army_b.owner_tag)
-	
 	_update_labels()
 	queue_redraw()
-	
-	if army_a.population <= 0:
-		end_battle(army_b, army_a)
-	elif army_b.population <= 0:
-		end_battle(army_a, army_b)
 
 func _update_labels():
 	var pct_a = round(prog * 100.0)
@@ -120,12 +179,16 @@ func _update_labels():
 	lbl_b.size = Vector2(bar_w / 2 - 4, bar_h) * 4.0
 	lbl_b.position = Vector2(2, -bar_h/2)
 
-func end_battle(winner, loser):
+func end_battle():
 	is_ending = true
-	winner.in_combat = false
-	winner.target_army = null
-	if loser.has_method("die"):
-		loser.die()
+	for a in side_a_armies:
+		if is_instance_valid(a):
+			a.in_combat = false
+			a.target_army = null
+	for b in side_b_armies:
+		if is_instance_valid(b):
+			b.in_combat = false
+			b.target_army = null
 
 func _draw():
 	var bar_w = 70.0

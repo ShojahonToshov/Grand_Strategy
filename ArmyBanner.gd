@@ -5,6 +5,7 @@ var population: int
 var owner_tag: String
 var selected: bool = false
 var target_pos: Vector2
+var path: Array = []
 
 var is_moving: bool = false
 var move_speed: float = 150.0
@@ -14,6 +15,8 @@ var combat_pos: Vector2
 
 var is_dying: bool = false
 var death_timer: float = 0.0
+
+var exile_hours: int = 0
 
 signal clicked(army)
 
@@ -61,6 +64,23 @@ func set_data(p_state_id, p_pop, p_owner):
 	_update_label_text()
 	queue_redraw()
 
+var attrition_tween: Tween
+
+func apply_attrition(amount: int):
+	if is_dying: return
+	population -= amount
+	if population <= 0:
+		population = 0
+		die()
+	else:
+		_update_label_text()
+		# Flash red to indicate starvation/desertion
+		modulate = Color(1.0, 0.5, 0.5)
+		if attrition_tween:
+			attrition_tween.kill()
+		attrition_tween = get_tree().create_tween()
+		attrition_tween.tween_property(self, "modulate", Color(1.0, 1.0, 1.0), 0.5)
+
 func _update_label_text():
 	var pop_str = ""
 	if population >= 1000000:
@@ -105,40 +125,42 @@ func _process(delta):
 		var game_hours_passed = delta * game_speed
 		var step_dist = realistic_speed_km_per_hour * game_hours_passed
 		
-		if target_army != null and is_instance_valid(target_army):
+		if target_army != null and is_instance_valid(target_army) and path.is_empty():
+			# If we have no path left and are tracking an army
 			target_pos = target_army.position
 			
 		var dist = position.distance_to(target_pos)
 		
-		if target_army != null and is_instance_valid(target_army) and dist < 20.0:
+		var dist_to_enemy = 9999.0
+		if target_army != null and is_instance_valid(target_army):
+			dist_to_enemy = position.distance_to(target_army.position)
+		
+		if target_army != null and is_instance_valid(target_army) and dist_to_enemy < 20.0 and path.is_empty():
 			# Enter combat
 			is_moving = false
-			in_combat = true
-			target_army.is_moving = false
-			target_army.in_combat = true
-			target_army.target_army = self
 			
-			# Setup combat positions based on who is on which side
-			var center = (position + target_army.position) / 2.0
-			var offset_x = 6.0
-			
-			if position.x <= target_army.position.x:
-				self.combat_pos = center + Vector2(-offset_x, 0)
-				target_army.combat_pos = center + Vector2(offset_x, 0)
-			else:
-				self.combat_pos = center + Vector2(offset_x, 0)
-				target_army.combat_pos = center + Vector2(-offset_x, 0)
-			
-			if main.has_method("start_combat"):
-				main.start_combat(self, target_army)
+			if main.has_method("join_or_start_combat"):
+				main.join_or_start_combat(self, target_army)
 			return
 			
 		if dist <= step_dist or dist < 0.1:
 			position = target_pos
-			is_moving = false
+			if path.size() > 0:
+				target_pos = path.pop_front()
+			else:
+				is_moving = false
+			
+			var current_s_id = main.get_state_at_pos(position)
+			if current_s_id > 0:
+				state_id = str(current_s_id)
 		else:
 			var dir = (target_pos - position).normalized()
 			position += dir * step_dist
+			
+		# Update state_id logically as we traverse
+		var current_s_id = main.get_state_at_pos(position)
+		if current_s_id > 0:
+			state_id = str(current_s_id)
 
 func _draw():
 	# Dimensions exactly matching the reference
