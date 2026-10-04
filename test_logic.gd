@@ -52,11 +52,11 @@ func create_test_session() -> Node:
 		"FRA_gold": {"owner": "FRA", "population": 1000},
 		"FRA_iron": {"owner": "FRA", "population": 1000},
 		"FRA_none": {"owner": "FRA", "population": 1000},
-		"FRA_steel": {"owner": "FRA", "population": 1000},
+		"FRA_bronze": {"owner": "FRA", "population": 1000},
 		"FRA_uni": {"owner": "FRA", "population": 1000},
 		"GER_wood": {"owner": "GER", "population": 1000},
 		"FRA_iron2": {"owner": "FRA", "population": 1000},
-		"FRA_steel2": {"owner": "FRA", "population": 1000}
+		"FRA_bronze2": {"owner": "FRA", "population": 1000}
 	}
 	for k in main.states_data.keys():
 		main.owners[k] = main.states_data[k]["owner"]
@@ -66,8 +66,8 @@ func create_test_session() -> Node:
 	main.resources["FRA_gold"] = 1 
 	main.resources["FRA_iron"] = 3 
 	main.resources["FRA_iron2"] = 3 
-	main.resources["FRA_steel"] = 0 
-	main.resources["FRA_steel2"] = 0 
+	main.resources["FRA_bronze"] = 0 
+	main.resources["FRA_bronze2"] = 0 
 	main.resources["FRA_uni"] = 0 
 	main.resources["FRA_none"] = 0 
 	
@@ -87,10 +87,10 @@ func _init():
 		ok = check_eq(session.wood, BalanceConfig.START_WOOD, "Start wood") and ok
 		ok = check_eq(session.gold, BalanceConfig.START_GOLD, "Start gold") and ok
 		ok = check_eq(session.iron, BalanceConfig.START_IRON, "Start iron") and ok
-		ok = check_eq(session.steel, BalanceConfig.START_STEEL, "Start steel") and ok
+		ok = check_eq(session.bronze, BalanceConfig.START_BRONZE, "Start bronze") and ok
 		ok = check_eq(session.science, BalanceConfig.START_SCIENCE, "Start science") and ok
 		ok = check_eq(session.is_paused, true, "Start paused") and ok
-		ok = check_eq(session.get_date_string(), "01.01.1936, 00:00", "Start date") and ok
+		ok = check_eq(session.get_date_string(), "01.01.1700, 00:00", "Start date") and ok
 		
 		session.main_node.resource_distribution.free()
 		session.main_node.free(); session.free()
@@ -112,7 +112,7 @@ func _init():
 	run_test("Building - lacks resources", func():
 		var session = create_test_session()
 		var ok = true
-		# Gold mine costs wood and money. Iron mine too. Steel mill too.
+		# Gold mine costs wood and money. Iron mine too. Bronze mill too.
 		var cost_m = BalanceConfig.GOLD_MINE_COST_MONEY
 		var cost_w = BalanceConfig.GOLD_MINE_COST_WOOD
 		var cost_g = BalanceConfig.GOLD_MINE_COST_GOLD
@@ -146,9 +146,9 @@ func _init():
 		else:
 			print("  -> Info: Gold shortage check not applicable (cost is 0)")
 			
-		# Test Iron/Steel shortage (not applicable for construction per BalanceConfig, but checking if there's any building that uses it)
-		# No building uses iron or steel for construction right now.
-		print("  -> Info: Iron/Steel shortage check not applicable")
+		# Test Iron/Bronze shortage (not applicable for construction per BalanceConfig, but checking if there's any building that uses it)
+		# No building uses iron or bronze for construction right now.
+		print("  -> Info: Iron/Bronze shortage check not applicable")
 			
 		
 		session.main_node.resource_distribution.free()
@@ -404,39 +404,39 @@ func _init():
 		return ok
 	)
 	
-	run_test("Economy - Steel Mill Consumption", func():
+	run_test("Economy - Bronze Foundry Consumption", func():
 		var session = create_test_session()
 		var ok = true
 		session.tax_rate = 0.0
 		
-		session.completed_buildings["FRA_steel"] = {"type": "STEEL_MILL", "completed_hour": 0}
+		session.completed_buildings["FRA_bronze"] = {"type": "BRONZE_FOUNDRY", "completed_hour": 0}
 		
 		session.iron = 0.0
-		session.steel = 0.0
+		session.bronze = 0.0
 		
 		session.is_paused = false
 		session._process(24.0)
 		
 		ok = check_eq(session.iron, 0.0, "Iron should not go negative") and ok
-		ok = check_eq(session.steel, 0.0, "No steel produced without iron") and ok
+		ok = check_eq(session.bronze, 0.0, "No bronze produced without iron") and ok
 		
-		session.iron = BalanceConfig.STEEL_MILL_CONS_IRON
+		session.iron = BalanceConfig.BRONZE_FOUNDRY_CONS_IRON
 		session._process(24.0)
 		ok = check_eq(session.iron, 0.0, "Iron consumed exactly") and ok
-		ok = check_eq(session.steel, BalanceConfig.STEEL_MILL_PROD_STEEL, "Steel produced") and ok
+		ok = check_eq(session.bronze, BalanceConfig.BRONZE_FOUNDRY_PROD_BRONZE, "Bronze produced") and ok
 		
-		session.completed_buildings["FRA_steel2"] = {"type": "STEEL_MILL", "completed_hour": session.current_hours}
-		session.iron = BalanceConfig.STEEL_MILL_CONS_IRON
-		session.steel = 0.0
+		session.completed_buildings["FRA_bronze2"] = {"type": "BRONZE_FOUNDRY", "completed_hour": session.current_hours}
+		session.iron = BalanceConfig.BRONZE_FOUNDRY_CONS_IRON
+		session.bronze = 0.0
 		session._process(24.0)
 		ok = check_eq(session.iron, 0.0, "Iron consumed once") and ok
-		ok = check_eq(session.steel, BalanceConfig.STEEL_MILL_PROD_STEEL, "Only one mill produced") and ok
+		ok = check_eq(session.bronze, BalanceConfig.BRONZE_FOUNDRY_PROD_BRONZE, "Only one mill produced") and ok
 		
-		session.iron = BalanceConfig.STEEL_MILL_CONS_IRON * 2
-		session.steel = 0.0
+		session.iron = BalanceConfig.BRONZE_FOUNDRY_CONS_IRON * 2
+		session.bronze = 0.0
 		session._process(24.0)
 		ok = check_eq(session.iron, 0.0, "Iron consumed twice") and ok
-		ok = check_eq(session.steel, BalanceConfig.STEEL_MILL_PROD_STEEL * 2, "Both mills produced") and ok
+		ok = check_eq(session.bronze, BalanceConfig.BRONZE_FOUNDRY_PROD_BRONZE * 2, "Both mills produced") and ok
 		
 		
 		session.main_node.resource_distribution.free()
@@ -506,18 +506,18 @@ func _init():
 		var ok = true
 		session.is_paused = false
 		
-		# Feb 28 1936 -> day 58. (Jan=31 + 27 = 58)
+		# Feb 28 1700 -> day 58. (Jan=31 + 27 = 58)
 		session.current_hours = 58 * 24 
-		ok = check_eq(session.get_date_string(), "28.02.1936, 00:00", "Feb 28") and ok
+		ok = check_eq(session.get_date_string(), "28.02.1700, 00:00", "Feb 28") and ok
 		
 		session.current_hours += 24
-		ok = check_eq(session.get_date_string(), "29.02.1936, 00:00", "Feb 29 (Leap year)") and ok
+		ok = check_eq(session.get_date_string(), "01.03.1700, 00:00", "Mar 1 (Not leap year)") and ok
 		
 		session.current_hours += 24
-		ok = check_eq(session.get_date_string(), "01.03.1936, 00:00", "Mar 1") and ok
+		ok = check_eq(session.get_date_string(), "02.03.1700, 00:00", "Mar 2") and ok
 		
-		session.current_hours = 366 * 24 - 24
-		ok = check_eq(session.get_date_string(), "31.12.1936, 00:00", "Dec 31") and ok
+		session.current_hours = 365 * 24 - 24
+		ok = check_eq(session.get_date_string(), "31.12.1700, 00:00", "Dec 31") and ok
 		
 		session.current_hours += 24
 		ok = check_eq(session.get_date_string(), "01.01.1937, 00:00", "Jan 1, 1937") and ok

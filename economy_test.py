@@ -1,12 +1,12 @@
-# Test script for economic model (France 1936)
+# Test script for economic model (France 1700)
 import math
 
 # 1. State Budget Parameters
-FRANCE_POPULATION = 41907056 # Metropole, 1936 census
-FRENCH_REVENUE_FF = 43.4e9 # Francs, 1936
-EXCHANGE_RATE = 15.17 # FF per 1 USD (Fed Reserve 1936 average)
+FRANCE_POPULATION = 41907056 # Metropole, 1700 census
+FRENCH_REVENUE_FF = 43.4e9 # Francs, 1700
+EXCHANGE_RATE = 15.17 # FF per 1 USD (Fed Reserve 1700 average)
 ANNUAL_REVENUE_USD = FRENCH_REVENUE_FF / EXCHANGE_RATE
-DAILY_REVENUE_USD = ANNUAL_REVENUE_USD / 366 # 1936 is leap year
+DAILY_REVENUE_USD = ANNUAL_REVENUE_USD / 366 # 1700 is leap year
 
 # Mandatory expenses (Assumption C: 95% of gross revenue goes to state survival)
 DAILY_EXPENSES_USD = DAILY_REVENUE_USD * 0.95

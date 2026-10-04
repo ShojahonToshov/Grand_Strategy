@@ -51,7 +51,7 @@ def main():
     except FileNotFoundError:
         capitals = {}
 
-    with open('data/scenarios/1936/population_sources.json', 'r', encoding='utf-8') as f:
+    with open('data/scenarios/1700/population_sources.json', 'r', encoding='utf-8') as f:
         sources = json.load(f)
 
     # Group states by owner, with split for FRA/ENG metropoles
@@ -85,9 +85,9 @@ def main():
     
     for tag, s_list in owner_states.items():
         if tag in sources:
-            target_pop = sources[tag]["population_1936"]
+            target_pop = sources[tag]["population_1700"]
         elif tag == "FRA_METRO":
-            target_pop = 41907056 # 1936 census
+            target_pop = 41907056 # 1700 census
         elif tag == "FRA_COLONY":
             target_pop = 65000000 # Estimate
         elif tag == "ENG_METRO":
@@ -100,7 +100,7 @@ def main():
             
         capital_id = capitals.get(tag[:3], {}).get("state_id", None)
         
-        allocs = distribute_population(target_pop, s_list, capital_id, f"pop_{tag}_1936")
+        allocs = distribute_population(target_pop, s_list, capital_id, f"pop_{tag}_1700")
         
         for sid, pop in allocs.items():
             result[sid] = {
@@ -109,7 +109,7 @@ def main():
                 "owner": states[sid]["owner"]
             }
 
-    with open('data/scenarios/1936/population_mapping.json', 'w', encoding='utf-8') as f:
+    with open('data/scenarios/1700/population_mapping.json', 'w', encoding='utf-8') as f:
         json.dump(result, f, indent=2)
 
     if missing_data_tags:

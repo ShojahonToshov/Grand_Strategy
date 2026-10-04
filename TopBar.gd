@@ -1,9 +1,5 @@
 extends PanelContainer
 
-
-
-@onready var time_label = $Margin/HBox/RightBox/Date
-@onready var pause_btn = $Margin/HBox/RightBox/TimeControls/Pause
 var speed_btns = []
 var session: Node
 
@@ -18,24 +14,21 @@ func _ready():
 			if ui_data.has("countries") and ui_data["countries"].has(player_tag):
 				country_name = ui_data["countries"][player_tag]
 				
-	var title_lbl = $Margin/HBox/LeftBox/Title
-	title_lbl.text = country_name
-	title_lbl.mouse_filter = Control.MOUSE_FILTER_STOP
-	title_lbl.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-	title_lbl.gui_input.connect(func(event):
+	%Title.text = country_name
+	%Title.mouse_filter = Control.MOUSE_FILTER_STOP
+	%Title.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	%Title.gui_input.connect(func(event):
 		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			_show_country_modal(player_tag, country_name)
 	)
 	
-	# The setup_session will handle data
+	speed_btns.append(%Speed1)
+	speed_btns.append(%Speed2)
+	speed_btns.append(%Speed3)
+	speed_btns.append(%Speed4)
+	speed_btns.append(%Speed5)
 	
-	speed_btns.append($Margin/HBox/RightBox/TimeControls/Speed1)
-	speed_btns.append($Margin/HBox/RightBox/TimeControls/Speed2)
-	speed_btns.append($Margin/HBox/RightBox/TimeControls/Speed3)
-	speed_btns.append($Margin/HBox/RightBox/TimeControls/Speed4)
-	speed_btns.append($Margin/HBox/RightBox/TimeControls/Speed5)
-	
-	pause_btn.pressed.connect(func():
+	%Pause.pressed.connect(func():
 		if session:
 			session.is_paused = not session.is_paused
 			session.time_changed.emit()
@@ -49,7 +42,6 @@ func _ready():
 				session.time_changed.emit()
 		)
 		
-	# Wait one frame for Main to be ready
 	call_deferred("setup_session")
 
 func setup_session():
@@ -63,19 +55,17 @@ func setup_session():
 func update_time_ui():
 	if not session: return
 	
-	# The user asked to format date properly and separate hours if needed.
 	var ds = session.get_date_string()
 	if ", " in ds:
-		# e.g., "01.01.1936, 00:00" -> separate date and time.
 		var parts = ds.split(", ")
-		time_label.text = parts[0] + "   " + parts[1]
+		%Date.text = parts[0] + "   " + parts[1]
 	else:
-		time_label.text = ds
+		%Date.text = ds
 	
 	if session.is_paused:
-		pause_btn.add_theme_color_override("font_color", Color(1, 0.5, 0.5))
+		%Pause.add_theme_color_override("font_color", Color(1, 0.5, 0.5))
 	else:
-		pause_btn.remove_theme_color_override("font_color")
+		%Pause.remove_theme_color_override("font_color")
 		
 	for i in range(5):
 		if i == session.speed_idx and not session.is_paused:
@@ -98,15 +88,15 @@ func _format_res(val: float, allow_decimal: bool = false) -> String:
 
 func update_res_ui():
 	if not session: return
-	$Margin/HBox/CenterBox/Resources/Money/Label.text = _format_res(session.money)
-	$Margin/HBox/CenterBox/Resources/Gold/Label.text = _format_res(session.gold, true)
-	$Margin/HBox/CenterBox/Resources/Wood/Label.text = _format_res(session.wood)
-	$Margin/HBox/CenterBox/Resources/Science/Label.text = _format_res(session.science)
-	$Margin/HBox/CenterBox/Resources/Iron/Label.text = _format_res(session.iron)
-	$Margin/HBox/CenterBox/Resources/Steel/Label.text = _format_res(session.steel)
-	$Margin/HBox/CenterBox/Resources/Oil/Label.text = _format_res(session.oil)
-	
-	$Margin/HBox/CenterBox/Resources/Money.tooltip_text = "Деньги"
+	%MoneyLabel.text = _format_res(session.money)
+	%GoldLabel.text = _format_res(session.gold, true)
+	%WoodLabel.text = _format_res(session.wood)
+	%ScienceLabel.text = _format_res(session.science)
+	%IronLabel.text = _format_res(session.iron)
+	%BronzeLabel.text = _format_res(session.bronze)
+	%CanvasLabel.text = _format_res(session.canvas)
+	%GunpowderLabel.text = _format_res(session.gunpowder)
+	%ProvisionsLabel.text = _format_res(session.provisions)
 
 func _show_country_modal(tag: String, country_name: String):
 	var existing = get_tree().current_scene.get_node_or_null("CountryModalLayer")

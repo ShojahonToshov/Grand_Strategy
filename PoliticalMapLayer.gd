@@ -63,7 +63,7 @@ func setup(states_data: Dictionary):
 		precalc_polys[sid] = []
 		for p in final_polys:
 			if Geometry2D.triangulate_polygon(p).size() == 0:
-				var cleaned = Geometry2D.offset_polygon(p, 0.1, Geometry2D.JOIN_MITER)
+				var cleaned = Geometry2D.offset_polygon(p, 0.1, Geometry2D.JOIN_SQUARE)
 				for c in cleaned:
 					precalc_polys[sid].append(c)
 			else:
@@ -79,4 +79,48 @@ func _draw():
 		var color_arr = PackedColorArray([color])
 		
 		for p in polys:
-			draw_polygon(p, color_arr)
+			_draw_poly_safe(p, color)
+
+func _draw_poly_safe(p: PackedVector2Array, color: Color, node: CanvasItem = self):
+	var idx = Geometry2D.triangulate_polygon(p)
+	if idx.size() > 0:
+		var cols = PackedColorArray()
+		cols.resize(p.size())
+		cols.fill(color)
+		RenderingServer.canvas_item_add_triangle_array(node.get_canvas_item(), idx, p, cols)
+		return
+
+	# Fallback 1: Clean the polygon with 0 delta (removes self-intersections without shrinking)
+	var cleaned = Geometry2D.offset_polygon(p, 0.0, Geometry2D.JOIN_SQUARE)
+	if cleaned.size() == 0:
+		var p_rev = p.duplicate()
+		p_rev.reverse()
+		cleaned = Geometry2D.offset_polygon(p_rev, 0.0, Geometry2D.JOIN_SQUARE)
+		
+	var drew_anything = false
+	for c in cleaned:
+		var c_idx = Geometry2D.triangulate_polygon(c)
+		if c_idx.size() > 0:
+			var cols = PackedColorArray()
+			cols.resize(c.size())
+			cols.fill(color)
+			RenderingServer.canvas_item_add_triangle_array(node.get_canvas_item(), c_idx, c, cols)
+			drew_anything = true
+			
+	if drew_anything:
+		return
+		
+	# Fallback 2: Expand slightly (merges very close vertices that might be causing EarClipping failure)
+	var cleaned_01 = Geometry2D.offset_polygon(p, 0.1, Geometry2D.JOIN_SQUARE)
+	if cleaned_01.size() == 0:
+		var p_rev = p.duplicate()
+		p_rev.reverse()
+		cleaned_01 = Geometry2D.offset_polygon(p_rev, 0.1, Geometry2D.JOIN_SQUARE)
+		
+	for c in cleaned_01:
+		var c_idx = Geometry2D.triangulate_polygon(c)
+		if c_idx.size() > 0:
+			var cols = PackedColorArray()
+			cols.resize(c.size())
+			cols.fill(color)
+			RenderingServer.canvas_item_add_triangle_array(node.get_canvas_item(), c_idx, c, cols)

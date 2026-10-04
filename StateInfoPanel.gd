@@ -261,8 +261,8 @@ func update_data(region_name: String, owner_name: String, owner_color: Color, re
 			res_row.get_node("Icon").texture = load("res://assets/ui/resources/wood.png")
 		elif resource_name == "Железо":
 			res_row.get_node("Icon").texture = load("res://assets/ui/resources/iron.png")
-		elif resource_name == "Нефть":
-			res_row.get_node("Icon").texture = load("res://assets/ui/resources/oil.png")
+		elif resource_name == "Парусина":
+			res_row.get_node("Icon").texture = load("res://assets/ui/resources/canvas.png")
 		else:
 			res_row.get_node("Icon").texture = null
 		
@@ -301,25 +301,29 @@ func update_buildings(state_id: String, owner_name: String):
 		if b.type == "GOLD_MINE": b_name = "Золотая Шахта"
 		elif b.type == "LOGGING_CAMP": b_name = "Лесозаготовка"
 		elif b.type == "IRON_MINE": b_name = "Железный Рудник"
-		elif b.type == "STEEL_MILL": b_name = "Сталелитейный Завод"
+		elif b.type == "BRONZE_FOUNDRY": b_name = "Бронзолитейный Завод"
 		elif b.type == "UNIVERSITY": b_name = "Университет"
-		elif b.type == "OIL_RIG": b_name = "Нефтяная Вышка"
+		elif b.type == "WEAVER_WORKSHOP": b_name = "Мануфактура Парусины"
+		elif b.type == "FARM": b_name = "Ферма Провизии"
+		elif b.type == "POWDER_MILL": b_name = "Пороховой Завод"
 		title.text = b_name
 		title.add_theme_color_override("font_color", Color(0.8, 0.8, 0.85))
 		b_content.add_child(title)
 		
 		var status = Label.new()
 		var res_type = session.main_node.resource_distribution.get_resource_for_state(state_id)
-		var is_match = (b.type == "GOLD_MINE" and res_type == 1) or (b.type == "LOGGING_CAMP" and res_type == 2) or (b.type == "IRON_MINE" and res_type == 3) or (b.type == "OIL_RIG" and res_type == 4) or b.type == "STEEL_MILL" or b.type == "UNIVERSITY"
+		var is_match = (b.type == "GOLD_MINE" and res_type == 1) or (b.type == "LOGGING_CAMP" and res_type == 2) or (b.type == "IRON_MINE" and res_type == 3) or (b.type == "WEAVER_WORKSHOP" and res_type == 4) or b.type == "BRONZE_FOUNDRY" or b.type == "UNIVERSITY" or b.type == "FARM" or b.type == "POWDER_MILL"
 		if is_match:
 			var prod_val = 0.0
 
 			if b.type == "GOLD_MINE": prod_val = BalanceConfig.GOLD_MINE_PROD_GOLD
 			elif b.type == "LOGGING_CAMP": prod_val = BalanceConfig.LOGGING_CAMP_PROD_WOOD
 			elif b.type == "IRON_MINE": prod_val = BalanceConfig.IRON_MINE_PROD_IRON
-			elif b.type == "STEEL_MILL": prod_val = BalanceConfig.STEEL_MILL_PROD_STEEL
+			elif b.type == "BRONZE_FOUNDRY": prod_val = BalanceConfig.BRONZE_FOUNDRY_PROD_BRONZE
 			elif b.type == "UNIVERSITY": prod_val = BalanceConfig.UNIVERSITY_PROD_SCIENCE
-			elif b.type == "OIL_RIG": prod_val = BalanceConfig.OIL_RIG_PROD_OIL
+			elif b.type == "WEAVER_WORKSHOP": prod_val = BalanceConfig.WEAVER_WORKSHOP_PROD_CANVAS
+			elif b.type == "FARM": prod_val = BalanceConfig.FARM_PROD_PROVISIONS
+			elif b.type == "POWDER_MILL": prod_val = BalanceConfig.POWDER_MILL_PROD_GUNPOWDER
 			status.text = "Работает (Добыча: " + str(prod_val) + ")"
 			status.add_theme_color_override("font_color", Color(0.5, 1.0, 0.5))
 		else:
@@ -340,9 +344,11 @@ func update_buildings(state_id: String, owner_name: String):
 		if order.type == "GOLD_MINE": b_name = "Золотая Шахта"
 		elif order.type == "LOGGING_CAMP": b_name = "Лесозаготовка"
 		elif order.type == "IRON_MINE": b_name = "Железный Рудник"
-		elif order.type == "STEEL_MILL": b_name = "Сталелитейный Завод"
+		elif order.type == "BRONZE_FOUNDRY": b_name = "Бронзолитейный Завод"
 		elif order.type == "UNIVERSITY": b_name = "Университет"
-		elif order.type == "OIL_RIG": b_name = "Нефтяная Вышка"
+		elif order.type == "WEAVER_WORKSHOP": b_name = "Мануфактура Парусины"
+		elif order.type == "FARM": b_name = "Ферма Провизии"
+		elif order.type == "POWDER_MILL": b_name = "Пороховой Завод"
 		title.text = "Строится: " + b_name
 		b_content.add_child(title)
 		
@@ -390,27 +396,23 @@ func _show_build_modal(state_id: String):
 	var existing = get_tree().current_scene.get_node_or_null("BuildModalLayer")
 	if existing: existing.queue_free()
 
-	# Create a CanvasLayer so it stays on top of everything
 	var modal_layer = CanvasLayer.new()
 	modal_layer.name = "BuildModalLayer"
 	modal_layer.layer = 100
 	get_tree().current_scene.add_child(modal_layer)
 	
-	# Dark overlay background
 	var bg = ColorRect.new()
 	bg.color = Color(0, 0, 0, 0.5)
 	bg.set_anchors_preset(Control.PRESET_FULL_RECT)
 	modal_layer.add_child(bg)
 	
-	# Centered Panel
 	var center = CenterContainer.new()
 	center.set_anchors_preset(Control.PRESET_FULL_RECT)
 	modal_layer.add_child(center)
 	
 	var pan = PanelContainer.new()
-	pan.custom_minimum_size = Vector2(400, 300)
+	pan.custom_minimum_size = Vector2(800, 500)
 	
-	# Aesthetic style for the modal
 	var style = StyleBoxFlat.new()
 	style.bg_color = Color(0.12, 0.15, 0.18)
 	style.set_corner_radius_all(12)
@@ -425,34 +427,32 @@ func _show_build_modal(state_id: String):
 	center.add_child(pan)
 	
 	var margin = MarginContainer.new()
-	margin.add_theme_constant_override("margin_left", 20)
-	margin.add_theme_constant_override("margin_right", 20)
-	margin.add_theme_constant_override("margin_top", 20)
-	margin.add_theme_constant_override("margin_bottom", 20)
+	margin.add_theme_constant_override("margin_left", 24)
+	margin.add_theme_constant_override("margin_right", 24)
+	margin.add_theme_constant_override("margin_top", 24)
+	margin.add_theme_constant_override("margin_bottom", 24)
 	pan.add_child(margin)
 	
 	var vbox = VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 16)
+	vbox.add_theme_constant_override("separation", 20)
 	margin.add_child(vbox)
 	
-	# Header with title and X button
 	var header = HBoxContainer.new()
 	vbox.add_child(header)
 	
 	var title = Label.new()
 	title.text = "ВЫБОР ПОСТРОЙКИ"
 	title.add_theme_color_override("font_color", Color(0.9, 0.8, 0.5))
-	title.add_theme_font_size_override("font_size", 16)
+	title.add_theme_font_size_override("font_size", 20)
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	header.add_child(title)
 	
 	var close_btn = Button.new()
 	close_btn.text = "X"
-	close_btn.custom_minimum_size = Vector2(30, 30)
-	# Make X button look nice
+	close_btn.custom_minimum_size = Vector2(32, 32)
 	var c_style = StyleBoxFlat.new()
 	c_style.bg_color = Color(0.2, 0.2, 0.25)
-	c_style.set_corner_radius_all(15)
+	c_style.set_corner_radius_all(16)
 	close_btn.add_theme_stylebox_override("normal", c_style)
 	close_btn.pressed.connect(func(): modal_layer.queue_free())
 	header.add_child(close_btn)
@@ -460,25 +460,55 @@ func _show_build_modal(state_id: String):
 	var sep = HSeparator.new()
 	vbox.add_child(sep)
 	
-	var cards_box = HBoxContainer.new()
-	cards_box.add_theme_constant_override("separation", 16)
-	cards_box.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	vbox.add_child(cards_box)
+	var scroll = ScrollContainer.new()
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	vbox.add_child(scroll)
+	
+	var cards_box = HFlowContainer.new()
+	cards_box.add_theme_constant_override("h_separation", 16)
+	cards_box.add_theme_constant_override("v_separation", 16)
+	cards_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(cards_box)
 	
 	var session = get_tree().current_scene.get_node_or_null("GameSession")
 	var res_type = session.main_node.resource_distribution.get_resource_for_state(state_id)
 	
-
 	_create_build_card_modal("LOGGING_CAMP", state_id, res_type == 2, cards_box, session, modal_layer)
 	_create_build_card_modal("GOLD_MINE", state_id, res_type == 1, cards_box, session, modal_layer)
 	_create_build_card_modal("IRON_MINE", state_id, res_type == 3, cards_box, session, modal_layer)
-	_create_build_card_modal("OIL_RIG", state_id, res_type == 4, cards_box, session, modal_layer)
-	_create_build_card_modal("STEEL_MILL", state_id, true, cards_box, session, modal_layer)
+	_create_build_card_modal("WEAVER_WORKSHOP", state_id, res_type == 4, cards_box, session, modal_layer)
+	_create_build_card_modal("FARM", state_id, true, cards_box, session, modal_layer)
+	_create_build_card_modal("POWDER_MILL", state_id, true, cards_box, session, modal_layer)
+	_create_build_card_modal("BRONZE_FOUNDRY", state_id, true, cards_box, session, modal_layer)
 	_create_build_card_modal("UNIVERSITY", state_id, true, cards_box, session, modal_layer)
+
+func _add_stat_row(parent: Node, icon_path: String, val_text: String, lbl_text: String = ""):
+	var hb = HBoxContainer.new()
+	hb.add_theme_constant_override("separation", 6)
+	if icon_path != "":
+		var tex = TextureRect.new()
+		tex.texture = load(icon_path)
+		tex.custom_minimum_size = Vector2(20, 20)
+		tex.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		tex.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		tex.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		hb.add_child(tex)
+	if lbl_text != "":
+		var lbl = Label.new()
+		lbl.text = lbl_text + ":"
+		lbl.add_theme_color_override("font_color", Color(0.7, 0.7, 0.75))
+		lbl.add_theme_font_size_override("font_size", 13)
+		hb.add_child(lbl)
+	var val = Label.new()
+	val.text = val_text
+	val.add_theme_font_size_override("font_size", 14)
+	hb.add_child(val)
+	parent.add_child(hb)
 
 func _create_build_card_modal(b_type: String, state_id: String, is_match: bool, container: Node, session: Node, modal: Node):
 	var pan = PanelContainer.new()
-	pan.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	pan.custom_minimum_size = Vector2(220, 0)
 	
 	var style = StyleBoxFlat.new()
 	style.bg_color = Color(0.15, 0.18, 0.22)
@@ -486,14 +516,14 @@ func _create_build_card_modal(b_type: String, state_id: String, is_match: bool, 
 	pan.add_theme_stylebox_override("panel", style)
 	
 	var margin = MarginContainer.new()
-	margin.add_theme_constant_override("margin_left", 12)
-	margin.add_theme_constant_override("margin_right", 12)
-	margin.add_theme_constant_override("margin_top", 12)
-	margin.add_theme_constant_override("margin_bottom", 12)
+	margin.add_theme_constant_override("margin_left", 16)
+	margin.add_theme_constant_override("margin_right", 16)
+	margin.add_theme_constant_override("margin_top", 16)
+	margin.add_theme_constant_override("margin_bottom", 16)
 	pan.add_child(margin)
 	
 	var vb = VBoxContainer.new()
-	vb.add_theme_constant_override("separation", 8)
+	vb.add_theme_constant_override("separation", 10)
 	margin.add_child(vb)
 	
 	var title = Label.new()
@@ -502,9 +532,8 @@ func _create_build_card_modal(b_type: String, state_id: String, is_match: bool, 
 	var cost_w = 0
 	var days = 0
 	var prod = 0.0
-	var prod_name = ""
+	var prod_icon = ""
 
-	
 	match b_type:
 		"LOGGING_CAMP":
 			b_name = "Лесозаготовка"
@@ -512,50 +541,65 @@ func _create_build_card_modal(b_type: String, state_id: String, is_match: bool, 
 			cost_w = BalanceConfig.LOGGING_CAMP_COST_WOOD
 			days = BalanceConfig.LOGGING_CAMP_DAYS
 			prod = BalanceConfig.LOGGING_CAMP_PROD_WOOD
-			prod_name = "Дерево"
+			prod_icon = "res://assets/ui/resources/wood.png"
 		"GOLD_MINE":
 			b_name = "Золотая Шахта"
 			cost_m = BalanceConfig.GOLD_MINE_COST_MONEY
 			cost_w = BalanceConfig.GOLD_MINE_COST_WOOD
 			days = BalanceConfig.GOLD_MINE_DAYS
 			prod = BalanceConfig.GOLD_MINE_PROD_GOLD
-			prod_name = "Золото"
+			prod_icon = "res://assets/ui/resources/gold.png"
 		"IRON_MINE":
 			b_name = "Железный Рудник"
 			cost_m = BalanceConfig.IRON_MINE_COST_MONEY
 			cost_w = BalanceConfig.IRON_MINE_COST_WOOD
 			days = BalanceConfig.IRON_MINE_DAYS
 			prod = BalanceConfig.IRON_MINE_PROD_IRON
-			prod_name = "Железо"
-		"STEEL_MILL":
-			b_name = "Сталелитейный Завод"
-			cost_m = BalanceConfig.STEEL_MILL_COST_MONEY
-			cost_w = BalanceConfig.STEEL_MILL_COST_WOOD
-			days = BalanceConfig.STEEL_MILL_DAYS
-			prod = BalanceConfig.STEEL_MILL_PROD_STEEL
-			prod_name = "Сталь (-10 Жел)"
+			prod_icon = "res://assets/ui/resources/iron.png"
+		"BRONZE_FOUNDRY":
+			b_name = "Бронзолитейный Завод"
+			cost_m = BalanceConfig.BRONZE_FOUNDRY_COST_MONEY
+			cost_w = BalanceConfig.BRONZE_FOUNDRY_COST_WOOD
+			days = BalanceConfig.BRONZE_FOUNDRY_DAYS
+			prod = BalanceConfig.BRONZE_FOUNDRY_PROD_BRONZE
+			prod_icon = "res://assets/ui/resources/bronze.png"
 		"UNIVERSITY":
 			b_name = "Университет"
 			cost_m = BalanceConfig.UNIVERSITY_COST_MONEY
 			cost_w = BalanceConfig.UNIVERSITY_COST_WOOD
 			days = BalanceConfig.UNIVERSITY_DAYS
 			prod = BalanceConfig.UNIVERSITY_PROD_SCIENCE
-			prod_name = "Наука"
-		"OIL_RIG":
-			b_name = "Нефтяная Вышка"
-			cost_m = BalanceConfig.OIL_RIG_COST_MONEY
-			cost_w = BalanceConfig.OIL_RIG_COST_WOOD
-			days = BalanceConfig.OIL_RIG_DAYS
-			prod = BalanceConfig.OIL_RIG_PROD_OIL
-			prod_name = "Нефть"
+			prod_icon = "res://assets/ui/resources/science.png"
+		"WEAVER_WORKSHOP":
+			b_name = "Мануфактура Парусины"
+			cost_m = BalanceConfig.WEAVER_WORKSHOP_COST_MONEY
+			cost_w = BalanceConfig.WEAVER_WORKSHOP_COST_WOOD
+			days = BalanceConfig.WEAVER_WORKSHOP_DAYS
+			prod = BalanceConfig.WEAVER_WORKSHOP_PROD_CANVAS
+			prod_icon = "res://assets/ui/resources/canvas.png"
+		"FARM":
+			b_name = "Ферма Провизии"
+			cost_m = BalanceConfig.FARM_COST_MONEY
+			cost_w = BalanceConfig.FARM_COST_WOOD
+			days = BalanceConfig.FARM_DAYS
+			prod = BalanceConfig.FARM_PROD_PROVISIONS
+			prod_icon = "res://assets/ui/resources/provisions.png"
+		"POWDER_MILL":
+			b_name = "Пороховой Завод"
+			cost_m = BalanceConfig.POWDER_MILL_COST_MONEY
+			cost_w = BalanceConfig.POWDER_MILL_COST_WOOD
+			days = BalanceConfig.POWDER_MILL_DAYS
+			prod = BalanceConfig.POWDER_MILL_PROD_GUNPOWDER
+			prod_icon = "res://assets/ui/resources/gunpowder.png"
 			
 	title.text = b_name
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.add_theme_font_size_override("font_size", 14)
+	title.add_theme_font_size_override("font_size", 15)
 	vb.add_child(title)
 	
 	var match_lbl = Label.new()
 	match_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	match_lbl.add_theme_font_size_override("font_size", 13)
 	if is_match:
 		match_lbl.text = "Подходит"
 		match_lbl.add_theme_color_override("font_color", Color(0.5, 1.0, 0.5))
@@ -564,20 +608,39 @@ func _create_build_card_modal(b_type: String, state_id: String, is_match: bool, 
 		match_lbl.add_theme_color_override("font_color", Color(1.0, 0.5, 0.5))
 	vb.add_child(match_lbl)
 	
-	var info = Label.new()
-	info.text = "Цена: %d $\nДерево: %d\nВремя: %d дн.\n%s: %.1f/д." % [cost_m, cost_w, days, prod_name, prod if is_match else 0]
-	info.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	info.add_theme_color_override("font_color", Color(0.7, 0.7, 0.75))
-	vb.add_child(info)
+	var sep = HSeparator.new()
+	vb.add_child(sep)
+	
+	var stats_vb = VBoxContainer.new()
+	stats_vb.add_theme_constant_override("separation", 6)
+	vb.add_child(stats_vb)
+	
+	_add_stat_row(stats_vb, "res://assets/ui/resources/money.png", str(cost_m))
+	_add_stat_row(stats_vb, "res://assets/ui/resources/wood.png", str(cost_w))
+	_add_stat_row(stats_vb, "", str(days) + " дн.", "Время")
+	
+	var prod_val = "%.1f/д." % prod if is_match else "0.0/д."
+	_add_stat_row(stats_vb, prod_icon, prod_val, "+")
 	
 	var spacer = Control.new()
 	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	vb.add_child(spacer)
 	
 	var btn = Button.new()
-	btn.text = "Выбрать"
+	btn.text = "Построить"
 	btn.custom_minimum_size.y = 35
 	btn.disabled = not session.can_build(state_id, b_type)
+	var btn_style = StyleBoxFlat.new()
+	if not btn.disabled:
+		btn_style.bg_color = Color(0.2, 0.35, 0.2)
+		btn_style.set_corner_radius_all(6)
+		btn.add_theme_stylebox_override("normal", btn_style)
+		var h_style = btn_style.duplicate()
+		h_style.bg_color = Color(0.25, 0.45, 0.25)
+		btn.add_theme_stylebox_override("hover", h_style)
+	else:
+		btn.text = "Недоступно"
+	
 	btn.pressed.connect(func():
 		if not is_match:
 			_confirm_build_mismatch_modal(state_id, b_type, cost_m, cost_w, modal)
@@ -596,7 +659,7 @@ func _confirm_build_mismatch_modal(state_id: String, b_type: String, cost_m: int
 	if b_type == "LOGGING_CAMP": rname = "деревьев"
 	elif b_type == "GOLD_MINE": rname = "золота"
 	elif b_type == "IRON_MINE": rname = "железа"
-	elif b_type == "OIL_RIG": rname = "нефти"
+	elif b_type == "WEAVER_WORKSHOP": rname = "нефти"
 	
 	dialog.dialog_text = "Здесь нет %s. Построить за %d денег и %d древесины?" % [rname, cost_m, cost_w]
 	dialog.canceled.connect(func(): dialog.queue_free())

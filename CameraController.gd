@@ -43,6 +43,12 @@ func _ready():
 	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	get_tree().root.size_changed.connect(calc_limits)
 	calc_limits()
+	
+	var cap_res = load("res://capitals.json") as JSON
+	if cap_res and cap_res.data.has("FRA"):
+		var vsize = get_viewport_rect().size / zoom
+		position = Vector2(cap_res.data["FRA"]["x"], cap_res.data["FRA"]["y"]) - vsize / 2.0
+		clamp_position()
 
 func calc_limits():
 	var vsize = get_viewport_rect().size

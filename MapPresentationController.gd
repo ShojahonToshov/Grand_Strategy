@@ -68,7 +68,7 @@ func _process(_delta):
 		army_flags_alpha = 1.0
 	elif current_theme == MapTheme.DIPLOMACY:
 		country_labels_alpha = 1.0
-		capital_stars_alpha = 1.0
+		capital_stars_alpha = 0.0
 		internal_borders_alpha = 0.0
 		army_flags_alpha = 0.0
 	else:

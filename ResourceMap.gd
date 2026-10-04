@@ -64,13 +64,13 @@ func _draw():
 	var gold_color = distribution_node.get_resource_color(1) # GOLD
 	var wood_color = distribution_node.get_resource_color(2) # WOOD
 	var iron_color = distribution_node.get_resource_color(3) # IRON
-	var oil_color = distribution_node.get_resource_color(4) # OIL
+	var canvas_color = distribution_node.get_resource_color(4) # CANVAS
 	var none_color = distribution_node.get_resource_color(0) # NONE
 	
 	var gold_arr = PackedColorArray([gold_color])
 	var wood_arr = PackedColorArray([wood_color])
 	var iron_arr = PackedColorArray([iron_color])
-	var oil_arr = PackedColorArray([oil_color])
+	var canvas_arr = PackedColorArray([canvas_color])
 	var none_arr = PackedColorArray([none_color])
 	
 	for state_id in state_polys.keys():
@@ -79,12 +79,52 @@ func _draw():
 		if res == 1: c_arr = gold_arr
 		elif res == 2: c_arr = wood_arr
 		elif res == 3: c_arr = iron_arr
-		elif res == 4: c_arr = oil_arr
+		elif res == 4: c_arr = canvas_arr
 		
 		for p in state_polys[state_id]:
-			if Geometry2D.triangulate_polygon(p).size() == 0:
-				var cleaned = Geometry2D.offset_polygon(p, 0.1, Geometry2D.JOIN_MITER)
-				for c in cleaned:
-					draw_polygon(c, c_arr)
-			else:
-				draw_polygon(p, c_arr)
+			_draw_poly_safe(p, c_arr[0])
+
+
+func _draw_poly_safe(p: PackedVector2Array, color: Color, node: CanvasItem = self):
+	var idx = Geometry2D.triangulate_polygon(p)
+	if idx.size() > 0:
+		var cols = PackedColorArray()
+		cols.resize(p.size())
+		cols.fill(color)
+		RenderingServer.canvas_item_add_triangle_array(node.get_canvas_item(), idx, p, cols)
+		return
+
+	# Fallback 1: Clean the polygon with 0 delta (removes self-intersections without shrinking)
+	var cleaned = Geometry2D.offset_polygon(p, 0.0, Geometry2D.JOIN_SQUARE)
+	if cleaned.size() == 0:
+		var p_rev = p.duplicate()
+		p_rev.reverse()
+		cleaned = Geometry2D.offset_polygon(p_rev, 0.0, Geometry2D.JOIN_SQUARE)
+		
+	var drew_anything = false
+	for c in cleaned:
+		var c_idx = Geometry2D.triangulate_polygon(c)
+		if c_idx.size() > 0:
+			var cols = PackedColorArray()
+			cols.resize(c.size())
+			cols.fill(color)
+			RenderingServer.canvas_item_add_triangle_array(node.get_canvas_item(), c_idx, c, cols)
+			drew_anything = true
+			
+	if drew_anything:
+		return
+		
+	# Fallback 2: Expand slightly (merges very close vertices that might be causing EarClipping failure)
+	var cleaned_01 = Geometry2D.offset_polygon(p, 0.1, Geometry2D.JOIN_SQUARE)
+	if cleaned_01.size() == 0:
+		var p_rev = p.duplicate()
+		p_rev.reverse()
+		cleaned_01 = Geometry2D.offset_polygon(p_rev, 0.1, Geometry2D.JOIN_SQUARE)
+		
+	for c in cleaned_01:
+		var c_idx = Geometry2D.triangulate_polygon(c)
+		if c_idx.size() > 0:
+			var cols = PackedColorArray()
+			cols.resize(c.size())
+			cols.fill(color)
+			RenderingServer.canvas_item_add_triangle_array(node.get_canvas_item(), c_idx, c, cols)

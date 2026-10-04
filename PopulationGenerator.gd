@@ -3,7 +3,7 @@ class_name PopulationGenerator
 
 static func generate_population(states_dict: Dictionary, geo_dict: Dictionary, capitals_dict: Dictionary) -> Dictionary:
 	var result = {}
-	var sources = _load_json("res://data/scenarios/1936/population_sources.json")
+	var sources = _load_json("res://data/scenarios/1700/population_sources.json")
 	if sources.is_empty():
 		return result
 		
@@ -41,7 +41,7 @@ static func generate_population(states_dict: Dictionary, geo_dict: Dictionary, c
 		var s_list = owner_states[tag]
 		var target_pop: int = 0
 		if sources.has(tag):
-			target_pop = int(sources[tag]["population_1936"])
+			target_pop = int(sources[tag]["population_1700"])
 		elif tag == "FRA_METRO":
 			target_pop = 41907056
 		elif tag == "FRA_COLONY":
@@ -58,7 +58,7 @@ static func generate_population(states_dict: Dictionary, geo_dict: Dictionary, c
 		if capitals_dict.has(base_tag):
 			capital_id = capitals_dict[base_tag].get("state_id", null)
 			
-		var allocs = _distribute(target_pop, s_list, capital_id, "pop_" + tag + "_1936")
+		var allocs = _distribute(target_pop, s_list, capital_id, "pop_" + tag + "_1700")
 		for sid in allocs.keys():
 			result[sid] = {
 				"population": allocs[sid],

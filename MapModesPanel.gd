@@ -99,7 +99,7 @@ func _create_legend_panel() -> Control:
 	lvbox.add_child(_create_legend_item("res://assets/ui/resources/gold.png", "Золото", Color("#D9AC43")))
 	lvbox.add_child(_create_legend_item("res://assets/ui/resources/wood.png", "Древесина", Color("#986744")))
 	lvbox.add_child(_create_legend_item("res://assets/ui/resources/iron.png", "Железо", Color("#A0A5A9")))
-	lvbox.add_child(_create_legend_item("res://assets/ui/resources/oil.png", "Нефть", Color("#1A1A1A")))
+	lvbox.add_child(_create_legend_item("res://assets/ui/resources/canvas.png", "Парусина", Color("#1A1A1A")))
 	lvbox.add_child(_create_legend_item("", "Нет ресурсов", Color("#E8E9EA")))
 	
 	legend_panel.name = "LegendPanel"
@@ -314,6 +314,8 @@ func _on_button_pressed(idx: int):
 		mode_button_pressed.emit(0) # POLITICAL
 	elif idx == 1:
 		mode_button_pressed.emit(1) # RESOURCES
+	elif idx == 2:
+		mode_button_pressed.emit(2) # DIPLOMACY
 
 func _update_active(idx: int):
 	var btns = [btn_political, btn_resources, btn_diplomacy]

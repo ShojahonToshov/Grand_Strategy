@@ -51,7 +51,7 @@ def parse_date(date_str):
     return None
 
 def compare_dates(d1, d2):
-    # d1 and d2 are tuples like (1936, 1, 1, 12)
+    # d1 and d2 are tuples like (1700, 1, 1, 12)
     # Pads shorter date with 0s
     for i in range(max(len(d1), len(d2))):
         v1 = d1[i] if i < len(d1) else 0
@@ -94,7 +94,7 @@ def main():
                 version = d.get('version', 'Unknown')
         except: pass
     
-    start_date_str = '1936.1.1.12'
+    start_date_str = '1700.1.1.12'
     target_date = parse_date(start_date_str)
     
     metadata = {

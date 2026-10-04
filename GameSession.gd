@@ -16,8 +16,10 @@ var wood: float = BalanceConfig.START_WOOD
 var gold: float = BalanceConfig.START_GOLD
 var science: float = BalanceConfig.START_SCIENCE
 var iron: float = BalanceConfig.START_IRON
-var steel: float = BalanceConfig.START_STEEL
-var oil: float = 0.0
+var bronze: float = BalanceConfig.START_BRONZE
+var canvas: float = 0.0
+var gunpowder: float = BalanceConfig.START_GUNPOWDER
+var provisions: float = BalanceConfig.START_PROVISIONS
 
 var building_orders: Dictionary = {}
 var completed_buildings: Dictionary = {}
@@ -197,9 +199,11 @@ func do_daily_payout():
 	var income_wood: float = 0.0
 	var income_gold: float = 0.0
 	var income_iron: float = 0.0
-	var income_steel: float = 0.0
+	var income_bronze: float = 0.0
 	var income_science: float = 0.0
-	var income_oil: float = 0.0
+	var income_canvas: float = 0.0
+	var income_gunpowder: float = 0.0
+	var income_provisions: float = 0.0
 	
 	for state_id in completed_buildings.keys():
 		var st_owner = main_node.get_state_owner(state_id)
@@ -220,10 +224,14 @@ func do_daily_payout():
 			income_iron += BalanceConfig.IRON_MINE_PROD_IRON
 		elif b.type == "UNIVERSITY":
 			income_science += BalanceConfig.UNIVERSITY_PROD_SCIENCE
-		elif b.type == "OIL_RIG" and res_type == ResourceDistribution.ResourceType.OIL:
-			income_oil += BalanceConfig.OIL_RIG_PROD_OIL
+		elif b.type == "FARM":
+			income_provisions += BalanceConfig.FARM_PROD_PROVISIONS
+		elif b.type == "POWDER_MILL":
+			income_gunpowder += BalanceConfig.POWDER_MILL_PROD_GUNPOWDER
+		elif b.type == "WEAVER_WORKSHOP" and res_type == ResourceDistribution.ResourceType.CANVAS:
+			income_canvas += BalanceConfig.WEAVER_WORKSHOP_PROD_CANVAS
 			
-	# Process Steel Mills after everything else to ensure we have iron first
+	# Process Bronze Foundrys after everything else to ensure we have iron first
 	for state_id in completed_buildings.keys():
 		var st_owner = main_node.get_state_owner(state_id)
 		if st_owner != "FRA": continue
@@ -231,26 +239,28 @@ func do_daily_payout():
 		var b = completed_buildings[state_id]
 		if b.completed_hour > (current_hours - 24): continue
 		
-		if b.type == "STEEL_MILL":
-			if (iron + income_iron) >= BalanceConfig.STEEL_MILL_CONS_IRON:
-				income_iron -= BalanceConfig.STEEL_MILL_CONS_IRON
-				income_steel += BalanceConfig.STEEL_MILL_PROD_STEEL
+		if b.type == "BRONZE_FOUNDRY":
+			if (iron + income_iron) >= BalanceConfig.BRONZE_FOUNDRY_CONS_IRON:
+				income_iron -= BalanceConfig.BRONZE_FOUNDRY_CONS_IRON
+				income_bronze += BalanceConfig.BRONZE_FOUNDRY_PROD_BRONZE
 			
 	# Apply incomes
 	money += income_money
 	wood += income_wood
 	gold += income_gold
 	iron += income_iron
-	steel += income_steel
+	bronze += income_bronze
 	science += income_science
-	oil += income_oil
+	canvas += income_canvas
+	gunpowder += income_gunpowder
+	provisions += income_provisions
 	
 	resources_changed.emit()
 
 func get_date_string() -> String:
-	# Starts 1936-01-01
+	# Starts 1700-01-01
 	var total_days = current_hours / 24
-	var year = 1936
+	var year = 1700
 	var month = 1
 	var day = 1
 	
@@ -277,7 +287,7 @@ func get_date_string() -> String:
 func get_completion_date_string(hours_from_now: int) -> String:
 	var target_hours = current_hours + hours_from_now
 	var total_days = target_hours / 24
-	var year = 1936
+	var year = 1700
 	var month = 1
 	var day = 1
 	
@@ -315,12 +325,12 @@ func can_build(state_id: String, type: String) -> bool:
 		return money >= BalanceConfig.GOLD_MINE_COST_MONEY and wood >= BalanceConfig.GOLD_MINE_COST_WOOD and gold >= BalanceConfig.GOLD_MINE_COST_GOLD
 	elif type == "IRON_MINE":
 		return money >= BalanceConfig.IRON_MINE_COST_MONEY and wood >= BalanceConfig.IRON_MINE_COST_WOOD and gold >= BalanceConfig.IRON_MINE_COST_GOLD
-	elif type == "STEEL_MILL":
-		return money >= BalanceConfig.STEEL_MILL_COST_MONEY and wood >= BalanceConfig.STEEL_MILL_COST_WOOD and gold >= BalanceConfig.STEEL_MILL_COST_GOLD
+	elif type == "BRONZE_FOUNDRY":
+		return money >= BalanceConfig.BRONZE_FOUNDRY_COST_MONEY and wood >= BalanceConfig.BRONZE_FOUNDRY_COST_WOOD and gold >= BalanceConfig.BRONZE_FOUNDRY_COST_GOLD
 	elif type == "UNIVERSITY":
 		return money >= BalanceConfig.UNIVERSITY_COST_MONEY and wood >= BalanceConfig.UNIVERSITY_COST_WOOD and gold >= BalanceConfig.UNIVERSITY_COST_GOLD
-	elif type == "OIL_RIG":
-		return money >= BalanceConfig.OIL_RIG_COST_MONEY and wood >= BalanceConfig.OIL_RIG_COST_WOOD and gold >= BalanceConfig.OIL_RIG_COST_GOLD
+	elif type == "WEAVER_WORKSHOP":
+		return money >= BalanceConfig.WEAVER_WORKSHOP_COST_MONEY and wood >= BalanceConfig.WEAVER_WORKSHOP_COST_WOOD and gold >= BalanceConfig.WEAVER_WORKSHOP_COST_GOLD
 	return false
 
 func start_building(state_id: String, type: String):
@@ -346,21 +356,21 @@ func start_building(state_id: String, type: String):
 		cost_w = BalanceConfig.IRON_MINE_COST_WOOD
 		cost_g = BalanceConfig.IRON_MINE_COST_GOLD
 		days = BalanceConfig.IRON_MINE_DAYS
-	elif type == "STEEL_MILL":
-		cost_m = BalanceConfig.STEEL_MILL_COST_MONEY
-		cost_w = BalanceConfig.STEEL_MILL_COST_WOOD
-		cost_g = BalanceConfig.STEEL_MILL_COST_GOLD
-		days = BalanceConfig.STEEL_MILL_DAYS
+	elif type == "BRONZE_FOUNDRY":
+		cost_m = BalanceConfig.BRONZE_FOUNDRY_COST_MONEY
+		cost_w = BalanceConfig.BRONZE_FOUNDRY_COST_WOOD
+		cost_g = BalanceConfig.BRONZE_FOUNDRY_COST_GOLD
+		days = BalanceConfig.BRONZE_FOUNDRY_DAYS
 	elif type == "UNIVERSITY":
 		cost_m = BalanceConfig.UNIVERSITY_COST_MONEY
 		cost_w = BalanceConfig.UNIVERSITY_COST_WOOD
 		cost_g = BalanceConfig.UNIVERSITY_COST_GOLD
 		days = BalanceConfig.UNIVERSITY_DAYS
-	elif type == "OIL_RIG":
-		cost_m = BalanceConfig.OIL_RIG_COST_MONEY
-		cost_w = BalanceConfig.OIL_RIG_COST_WOOD
-		cost_g = BalanceConfig.OIL_RIG_COST_GOLD
-		days = BalanceConfig.OIL_RIG_DAYS
+	elif type == "WEAVER_WORKSHOP":
+		cost_m = BalanceConfig.WEAVER_WORKSHOP_COST_MONEY
+		cost_w = BalanceConfig.WEAVER_WORKSHOP_COST_WOOD
+		cost_g = BalanceConfig.WEAVER_WORKSHOP_COST_GOLD
+		days = BalanceConfig.WEAVER_WORKSHOP_DAYS
 		
 	money -= cost_m
 	wood -= cost_w

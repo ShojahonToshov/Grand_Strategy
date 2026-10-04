@@ -4,7 +4,7 @@ import json
 from collections import defaultdict
 
 HOI4_DIR = r"D:\Games\Hearts of Iron IV (2016)\Hearts of Iron IV"
-SCENARIO_DATE = (1936, 1, 1)
+SCENARIO_DATE = (1700, 1, 1)
 
 def parse_date(date_str):
     try:

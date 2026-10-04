@@ -87,12 +87,7 @@ func _draw_fill(node: Node2D):
 	if current_highlight_id == "" or current_highlight_id == "0" or current_highlight_id == "WATER": return
 	var colors = PackedColorArray([fill_color])
 	for p in highlight_fill_polys:
-		if Geometry2D.triangulate_polygon(p).size() == 0:
-			var cleaned = Geometry2D.offset_polygon(p, 0.1, Geometry2D.JOIN_MITER)
-			for c in cleaned:
-				node.draw_polygon(c, colors)
-		else:
-			node.draw_polygon(p, colors)
+		_draw_poly_safe(p, fill_color, node)
 
 func _draw_border(node: Node2D):
 	if current_highlight_id == "" or current_highlight_id == "0" or current_highlight_id == "WATER": return
@@ -104,3 +99,47 @@ func _draw_border(node: Node2D):
 	
 	for line in highlight_border_lines:
 		node.draw_polyline(line, outline_color, width, true)
+
+func _draw_poly_safe(p: PackedVector2Array, color: Color, node: CanvasItem = self):
+	var idx = Geometry2D.triangulate_polygon(p)
+	if idx.size() > 0:
+		var cols = PackedColorArray()
+		cols.resize(p.size())
+		cols.fill(color)
+		RenderingServer.canvas_item_add_triangle_array(node.get_canvas_item(), idx, p, cols)
+		return
+
+	# Fallback 1: Clean the polygon with 0 delta (removes self-intersections without shrinking)
+	var cleaned = Geometry2D.offset_polygon(p, 0.0, Geometry2D.JOIN_SQUARE)
+	if cleaned.size() == 0:
+		var p_rev = p.duplicate()
+		p_rev.reverse()
+		cleaned = Geometry2D.offset_polygon(p_rev, 0.0, Geometry2D.JOIN_SQUARE)
+		
+	var drew_anything = false
+	for c in cleaned:
+		var c_idx = Geometry2D.triangulate_polygon(c)
+		if c_idx.size() > 0:
+			var cols = PackedColorArray()
+			cols.resize(c.size())
+			cols.fill(color)
+			RenderingServer.canvas_item_add_triangle_array(node.get_canvas_item(), c_idx, c, cols)
+			drew_anything = true
+			
+	if drew_anything:
+		return
+		
+	# Fallback 2: Expand slightly (merges very close vertices that might be causing EarClipping failure)
+	var cleaned_01 = Geometry2D.offset_polygon(p, 0.1, Geometry2D.JOIN_SQUARE)
+	if cleaned_01.size() == 0:
+		var p_rev = p.duplicate()
+		p_rev.reverse()
+		cleaned_01 = Geometry2D.offset_polygon(p_rev, 0.1, Geometry2D.JOIN_SQUARE)
+		
+	for c in cleaned_01:
+		var c_idx = Geometry2D.triangulate_polygon(c)
+		if c_idx.size() > 0:
+			var cols = PackedColorArray()
+			cols.resize(c.size())
+			cols.fill(color)
+			RenderingServer.canvas_item_add_triangle_array(node.get_canvas_item(), c_idx, c, cols)

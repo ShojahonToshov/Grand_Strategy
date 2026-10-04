@@ -1,7 +1,7 @@
 import json
 import random
 
-# Base populations in millions for 1936
+# Base populations in millions for 1700
 EMPIRES = {
     "FRA": {"tags": ["FRA", "SYR", "LEB"], "pop": 110_000_000, "capital": "16"},
     "ENG": {"tags": ["ENG", "RAJ", "MAL", "CAN", "AST", "NZL", "SAF"], "pop": 480_000_000, "capital": "120"},

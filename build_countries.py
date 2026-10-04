@@ -80,7 +80,7 @@ def parse_hoi4_names():
             
     return res
 
-def get_1936_name(tag, loc_dict):
+def get_1700_name(tag, loc_dict):
     mapping = {
         "GER": "GER_fascism",
         "SOV": "SOV_communism",
@@ -342,7 +342,7 @@ for owner, poly_data in country_polygons.items():
     rings = poly_data["lod0"]
     if not rings: continue
     
-    owner_name = get_1936_name(owner, loc_dict)
+    owner_name = get_1700_name(owner, loc_dict)
     
     ring_areas = [(polygon_signed_area(r), r) for r in rings]
     if not ring_areas: continue

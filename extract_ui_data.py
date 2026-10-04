@@ -50,7 +50,7 @@ for sid, key in state_keys.items():
     else: name = f'Регион {sid}'
     state_names[str(sid)] = name
 
-def get_1936_name(tag, loc_dict):
+def get_1700_name(tag, loc_dict):
     mapping = {
         'GER': 'GER_fascism',
         'SOV': 'SOV_communism',
@@ -77,8 +77,8 @@ tags = set(v.get('owner', 'None') for v in st_data.values())
 
 for tag in tags:
     if tag in ['WATER', 'None']: continue
-    name_ru = get_1936_name(tag, ru_countries)
-    if name_ru == tag: name_ru = get_1936_name(tag, en_countries)
+    name_ru = get_1700_name(tag, ru_countries)
+    if name_ru == tag: name_ru = get_1700_name(tag, en_countries)
     country_names[tag] = name_ru
 
 out = {'states': state_names, 'countries': country_names}

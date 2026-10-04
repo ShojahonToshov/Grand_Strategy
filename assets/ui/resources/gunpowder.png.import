@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bx2doki28ht3m"
-path="res://.godot/imported/oil.png-70ce213dd4d84c65d2a2c8d3011551bd.ctex"
+uid="uid://b5yusa6io7lin"
+path="res://.godot/imported/gunpowder.png-fd79c9d978a8a274a7bef58282f0bbd3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/resources/oil.png"
-dest_files=["res://.godot/imported/oil.png-70ce213dd4d84c65d2a2c8d3011551bd.ctex"]
+source_file="res://assets/ui/resources/gunpowder.png"
+dest_files=["res://.godot/imported/gunpowder.png-fd79c9d978a8a274a7bef58282f0bbd3.ctex"]
 
 [params]
 
